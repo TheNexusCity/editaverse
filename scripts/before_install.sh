@@ -8,7 +8,7 @@ sudo apt-get install -y nodejs
 npm install pm2 -g
 
 #create our working directory if it doesnt exist
-DIR="/home/ubuntu/editaverse"
+DIR="/opt/editaverse"
 if [ -d "$DIR" ]; then
   echo "${DIR} exists"
 else
