@@ -37,6 +37,10 @@ export default class ModelNode extends EditorNodeMixin(Model) {
       (async () => {
         const { src, attribution } = json.components.find(c => c.name === "gltf-model").props;
 
+        if (src === undefined || src === "") {
+          return;
+        }
+
         await node.load(src, onError);
 
         // Legacy, might be a raw string left over before switch to JSON.
@@ -386,7 +390,7 @@ export default class ModelNode extends EditorNodeMixin(Model) {
       return ctx.animations.indexOf(this.model.animations[index]);
     });
 
-    this.model.traverse(child => {
+    this.model?.traverse(child => {
       const components = getComponents(child);
 
       if (components && components["loop-animation"]) {

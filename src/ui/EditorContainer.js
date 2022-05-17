@@ -770,6 +770,8 @@ class EditorContainer extends Component {
       this.showDialog(ConfirmDialog, {
         title: "Import Legacy Spoke Project",
         message: "Warning! This will overwrite your existing scene! Are you sure you wish to continue?",
+        cancelLabel: "Cancel",
+        confirmLabel: "Ok",
         onConfirm: () => resolve(true),
         onCancel: () => resolve(false)
       });
@@ -792,7 +794,6 @@ class EditorContainer extends Component {
             delete json.metadata.sceneUrl;
             delete json.metadata.sceneId;
           }
-
           this.importProject(json);
         };
         fileReader.readAsText(el.files[0]);
@@ -808,6 +809,8 @@ class EditorContainer extends Component {
       this.showDialog(ConfirmDialog, {
         title: "Import Scn Project",
         message: "Warning! This will overwrite your existing scene! Are you sure you wish to continue?",
+        cancelLabel: "Cancel",
+        confirmLabel: "Ok",
         onConfirm: () => resolve(true),
         onCancel: () => resolve(false)
       });

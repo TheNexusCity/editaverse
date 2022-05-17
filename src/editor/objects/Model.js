@@ -106,7 +106,7 @@ export default class Model extends Object3D {
   }
 
   get clips() {
-    return this.model.animations;
+    return this.model?.animations || [];
   }
 
   updateAnimationState() {
@@ -155,7 +155,7 @@ export default class Model extends Object3D {
     this._castShadow = value;
 
     if (this.model) {
-      this.model.traverse(child => {
+      this.model?.traverse(child => {
         child.castShadow = value;
 
         if (child.material) {
@@ -181,7 +181,7 @@ export default class Model extends Object3D {
     this._receiveShadow = value;
 
     if (this.model) {
-      this.model.traverse(child => {
+      this.model?.traverse(child => {
         child.receiveShadow = value;
 
         if (child.material) {
@@ -201,7 +201,7 @@ export default class Model extends Object3D {
 
   setShadowsEnabled(enabled) {
     if (this.model) {
-      this.model.traverse(child => {
+      this.model?.traverse(child => {
         child.castShadow = enabled ? this._castShadow : false;
         child.receiveShadow = enabled ? this._receiveShadow : false;
 
@@ -228,7 +228,7 @@ export default class Model extends Object3D {
     this._combine = value;
 
     if (this.model) {
-      this.model.traverse(child => {
+      this.model?.traverse(child => {
         child._combine = value;
       });
     }

@@ -286,6 +286,7 @@ export default class SceneNode extends EditorNodeMixin(Scene) {
     const secureName = name ? name : "Imported";
     const secureRoot = root ? root : _Math.generateUUID();
     const secureSkyBoxId = skyboxId ? skyboxId : _Math.generateUUID();
+
     const object = {
       version: 5,
       root: secureRoot,
@@ -359,7 +360,12 @@ export default class SceneNode extends EditorNodeMixin(Scene) {
 
     json.objects.forEach((item, index) => {
       let tmpEntity;
-      const itemUuid = item?.content?.uuid ? item.content.uuid : _Math.generateUUID();
+      const itemUuid = item?.content?.root
+        ? item?.content?.root
+        : item?.content?.uuid
+        ? item.content.uuid
+        : _Math.generateUUID();
+
       if (itemUuid && item.type === "application/light") {
         const itemName = item?.content?.name ? item.content.name : `${item.content.lightType}-light`;
         tmpEntity = {
@@ -411,7 +417,7 @@ export default class SceneNode extends EditorNodeMixin(Scene) {
                 }
               }
             ],
-            parent: secureRoot,
+            parent: secureRoot !== itemUuid ? secureRoot : undefined,
             index: index
           }
         };
@@ -481,7 +487,7 @@ export default class SceneNode extends EditorNodeMixin(Scene) {
                 props: {}
               }
             ],
-            parent: secureRoot,
+            parent: secureRoot !== itemUuid ? secureRoot : undefined,
             index: index
           }
         };
