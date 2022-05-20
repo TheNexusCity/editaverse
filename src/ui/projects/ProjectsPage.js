@@ -18,6 +18,8 @@ import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import { GlobalContext } from "../contexts/GlobalState";
 import { ApiContext } from "../contexts/ApiContext";
+import ProgressDialog from "../dialogs/ProgressDialog";
+import Modal from "react-modal";
 
 export const ProjectsSection = styled.section`
   padding-bottom: 100px;
@@ -115,14 +117,18 @@ const ProjectsPage = props => {
     }
 
     if (params.code && !auth) {
-      const user = async () => await loginWithDiscord(params.code);
+      const user = async () => {
+        await loginWithDiscord(params.code);
+        // eslint-disable-next-line react/prop-types
+        props.history.push("/projects");
+      };
       user();
     }
   }, [isAuthenticated, params]);
 
   useEffect(() => {
     if (auth) {
-      // eslint-disable-next-line react/prop-types
+      //eslint-disable-next-line react/prop-types
       props.history.push("/projects");
     }
   }, [auth]);
@@ -131,7 +137,7 @@ const ProjectsPage = props => {
     api
       .deleteProject(project.project_id)
       .then(() => setState({ projects: state.projects.filter(p => p.project_id !== project.project_id) }))
-      .catch(error => this.setState({ error }));
+      .catch(error => setState({ error }));
   };
 
   const renderContextMenu = props => {
@@ -163,6 +169,16 @@ const ProjectsPage = props => {
     <>
       <NavBar />
       <main>
+        <Modal
+          ariaHideApp={false}
+          isOpen={params.code ? true : false}
+          shouldCloseOnOverlayClick={false}
+          className="Modal"
+          overlayClassName="Overlay"
+        >
+          <ProgressDialog title={"Login"} message={""} cancelable={false} />
+        </Modal>
+
         {!isAuthenticated || (projects && !loading) ? (
           <ProjectsSection flex={0}>
             <WelcomeContainer>

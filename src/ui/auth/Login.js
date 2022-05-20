@@ -6,6 +6,8 @@ import configs from "../../configs";
 import { withApi } from "../contexts/ApiContext";
 import { useHistory } from "react-router-dom";
 import { GlobalContext } from "../contexts/GlobalState";
+import ProgressDialog from "../dialogs/ProgressDialog";
+import Modal from "react-modal";
 
 const Container = styled.div`
   display: flex;
@@ -85,7 +87,7 @@ const LoginWithMeta = () => {
     if (!loggingIn) {
       setLoggingIn(true);
       await context.metaMaskLogin();
-      history.push("/projects");
+      setLoggingIn(false);
     }
   };
 
@@ -97,11 +99,15 @@ const LoginWithMeta = () => {
   // }, [address])
 
   const handleLogin = async () => {
+    setLoggingIn(true);
     await context.loginWithEmail(email);
+    setLoggingIn(false);
   };
 
   const confirmCode = async () => {
+    setLoggingIn(true);
     await context.confirmLogin(email, code);
+    setLoggingIn(false);
   };
 
   //Close model automatically
@@ -109,24 +115,35 @@ const LoginWithMeta = () => {
     if (context.auth) {
       history.push("/projects");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [context.auth]);
 
   return (
     <Container>
+      <Modal
+        ariaHideApp={false}
+        isOpen={loggingIn}
+        shouldCloseOnOverlayClick={false}
+        className="Modal"
+        overlayClassName="Overlay"
+      >
+        <ProgressDialog title={"Login"} message={""} cancelable={false} />
+      </Modal>
+
       <Header>Register or Login</Header>
       <Span>Login to save projects and publish scenes to Webaverse</Span>
       {context.resEmail !== 200 ? (
         <>
           <InputText type={"email"} placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
           <MetaButton primary="rgb(0, 110, 255)" onClick={handleLogin}>
-            Login with E-mail
+            <ButtonLabel>Login with E-mail</ButtonLabel>
           </MetaButton>
         </>
       ) : (
         <>
           <InputText type={"code"} placeholder="Code" value={code} onChange={e => setCode(e.target.value)} />
           <MetaButton primary="rgb(0, 110, 255)" onClick={confirmCode}>
-            Confirm code
+            <ButtonLabel>Confirm code</ButtonLabel>
           </MetaButton>
         </>
       )}

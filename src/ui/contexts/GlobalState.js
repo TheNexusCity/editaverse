@@ -86,7 +86,7 @@ export const GlobalProvider = ({ children }) => {
         const params = {
           metamaskWalletAddress: address
         };
-        authAction.login(params);
+        await authAction.login(params);
       } else {
         dispatch({
           type: "LOGIN_ERROR",
@@ -101,18 +101,29 @@ export const GlobalProvider = ({ children }) => {
         discordcode: code,
         redirect_uri: configs.DISCORD_REDIRECT
       };
-      authAction.login(params);
+      await authAction.login(params);
     },
     login: async params => {
-      const result = await axios.post(`${configs.SERVER_URL}/login`, null, { params });
-      if (result.status == 200) {
-        //localStorage.setItem(LOCAL_ACCESS_TOKEN, JSON.stringify(accessToken.data.access_token));
-        localStorage.setItem(LOCAL_STORE_KEY, JSON.stringify(result.data));
-        dispatch({
-          type: "USER_LOGIN",
-          payload: result.data
-        });
-      } else {
+      try {
+        const result = await axios.post(`${configs.SERVER_URL}/login`, null, { params });
+
+        if (result.status == 200) {
+          localStorage.setItem(LOCAL_STORE_KEY, JSON.stringify(result.data));
+          localStorage.setItem(LOCAL_ACCESS_TOKEN, JSON.stringify(result.data.token));
+
+          dispatch({
+            type: "USER_LOGIN",
+            payload: result.data
+          });
+        } else {
+          dispatch({
+            type: "LOGIN_ERROR",
+            payload: {
+              address: null
+            }
+          });
+        }
+      } catch (e) {
         dispatch({
           type: "LOGIN_ERROR",
           payload: {
@@ -152,12 +163,12 @@ export const GlobalProvider = ({ children }) => {
     loginWithEmail: async email => {
       try {
         localStorage.setItem(E_MAIL_ADDRESS, JSON.stringify(email));
-        const res = await axios.post(`${configs.SERVER_URL}/login?email=${email}`);
+        const result = await axios.post(`${configs.SERVER_URL}/login?email=${email}`);
         dispatch({
           type: "LOGIN_WITH_EMAIL",
-          payload: res.status
+          payload: result.status
         });
-        console.log(res.status);
+        console.log(result.status);
       } catch (error) {
         console.error(error);
       }
@@ -165,12 +176,13 @@ export const GlobalProvider = ({ children }) => {
     confirmLogin: async (email, code) => {
       try {
         const data = email ? email : localStorage.getItem(E_MAIL_ADDRESS);
-        const res = await axios.post(`${configs.SERVER_URL}/login?email=${data}&code=${code}`);
-        localStorage.setItem(LOCAL_STORE_KEY, JSON.stringify({ address: res.data.addr }));
-        localStorage.setItem(LOCAL_ACCESS_TOKEN, JSON.stringify(res.data.token));
+        const result = await axios.post(`${configs.SERVER_URL}/login?email=${data}&code=${code}`);
+        localStorage.setItem(LOCAL_STORE_KEY, JSON.stringify(result.data));
+        localStorage.setItem(LOCAL_ACCESS_TOKEN, JSON.stringify(result.data.token));
+        localStorage.removeItem(E_MAIL_ADDRESS);
         dispatch({
           type: "LOGIN_WITH_E_MAIL",
-          payload: res.data
+          payload: result.data
         });
       } catch (error) {
         console.error(error);
