@@ -1,5 +1,5 @@
 import { BufferGeometry, Float32BufferAttribute, Uint16BufferAttribute } from "three";
-import RecastWorker from "./recast.worker";
+import RecastWorker from "./recast.worker.js?worker";
 
 const statuses = [
   "success",
@@ -21,7 +21,7 @@ const statuses = [
 
 export default class RecastClient {
   constructor() {
-    this.worker = new RecastWorker();
+    this.worker = RecastWorker;
     this.working = false;
   }
 

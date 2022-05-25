@@ -303,6 +303,7 @@ export default class Project extends EventEmitter {
             /* webpackChunkName: "SketchfabZipLoader", webpackPrefetch: true */ "./SketchfabZipLoader"
           );
           const files = await getFilesFromSketchfabZip(accessibleUrl);
+
           return { canonicalUrl, accessibleUrl: files["scene.gtlf"].url, contentType, files };
         }
       } catch (error) {

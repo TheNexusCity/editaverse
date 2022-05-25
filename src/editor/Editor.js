@@ -457,7 +457,7 @@ export default class Editor extends EventEmitter {
       version: 4
     };
 
-    json.asset.generator = `Mozilla Spoke ${process.env.BUILD_VERSION}`;
+    json.asset.generator = `Mozilla Spoke ${import.meta.env.VITE_BUILD_VERSION}`;
 
     try {
       const glbBlob = await exporter.exportGLBBlob(chunks);

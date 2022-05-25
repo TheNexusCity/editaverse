@@ -1,4 +1,4 @@
-import HeightfieldWorker from "./heightfield.worker";
+import HeightfieldWorker from "./heightfield.worker.js?worker";
 
 export default class HeightfieldClient {
   constructor() {

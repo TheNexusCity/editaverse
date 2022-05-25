@@ -1,7 +1,7 @@
 import { Object3D } from "three";
 import { GLTFLoader } from "../gltf/GLTFLoader";
 import EditorNodeMixin from "./EditorNodeMixin";
-import wayPointModelUrl from "../../assets/spawn-point.glb";
+import wayPointModelUrl from "../../assets/spawn-point.glb?url";
 
 let wayPointHelperModel = null;
 

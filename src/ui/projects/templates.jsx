@@ -28,9 +28,9 @@ import wideopenTemplateThumbnail from "../../assets/templates/wide-open-space.jp
 import craterTemplateUrl from "../../assets/templates/crater.spoke";
 import craterTemplateThumbnail from "../../assets/templates/crater.jpg";
 
-import surroundedLakeTemplateUrl from "../../assets/templates/surrounded-lake.spoke";
-import surroundedLakeTemplateThumbnail from "../../assets/templates/surrounded-lake.jpg";
-
+const surroundedLakeTemplateUrl =  require("../../assets/templates/surrounded-lake.spoke");
+const surroundedLakeTemplateThumbnail = require("../../assets/templates/surrounded-lake.jpg");
+debugger
 const templates = [
   {
     project_id: "crater",
@@ -110,7 +110,7 @@ const templates = [
 
 function transformUrls(templates) {
   const searchParams = new URLSearchParams();
-
+debugger;
   for (const template of templates) {
     searchParams.set("template", template.project_url);
     template.url = "/projects/new?" + searchParams;

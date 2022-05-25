@@ -1,6 +1,6 @@
 import { Object3D, Color, Vector3 } from "three";
 import { GLTFLoader } from "../gltf/GLTFLoader";
-import transformGizmoUrl from "../../assets/TransformGizmo.glb";
+import transformGizmoUrl from "../../assets/TransformGizmo.glb?url";
 import cloneObject3D from "../utils/cloneObject3D";
 import { TransformMode, TransformAxis } from "../controls/SpokeControls";
 

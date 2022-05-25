@@ -1,6 +1,6 @@
 import { Object3D, AnimationMixer, Vector3 } from "three";
 import { GLTFLoader } from "../gltf/GLTFLoader";
-import loadingCubeUrl from "../../assets/loading-cube.glb";
+import loadingCubeUrl from "../../assets/loading-cube.glb?url";
 import cloneObject3D from "../utils/cloneObject3D";
 
 let cubeGltf = null;

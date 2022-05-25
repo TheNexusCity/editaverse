@@ -1,3 +1,6 @@
 [submodule "webaverse-blockchain-lib"]
-	path = webaverse-blockchain-lib
+	path = packages/webaverse-blockchain-lib
 	url = https://github.com/TheNexusCity/webaverse-blockchain-lib.git
+[submodule "totum"]
+	path = packages/totum
+	url = https://github.com/webaverse/totum.git

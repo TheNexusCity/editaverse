@@ -1,4 +1,4 @@
-import SketchfabZipWorker from "./SketchfabZipLoader.worker.js";
+import SketchfabZipWorker from "./SketchfabZipLoader.worker.js?worker";
 
 export async function getFilesFromSketchfabZip(src) {
   return new Promise((resolve, reject) => {

@@ -2,12 +2,13 @@ const cors_proxy = require("cors-anywhere");
 const cors_proxy2 = require("cors-anywhere");
 const fs = require("fs");
 const path = require("path");
+require("dotenv").config();
 
 // Listen on a specific host via the HOST environment variable
-const host = process.env.CORS_HOST || "0.0.0.0";
+const host = process.env.VITE_CORS_HOST || "0.0.0.0";
 // Listen on a specific port via the PORT environment variable
-const port = process.env.CORS_PORT || 8080;
-const port2 = process.env.CORS_PORT_TWO || 8081;
+const port = process.env.VITE_CORS_PORT || 8080;
+const port2 = process.env.VITE_CORS_PORT_TWO || 8081;
 
 const key = fs.readFileSync(path.join(__dirname, "certs", "privkey.pem"));
 const cert = fs.readFileSync(path.join(__dirname, "certs", "cert.pem"));

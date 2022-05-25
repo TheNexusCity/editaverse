@@ -66,7 +66,7 @@ export default class App extends Component {
         <ApiContextProvider value={api}>
           <AuthContextProvider value={this.state.isAuthenticated}>
             <ThemeProvider theme={theme}>
-              <Router basename={process.env.ROUTER_BASE_PATH}>
+              <Router basename={import.meta.env.VITE_ROUTER_BASE_PATH}>
                 <GlobalStyle />
                 <Column as={Suspense} fallback={<Loading message="Loading..." fullScreen />}>
                   <Switch>

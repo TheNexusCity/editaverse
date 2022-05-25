@@ -24,7 +24,7 @@ export async function* getUpdates(perPage = 30) {
     const cursorStr = cursor ? `, after: "${cursor}"` : "";
 
     const query = `query {
-      repository(owner: "${process.env.GITHUB_ORG}", name: "${process.env.GITHUB_REPO}") {
+      repository(owner: "${import.meta.env.VITE_GITHUB_ORG}", name: "${import.meta.env.VITE_GITHUB_REPO}") {
         pullRequests(labels: ["whats new"], states: [MERGED], first: ${perPage}, orderBy: { field: UPDATED_AT, direction: DESC }${cursorStr}) {
           edges {
             node {
@@ -40,7 +40,7 @@ export async function* getUpdates(perPage = 30) {
     }`;
 
     // Read-only, public access token.
-    const token = process.env.GITHUB_PUBLIC_TOKEN;
+    const token = import.meta.env.VITE_GITHUB_PUBLIC_TOKEN;
 
     const response = await fetch("https://api.github.com/graphql", {
       method: "POST",
