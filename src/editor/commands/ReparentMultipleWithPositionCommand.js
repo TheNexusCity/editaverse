@@ -1,7 +1,7 @@
-import Command from "./Command";
-import { serializeObject3DArray, serializeObject3D, serializeVector3 } from "../utils/debug";
-import reverseDepthFirstTraverse from "../utils/reverseDepthFirstTraverse";
-import { TransformSpace } from "../Editor";
+import Command from './Command';
+import { serializeObject3DArray, serializeObject3D, serializeVector3 } from '../utils/debug';
+import reverseDepthFirstTraverse from '../utils/reverseDepthFirstTraverse';
+import { TransformSpace } from '../Editor';
 
 export default class ReparentMultipleWithPositionCommand extends Command {
   constructor(editor, objects, newParent, newBefore, position) {
@@ -59,8 +59,8 @@ export default class ReparentMultipleWithPositionCommand extends Command {
 
     this.editor.updateTransformRoots();
 
-    this.editor.emit("sceneGraphChanged");
-    this.editor.emit("objectsChanged", this.objects, "position");
+    this.editor.emit('sceneGraphChanged');
+    this.editor.emit('objectsChanged', this.objects, 'position');
   }
 
   toString() {

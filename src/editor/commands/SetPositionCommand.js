@@ -1,6 +1,6 @@
-import Command from "./Command";
-import { TransformSpace } from "../Editor";
-import { serializeVector3, serializeObject3D } from "../utils/debug";
+import Command from './Command';
+import { TransformSpace } from '../Editor';
+import { serializeVector3, serializeObject3D } from '../utils/debug';
 
 export default class SetPositionCommand extends Command {
   constructor(editor, object, position, space) {

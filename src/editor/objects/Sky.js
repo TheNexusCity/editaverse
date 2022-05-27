@@ -9,9 +9,9 @@ import {
   BackSide,
   Mesh,
   UniformsLib
-} from "three";
-import { PMREMGenerator } from "three/examples/jsm/pmrem/PMREMGenerator";
-import { PMREMCubeUVPacker } from "three/examples/jsm/pmrem/PMREMCubeUVPacker";
+} from 'three';
+import { PMREMGenerator } from 'three/examples/jsm/pmrem/PMREMGenerator';
+import { PMREMCubeUVPacker } from 'three/examples/jsm/pmrem/PMREMCubeUVPacker';
 
 /**
  * @author zz85 / https://github.com/zz85
@@ -248,7 +248,7 @@ export default class Sky extends Object3D {
     this.skyScene.add(this.cubeCamera);
 
     this.sky = new Mesh(Sky._geometry, material);
-    this.sky.name = "Sky";
+    this.sky.name = 'Sky';
     this.add(this.sky);
 
     this._inclination = 0;

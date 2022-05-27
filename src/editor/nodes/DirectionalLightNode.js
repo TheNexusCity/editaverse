@@ -1,17 +1,17 @@
-import EditorNodeMixin from "./EditorNodeMixin";
-import PhysicalDirectionalLight from "../objects/PhysicalDirectionalLight";
-import SpokeDirectionalLightHelper from "../helpers/SpokeDirectionalLightHelper";
+import EditorNodeMixin from './EditorNodeMixin';
+import PhysicalDirectionalLight from '../objects/PhysicalDirectionalLight';
+import SpokeDirectionalLightHelper from '../helpers/SpokeDirectionalLightHelper';
 
 export default class DirectionalLightNode extends EditorNodeMixin(PhysicalDirectionalLight) {
-  static legacyComponentName = "directional-light";
+  static legacyComponentName = 'directional-light';
 
-  static nodeName = "Directional Light";
+  static nodeName = 'Directional Light';
 
   static async deserialize(editor, json) {
     const node = await super.deserialize(editor, json);
 
     const { color, intensity, castShadow, shadowMapResolution, shadowBias, shadowRadius } = json.components.find(
-      c => c.name === "directional-light"
+      c => c.name === 'directional-light'
     ).props;
 
     node.color.set(color);
@@ -77,7 +77,7 @@ export default class DirectionalLightNode extends EditorNodeMixin(PhysicalDirect
 
   serialize() {
     return super.serialize({
-      "directional-light": {
+      'directional-light': {
         color: this.color,
         intensity: this.intensity,
         castShadow: this.castShadow,
@@ -91,7 +91,7 @@ export default class DirectionalLightNode extends EditorNodeMixin(PhysicalDirect
   prepareForExport() {
     super.prepareForExport();
     this.remove(this.helper);
-    this.addGLTFComponent("directional-light", {
+    this.addGLTFComponent('directional-light', {
       color: this.color,
       intensity: this.intensity,
       castShadow: this.castShadow,

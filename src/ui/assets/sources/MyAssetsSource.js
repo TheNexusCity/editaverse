@@ -1,11 +1,11 @@
-import { BaseSource } from "./index";
-import { ItemTypes } from "../../dnd";
-import UploadSourcePanel from "../UploadSourcePanel";
-import ModelNode from "../../../editor/nodes/ModelNode";
-import VideoNode from "../../../editor/nodes/VideoNode";
-import ImageNode from "../../../editor/nodes/ImageNode";
-import AudioNode from "../../../editor/nodes/AudioNode";
-import { AcceptsAllFileTypes } from "../fileTypes";
+import { BaseSource } from './index';
+import { ItemTypes } from '../../dnd';
+import UploadSourcePanel from '../UploadSourcePanel';
+import ModelNode from '../../../editor/nodes/ModelNode';
+import VideoNode from '../../../editor/nodes/VideoNode';
+import ImageNode from '../../../editor/nodes/ImageNode';
+import AudioNode from '../../../editor/nodes/AudioNode';
+import { AcceptsAllFileTypes } from '../fileTypes';
 
 const assetTypeToNode = {
   model: ModelNode,
@@ -26,15 +26,15 @@ export default class MyAssetsSource extends BaseSource {
     super();
     this.component = UploadSourcePanel;
     this.editor = editor;
-    this.id = "assets";
-    this.name = "My Assets";
+    this.id = 'assets';
+    this.name = 'My Assets';
     this.tags = [
-      { label: "Models", value: "model" },
-      { label: "Images", value: "image" },
-      { label: "Videos", value: "video" },
-      { label: "Audio", value: "audio" }
+      { label: 'Models', value: 'model' },
+      { label: 'Images', value: 'image' },
+      { label: 'Videos', value: 'video' },
+      { label: 'Audio', value: 'audio' }
     ];
-    this.searchLegalCopy = "Search";
+    this.searchLegalCopy = 'Search';
     this.uploadSource = true;
     this.uploadMultiple = true;
     this.acceptFileTypes = AcceptsAllFileTypes;
@@ -43,13 +43,13 @@ export default class MyAssetsSource extends BaseSource {
 
   async upload(files, onProgress, abortSignal) {
     const assets = await this.editor.api.uploadAssets(this.editor, files, onProgress, abortSignal);
-    this.emit("resultsChanged");
+    this.emit('resultsChanged');
     return assets;
   }
 
   async delete(item) {
     await this.editor.api.deleteAsset(item.id);
-    this.emit("resultsChanged");
+    this.emit('resultsChanged');
   }
 
   async search(params, cursor, abortSignal) {

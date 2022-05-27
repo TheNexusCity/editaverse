@@ -1,13 +1,13 @@
-import EditorNodeMixin from "./EditorNodeMixin";
-import Image, { ImageAlphaMode } from "../objects/Image";
-import spokeLogoSrc from "../../assets/spoke-icon.png";
-import { RethrownError } from "../utils/errors";
-import { getObjectPerfIssues, maybeAddLargeFileIssue } from "../utils/performance";
+import EditorNodeMixin from './EditorNodeMixin';
+import Image, { ImageAlphaMode } from '../objects/Image';
+import spokeLogoSrc from '../../assets/spoke-icon.png?url';
+import { RethrownError } from '../utils/errors';
+import { getObjectPerfIssues, maybeAddLargeFileIssue } from '../utils/performance';
 
 export default class ImageNode extends EditorNodeMixin(Image) {
-  static legacyComponentName = "image";
+  static legacyComponentName = 'image';
 
-  static nodeName = "Image";
+  static nodeName = 'Image';
 
   static initialElementProps = {
     src: new URL(spokeLogoSrc, location).href
@@ -16,7 +16,7 @@ export default class ImageNode extends EditorNodeMixin(Image) {
   static async deserialize(editor, json, loadAsync, onError) {
     const node = await super.deserialize(editor, json);
 
-    const { src, projection, controls, alphaMode, alphaCutoff } = json.components.find(c => c.name === "image").props;
+    const { src, projection, controls, alphaMode, alphaCutoff } = json.components.find(c => c.name === 'image').props;
 
     loadAsync(
       (async () => {
@@ -34,7 +34,7 @@ export default class ImageNode extends EditorNodeMixin(Image) {
   constructor(editor) {
     super(editor);
 
-    this._canonicalUrl = "";
+    this._canonicalUrl = '';
     this.controls = true;
   }
 
@@ -55,9 +55,9 @@ export default class ImageNode extends EditorNodeMixin(Image) {
   }
 
   async load(src, onError) {
-    const nextSrc = src || "";
+    const nextSrc = src || '';
 
-    if (nextSrc === this._canonicalUrl && nextSrc !== "") {
+    if (nextSrc === this._canonicalUrl && nextSrc !== '') {
       return;
     }
 
@@ -83,7 +83,7 @@ export default class ImageNode extends EditorNodeMixin(Image) {
 
       if (perfEntries.length > 0) {
         const imageSize = perfEntries[0].encodedBodySize;
-        maybeAddLargeFileIssue("image", imageSize, this.issues);
+        maybeAddLargeFileIssue('image', imageSize, this.issues);
       }
     } catch (error) {
       this.showErrorIcon();
@@ -96,11 +96,11 @@ export default class ImageNode extends EditorNodeMixin(Image) {
 
       console.error(imageError);
 
-      this.issues.push({ severity: "error", message: "Error loading image." });
+      this.issues.push({ severity: 'error', message: 'Error loading image.' });
     }
 
-    this.editor.emit("objectsChanged", [this]);
-    this.editor.emit("selectionChanged");
+    this.editor.emit('objectsChanged', [this]);
+    this.editor.emit('selectionChanged');
     this.hideLoadingCube();
 
     return this;
@@ -142,8 +142,8 @@ export default class ImageNode extends EditorNodeMixin(Image) {
       imageData.alphaCutoff = this.alphaCutoff;
     }
 
-    this.addGLTFComponent("image", imageData);
-    this.addGLTFComponent("networked", {
+    this.addGLTFComponent('image', imageData);
+    this.addGLTFComponent('networked', {
       id: this.uuid
     });
     this.replaceObject();

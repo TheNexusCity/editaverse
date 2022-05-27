@@ -1,7 +1,7 @@
-import { traverseGltfScene, traverseGltfSceneEarlyOut, getGLTFComponents } from "../gltf/moz-hubs-components";
-import { PointLight, DirectionalLight, SpotLight, Texture } from "three";
-import { forEachMaterial } from "./materials";
-import { bytesToSize } from "../../ui/utils";
+import { traverseGltfScene, traverseGltfSceneEarlyOut, getGLTFComponents } from '../gltf/moz-hubs-components';
+import { PointLight, DirectionalLight, SpotLight, Texture } from 'three';
+import { forEachMaterial } from './materials';
+import { bytesToSize } from '../../ui/utils';
 
 function calculateUncompressedMipmapedTextureSize(width, height) {
   if (width === 1 && height === 1) {
@@ -15,12 +15,12 @@ function calculateUncompressedMipmapedTextureSize(width, height) {
 }
 
 function isVisible(components) {
-  const visibleComponent = components && components["visible"];
+  const visibleComponent = components && components['visible'];
   return visibleComponent ? visibleComponent.visible : true;
 }
 
 function isLight(components) {
-  return components && (components["directional-light"] || components["point-light"] || components["spot-light"]);
+  return components && (components['directional-light'] || components['point-light'] || components['spot-light']);
 }
 
 function isLargeImage(width, height) {
@@ -64,7 +64,7 @@ export function maybeAddLargeFileIssue(type, fileSize, issues) {
 
   if (fileSize > suggestedMaxFileSize) {
     issues.push({
-      severity: "warning",
+      severity: 'warning',
       message: `Large file (${bytesToSize(fileSize)}). Suggested ${type} max file size is ${suggestedMaxFileSize}.`
     });
   }
@@ -153,23 +153,23 @@ export function getObjectPerfIssues(object, traverse = true) {
   }
 
   if (polygons > 10000) {
-    issues.push({ severity: "warning", message: `This object contains ${polygons.toLocaleString()} polygons.` });
+    issues.push({ severity: 'warning', message: `This object contains ${polygons.toLocaleString()} polygons.` });
   }
 
   if (uniqueMaterials > 10) {
-    issues.push({ severity: "warning", message: `This object contains ${uniqueMaterials.size} unique materials.` });
+    issues.push({ severity: 'warning', message: `This object contains ${uniqueMaterials.size} unique materials.` });
   }
 
   if (largeTextures > 0) {
     issues.push({
-      severity: "warning",
-      message: `This object contains ${largeTextures} texture${largeTextures > 1 ? "s" : ""} larger than 2048 x 2048.`
+      severity: 'warning',
+      message: `This object contains ${largeTextures} texture${largeTextures > 1 ? 's' : ''} larger than 2048 x 2048.`
     });
   }
 
   if (totalVRAM > 67108860) {
     issues.push({
-      severity: "warning",
+      severity: 'warning',
       message: `This object's textures use ~${bytesToSize(totalVRAM)} of video RAM.`
     });
   }
@@ -307,53 +307,53 @@ export function calculateGLTFPerformanceScores(scene, glbBlob, chunks) {
   let polygonsScore;
 
   if (polygons <= 50000) {
-    polygonsScore = "Low";
+    polygonsScore = 'Low';
   } else if (polygons <= 75000) {
-    polygonsScore = "Medium";
+    polygonsScore = 'Medium';
   } else {
-    polygonsScore = "High";
+    polygonsScore = 'High';
   }
 
   let lightsScore;
 
   if (lights <= 3) {
-    lightsScore = "Low";
+    lightsScore = 'Low';
   } else if (lights <= 6) {
-    lightsScore = "Medium";
+    lightsScore = 'Medium';
   } else {
-    lightsScore = "High";
+    lightsScore = 'High';
   }
 
   let texturesScore;
 
   if (totalVRAM <= 268435500) {
-    texturesScore = "Low";
+    texturesScore = 'Low';
   } else if (totalVRAM <= 536870900) {
-    texturesScore = "Medium";
+    texturesScore = 'Medium';
   } else {
-    texturesScore = "High";
+    texturesScore = 'High';
   }
 
-  const largeTexturesScore = largeTextures > 0 ? "High" : "Low";
+  const largeTexturesScore = largeTextures > 0 ? 'High' : 'Low';
 
   let materialsScore;
 
   if (uniqueMaterials <= 25) {
-    materialsScore = "Low";
+    materialsScore = 'Low';
   } else if (uniqueMaterials <= 50) {
-    materialsScore = "Medium";
+    materialsScore = 'Medium';
   } else {
-    materialsScore = "High";
+    materialsScore = 'High';
   }
 
   let fileSizeScore;
 
   if (fileSize < 16777220) {
-    fileSizeScore = "Low";
+    fileSizeScore = 'Low';
   } else if (fileSize < 52428800) {
-    fileSizeScore = "Medium";
+    fileSizeScore = 'Medium';
   } else {
-    fileSizeScore = "High";
+    fileSizeScore = 'High';
   }
 
   return {

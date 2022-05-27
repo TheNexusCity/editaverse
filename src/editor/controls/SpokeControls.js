@@ -1,5 +1,5 @@
-import EventEmitter from "eventemitter3";
-import { Spoke, SpokeMapping, Fly } from "./input-mappings";
+import EventEmitter from 'eventemitter3';
+import { Spoke, SpokeMapping, Fly } from './input-mappings';
 import {
   Matrix3,
   Vector2,
@@ -13,39 +13,39 @@ import {
   Quaternion,
   Math as _Math,
   Layers
-} from "three";
-import getIntersectingNode from "../utils/getIntersectingNode";
-import { TransformSpace } from "../Editor";
-import TransformGizmo from "../objects/TransformGizmo";
+} from 'three';
+import getIntersectingNode from '../utils/getIntersectingNode';
+import { TransformSpace } from '../Editor';
+import TransformGizmo from '../objects/TransformGizmo';
 
 export const SnapMode = {
-  Disabled: "Disabled",
-  Grid: "Grid"
+  Disabled: 'Disabled',
+  Grid: 'Grid'
 };
 
 export const TransformPivot = {
-  Selection: "Selection",
-  Center: "Center",
-  Bottom: "Bottom"
+  Selection: 'Selection',
+  Center: 'Center',
+  Bottom: 'Bottom'
 };
 
 export const TransformMode = {
-  Disabled: "Disabled",
-  Grab: "Grab",
-  Placement: "Placement",
-  Translate: "Translate",
-  Rotate: "Rotate",
-  Scale: "Scale"
+  Disabled: 'Disabled',
+  Grab: 'Grab',
+  Placement: 'Placement',
+  Translate: 'Translate',
+  Rotate: 'Rotate',
+  Scale: 'Scale'
 };
 
 export const TransformAxis = {
-  X: "X",
-  Y: "Y",
-  Z: "Z",
-  XY: "XY",
-  YZ: "YZ",
-  XZ: "XZ",
-  XYZ: "XYZ"
+  X: 'X',
+  Y: 'Y',
+  Z: 'Z',
+  XY: 'XY',
+  YZ: 'YZ',
+  XZ: 'XZ',
+  XYZ: 'XYZ'
 };
 
 export const TransformAxisConstraints = {
@@ -152,9 +152,9 @@ export default class SpokeControls extends EventEmitter {
     this.flyStartTime = 0;
     this.flyModeSensitivity = 0.25;
 
-    this.editor.addListener("beforeSelectionChanged", this.onBeforeSelectionChanged);
-    this.editor.addListener("selectionChanged", this.onSelectionChanged);
-    this.editor.addListener("objectsChanged", this.onObjectsChanged);
+    this.editor.addListener('beforeSelectionChanged', this.onBeforeSelectionChanged);
+    this.editor.addListener('selectionChanged', this.onSelectionChanged);
+    this.editor.addListener('objectsChanged', this.onObjectsChanged);
   }
 
   onSceneSet = scene => {
@@ -177,7 +177,7 @@ export default class SpokeControls extends EventEmitter {
   };
 
   onObjectsChanged = (_objects, property) => {
-    if (property === "position" || property === "rotation" || property === "scale" || property === "matrix") {
+    if (property === 'position' || property === 'rotation' || property === 'scale' || property === 'matrix') {
       this.transformPropertyChanged = true;
     }
   };
@@ -209,7 +209,7 @@ export default class SpokeControls extends EventEmitter {
         this.camera.position,
         this.vector.set(0, 0, -this.distance).applyMatrix3(this.normalMatrix.getNormalMatrix(this.camera.matrix))
       );
-      this.emit("flyModeChanged");
+      this.emit('flyModeChanged');
 
       if (performance.now() - this.flyStartTime < this.flyModeSensitivity * 1000) {
         this.cancel();
@@ -226,7 +226,7 @@ export default class SpokeControls extends EventEmitter {
       this.flyControls.lookSensitivity = this.lookSensitivity;
       this.flyControls.moveSpeed = this.moveSpeed;
       this.flyControls.boostSpeed = this.boostSpeed;
-      this.emit("flyModeChanged");
+      this.emit('flyModeChanged');
     }
 
     const shift = input.get(Spoke.shift);
@@ -642,7 +642,7 @@ export default class SpokeControls extends EventEmitter {
       this.editor.removeSelectedObjects();
     } else if (input.get(Spoke.saveProject)) {
       // TODO: Move save to Project class
-      this.editor.emit("saveProject");
+      this.editor.emit('saveProject');
     }
 
     if (flying) {
@@ -835,13 +835,13 @@ export default class SpokeControls extends EventEmitter {
     this.grabHistoryCheckpoint = null;
     this.transformMode = mode;
     this.transformModeChanged = true;
-    this.emit("transformModeChanged", mode);
+    this.emit('transformModeChanged', mode);
   }
 
   setTransformSpace(transformSpace) {
     this.transformSpace = transformSpace;
     this.transformSpaceChanged = true;
-    this.emit("transformSpaceChanged");
+    this.emit('transformSpaceChanged');
   }
 
   toggleTransformSpace() {
@@ -853,7 +853,7 @@ export default class SpokeControls extends EventEmitter {
   setTransformPivot(pivot) {
     this.transformPivot = pivot;
     this.transformPivotChanged = true;
-    this.emit("transformPivotChanged");
+    this.emit('transformPivotChanged');
   }
 
   transformPivotModes = [TransformPivot.Selection, TransformPivot.Center, TransformPivot.Bottom];
@@ -866,7 +866,7 @@ export default class SpokeControls extends EventEmitter {
 
   setSnapMode(snapMode) {
     this.snapMode = snapMode;
-    this.emit("snapSettingsChanged");
+    this.emit('snapSettingsChanged');
   }
 
   toggleSnapMode() {
@@ -880,17 +880,17 @@ export default class SpokeControls extends EventEmitter {
   setTranslationSnap(value) {
     this.translationSnap = value;
     this.editor.grid.setSize(value);
-    this.emit("snapSettingsChanged");
+    this.emit('snapSettingsChanged');
   }
 
   setScaleSnap(value) {
     this.scaleSnap = value;
-    this.emit("snapSettingsChanged");
+    this.emit('snapSettingsChanged');
   }
 
   setRotationSnap(value) {
     this.rotationSnap = value;
-    this.emit("snapSettingsChanged");
+    this.emit('snapSettingsChanged');
   }
 
   cancel() {

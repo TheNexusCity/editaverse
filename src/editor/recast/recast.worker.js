@@ -1,4 +1,4 @@
-import Recast from "recast-wasm/dist/recast.js";
+import Recast from 'recast-wasm/dist/recast.js';
 
 const defaultParams = {
   cellSize: 0.166,
@@ -25,7 +25,7 @@ self.onmessage = async event => {
     if (!recast) {
       recast = Recast({
         locateFile(path) {
-          if (path.endsWith(".wasm")) {
+          if (path.endsWith('.wasm')) {
             return message.params.wasmUrl;
           }
         }
@@ -35,7 +35,7 @@ self.onmessage = async event => {
     await recast.ready;
 
     if (!recast.loadArray(message.verts, message.faces)) {
-      self.postMessage({ error: "error loading navmesh data" });
+      self.postMessage({ error: 'error loading navmesh data' });
     }
 
     const {
@@ -78,7 +78,7 @@ self.onmessage = async event => {
     }
 
     if (status !== 0) {
-      self.postMessage({ error: "unknown error building nav mesh", status });
+      self.postMessage({ error: 'unknown error building nav mesh', status });
       recast.freeNavMesh();
       return;
     }
@@ -123,6 +123,6 @@ self.onmessage = async event => {
     recast.freeNavMesh();
   } catch (err) {
     console.error(err);
-    self.postMessage({ error: err.message || "unknown error building nav mesh" });
+    self.postMessage({ error: err.message || 'unknown error building nav mesh' });
   }
 };

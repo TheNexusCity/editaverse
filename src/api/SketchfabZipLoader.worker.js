@@ -1,4 +1,4 @@
-import JSZip from "jszip";
+import JSZip from 'jszip';
 
 async function fetchZipAndGetBlobs(src) {
   const zip = await fetch(src)
@@ -8,7 +8,7 @@ async function fetchZipAndGetBlobs(src) {
   // Rewrite any url refferences in the GLTF to blob urls
   const fileMap = {};
   const files = Object.values(zip.files);
-  const fileBlobs = await Promise.all(files.map(f => f.async("blob")));
+  const fileBlobs = await Promise.all(files.map(f => f.async('blob')));
   for (let i = 0; i < fileBlobs.length; i++) {
     const name = files[i].name;
     const blob = fileBlobs[i];
@@ -22,15 +22,15 @@ async function fetchZipAndGetBlobs(src) {
     };
   }
 
-  const gltfJson = JSON.parse(await zip.file("scene.gltf").async("text"));
+  const gltfJson = JSON.parse(await zip.file('scene.gltf').async('text'));
   gltfJson.buffers && gltfJson.buffers.forEach(b => (b.uri = fileMap[b.uri].url));
   gltfJson.images && gltfJson.images.forEach(i => (i.uri = fileMap[i.uri].url));
 
-  const blob = new Blob([JSON.stringify(gltfJson, null, 2)], { type: "model/gltf+json" });
+  const blob = new Blob([JSON.stringify(gltfJson, null, 2)], { type: 'model/gltf+json' });
 
   const url = URL.createObjectURL(blob);
 
-  fileMap["scene.gtlf"] = {
+  fileMap['scene.gtlf'] = {
     url,
     size: blob.size,
     type: blob.type

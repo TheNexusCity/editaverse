@@ -1,6 +1,6 @@
-import Command from "./Command";
-import { TransformSpace } from "../Editor";
-import { serializeObject3D, serializeVector3 } from "../utils/debug";
+import Command from './Command';
+import { TransformSpace } from '../Editor';
+import { serializeObject3D, serializeVector3 } from '../utils/debug';
 
 export default class TranslateCommand extends Command {
   constructor(editor, object, translation, space) {

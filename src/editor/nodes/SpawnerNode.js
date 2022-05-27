@@ -1,10 +1,10 @@
-import { Box3, Sphere } from "three";
-import Model from "../objects/Model";
-import EditorNodeMixin from "./EditorNodeMixin";
-import cloneObject3D from "../utils/cloneObject3D";
-import { RethrownError } from "../utils/errors";
-import { collectUniqueMaterials } from "../utils/materials";
-import { getObjectPerfIssues, maybeAddLargeFileIssue } from "../utils/performance";
+import { Box3, Sphere } from 'three';
+import Model from '../objects/Model';
+import EditorNodeMixin from './EditorNodeMixin';
+import cloneObject3D from '../utils/cloneObject3D';
+import { RethrownError } from '../utils/errors';
+import { collectUniqueMaterials } from '../utils/materials';
+import { getObjectPerfIssues, maybeAddLargeFileIssue } from '../utils/performance';
 
 const defaultStats = {
   nodes: 0,
@@ -20,19 +20,19 @@ const defaultStats = {
 };
 
 export default class SpawnerNode extends EditorNodeMixin(Model) {
-  static legacyComponentName = "spawner";
+  static legacyComponentName = 'spawner';
 
-  static nodeName = "Spawner";
+  static nodeName = 'Spawner';
 
   static initialElementProps = {
-    initialScale: "fit",
-    src: "https://sketchfab.com/models/a4c500d7358a4a199b6a5cd35f416466"
+    initialScale: 'fit',
+    src: 'https://sketchfab.com/models/a4c500d7358a4a199b6a5cd35f416466'
   };
 
   static async deserialize(editor, json, loadAsync, onError) {
     const node = await super.deserialize(editor, json);
 
-    const { src, applyGravity } = json.components.find(c => c.name === "spawner").props;
+    const { src, applyGravity } = json.components.find(c => c.name === 'spawner').props;
 
     node.applyGravity = !!applyGravity;
 
@@ -43,7 +43,7 @@ export default class SpawnerNode extends EditorNodeMixin(Model) {
 
   constructor(editor) {
     super(editor);
-    this._canonicalUrl = "";
+    this._canonicalUrl = '';
     this.initialScale = 1;
     this.boundingBox = new Box3();
     this.boundingSphere = new Sphere();
@@ -66,7 +66,7 @@ export default class SpawnerNode extends EditorNodeMixin(Model) {
   async loadGLTF(src) {
     const loader = this.editor.gltfCache.getLoader(src);
 
-    const { scene, json, stats } = await loader.getDependency("gltf");
+    const { scene, json, stats } = await loader.getDependency('gltf');
 
     this.stats = stats;
     this.gltfJson = json;
@@ -78,9 +78,9 @@ export default class SpawnerNode extends EditorNodeMixin(Model) {
 
   // Overrides Model's load method and resolves the src url before loading.
   async load(src, onError) {
-    const nextSrc = src || "";
+    const nextSrc = src || '';
 
-    if (nextSrc === this._canonicalUrl && nextSrc !== "") {
+    if (nextSrc === this._canonicalUrl && nextSrc !== '') {
       return;
     }
 
@@ -138,7 +138,7 @@ export default class SpawnerNode extends EditorNodeMixin(Model) {
         this.editor.renderer.addBatchedObject(this.model);
       }
 
-      if (this.initialScale === "fit") {
+      if (this.initialScale === 'fit') {
         this.scale.set(1, 1, 1);
 
         if (this.model) {
@@ -175,7 +175,7 @@ export default class SpawnerNode extends EditorNodeMixin(Model) {
         });
 
         this.issues = getObjectPerfIssues(this.model);
-        maybeAddLargeFileIssue("gltf", this.stats.totalSize, this.issues);
+        maybeAddLargeFileIssue('gltf', this.stats.totalSize, this.issues);
       }
 
       if (files) {
@@ -197,11 +197,11 @@ export default class SpawnerNode extends EditorNodeMixin(Model) {
 
       console.error(spawnerError);
 
-      this.issues.push({ severity: "error", message: "Error loading model." });
+      this.issues.push({ severity: 'error', message: 'Error loading model.' });
     }
 
-    this.editor.emit("objectsChanged", [this]);
-    this.editor.emit("selectionChanged");
+    this.editor.emit('objectsChanged', [this]);
+    this.editor.emit('selectionChanged');
     this.hideLoadingCube();
 
     return this;
@@ -247,7 +247,7 @@ export default class SpawnerNode extends EditorNodeMixin(Model) {
 
   prepareForExport() {
     super.prepareForExport();
-    this.addGLTFComponent("spawner", {
+    this.addGLTFComponent('spawner', {
       src: this._canonicalUrl,
       mediaOptions: {
         applyGravity: this.applyGravity

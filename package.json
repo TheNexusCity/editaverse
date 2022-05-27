@@ -11,8 +11,8 @@
     "url": "https://github.com/webaverse/editaverse.git"
   },
   "scripts": {
-    "start": "cross-env NODE_ENV=development vite",
-    "dev": "concurrently \"node ./cors-server.js\" \"cross-env NODE_ENV=development vite \"",
+    "start": "cross-env NODE_ENV=development node index.mjs",
+    "dev": "concurrently \"node ./cors-server.js\" \"cross-env NODE_ENV=development node index.mjs\"",
     "build": "cross-env NODE_ENV=production vite build",
     "precommit": "lint-staged",
     "lint": "yarn lint:js && yarn lint:css",
@@ -48,7 +48,7 @@
     "jszip": "^3.2.0",
     "jwt-decode": "^2.2.0",
     "markdown-it": "^9.1.0",
-    "metaversefile": "./packages/totum",
+    "metaversefile": "./totum",
     "mousetrap": "^1.6.3",
     "phoenix": "^1.4.10",
     "rc-slider": "^8.7.1",
@@ -76,7 +76,10 @@
     "use-debounce": "^3.4.0",
     "use-http": "^0.2.4",
     "uuid": "^3.3.3",
-    "web3modal": "^1.9.7"
+    "web3modal": "^1.9.7",
+    "json-6":"^1.1.4",
+    "@react-three/fiber": "^7.0.6",
+    "express": "^4.17.1"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.3",

@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
-import Metamask from "../../assets/metamask.png";
-import Discord from "../../assets/discord-dark.png";
+import Metamask from "../../assets/metamask.png?url";
+import Discord from "../../assets/discord-dark.png?url";
 import configs from "../../configs";
 import { withApi } from "../contexts/ApiContext";
 import { useHistory } from "react-router-dom";

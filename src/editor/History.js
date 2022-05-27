@@ -60,7 +60,7 @@ export default class History {
     const lastCmd = this.undos[this.undos.length - 1];
 
     if (lastCmd && checkpointId > lastCmd.id) {
-      console.warn("Tried to revert back to an undo action with an id greater than the last action");
+      console.warn('Tried to revert back to an undo action with an id greater than the last action');
       return;
     }
 
@@ -121,7 +121,7 @@ export default class History {
   }
 
   getDebugLog() {
-    return this.undos.map(cmd => cmd.toString()).join("\n");
+    return this.undos.map(cmd => cmd.toString()).join('\n');
   }
 
   clear() {

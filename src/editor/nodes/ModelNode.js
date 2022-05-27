@@ -1,11 +1,11 @@
-import { Box3, Sphere, PropertyBinding } from "three";
-import Model from "../objects/Model";
-import EditorNodeMixin from "./EditorNodeMixin";
-import { setStaticMode, StaticModes } from "../StaticMode";
-import cloneObject3D from "../utils/cloneObject3D";
-import { getComponents } from "../gltf/moz-hubs-components";
-import { RethrownError } from "../utils/errors";
-import { getObjectPerfIssues, maybeAddLargeFileIssue } from "../utils/performance";
+import { Box3, Sphere, PropertyBinding } from 'three';
+import Model from '../objects/Model';
+import EditorNodeMixin from './EditorNodeMixin';
+import { setStaticMode, StaticModes } from '../StaticMode';
+import cloneObject3D from '../utils/cloneObject3D';
+import { getComponents } from '../gltf/moz-hubs-components';
+import { RethrownError } from '../utils/errors';
+import { getObjectPerfIssues, maybeAddLargeFileIssue } from '../utils/performance';
 
 const defaultStats = {
   nodes: 0,
@@ -21,13 +21,13 @@ const defaultStats = {
 };
 
 export default class ModelNode extends EditorNodeMixin(Model) {
-  static nodeName = "Model";
+  static nodeName = 'Model';
 
-  static legacyComponentName = "gltf-model";
+  static legacyComponentName = 'gltf-model';
 
   static initialElementProps = {
-    initialScale: "fit",
-    src: "https://sketchfab.com/models/a4c500d7358a4a199b6a5cd35f416466"
+    initialScale: 'fit',
+    src: 'https://sketchfab.com/models/a4c500d7358a4a199b6a5cd35f416466'
   };
 
   static async deserialize(editor, json, loadAsync, onError) {
@@ -35,24 +35,24 @@ export default class ModelNode extends EditorNodeMixin(Model) {
 
     loadAsync(
       (async () => {
-        const { src, attribution } = json.components.find(c => c.name === "gltf-model").props;
+        const { src, attribution } = json.components.find(c => c.name === 'gltf-model').props;
 
         await node.load(src, onError);
 
         // Legacy, might be a raw string left over before switch to JSON.
-        if (attribution && typeof attribution === "string") {
-          const [name, author] = attribution.split(" by ");
+        if (attribution && typeof attribution === 'string') {
+          const [name, author] = attribution.split(' by ');
           node.attribution = node.attribution || {};
           Object.assign(node.attribution, author ? { author: author } : null, name ? { title: name } : null);
         } else {
           node.attribution = attribution;
         }
 
-        node.collidable = !!json.components.find(c => c.name === "collidable");
-        node.walkable = !!json.components.find(c => c.name === "walkable");
-        node.combine = !!json.components.find(c => c.name === "combine");
+        node.collidable = !!json.components.find(c => c.name === 'collidable');
+        node.walkable = !!json.components.find(c => c.name === 'walkable');
+        node.combine = !!json.components.find(c => c.name === 'combine');
 
-        const loopAnimationComponent = json.components.find(c => c.name === "loop-animation");
+        const loopAnimationComponent = json.components.find(c => c.name === 'loop-animation');
 
         if (loopAnimationComponent && loopAnimationComponent.props) {
           const { clip, activeClipIndices } = loopAnimationComponent.props;
@@ -69,7 +69,7 @@ export default class ModelNode extends EditorNodeMixin(Model) {
           }
         }
 
-        const shadowComponent = json.components.find(c => c.name === "shadow");
+        const shadowComponent = json.components.find(c => c.name === 'shadow');
 
         if (shadowComponent) {
           node.castShadow = shadowComponent.props.cast;
@@ -84,7 +84,7 @@ export default class ModelNode extends EditorNodeMixin(Model) {
   constructor(editor) {
     super(editor);
     this.attribution = null;
-    this._canonicalUrl = "";
+    this._canonicalUrl = '';
     this.collidable = true;
     this.walkable = true;
     this.combine = true;
@@ -109,7 +109,7 @@ export default class ModelNode extends EditorNodeMixin(Model) {
   async loadGLTF(src) {
     const loader = this.editor.gltfCache.getLoader(src);
 
-    const { scene, json, stats } = await loader.getDependency("gltf");
+    const { scene, json, stats } = await loader.getDependency('gltf');
 
     this.stats = stats;
     this.gltfJson = json;
@@ -123,9 +123,9 @@ export default class ModelNode extends EditorNodeMixin(Model) {
 
   // Overrides Model's load method and resolves the src url before loading.
   async load(src, onError) {
-    const nextSrc = src || "";
+    const nextSrc = src || '';
 
-    if (nextSrc === this._canonicalUrl && nextSrc !== "") {
+    if (nextSrc === this._canonicalUrl && nextSrc !== '') {
       return;
     }
 
@@ -183,7 +183,7 @@ export default class ModelNode extends EditorNodeMixin(Model) {
         this.editor.renderer.addBatchedObject(this.model);
       }
 
-      if (this.initialScale === "fit") {
+      if (this.initialScale === 'fit') {
         this.scale.set(1, 1, 1);
 
         if (this.model) {
@@ -220,7 +220,7 @@ export default class ModelNode extends EditorNodeMixin(Model) {
         });
 
         this.issues = getObjectPerfIssues(this.model);
-        maybeAddLargeFileIssue("gltf", this.stats.totalSize, this.issues);
+        maybeAddLargeFileIssue('gltf', this.stats.totalSize, this.issues);
       }
 
       this.updateStaticModes();
@@ -244,11 +244,11 @@ export default class ModelNode extends EditorNodeMixin(Model) {
 
       console.error(modelError);
 
-      this.issues.push({ severity: "error", message: "Error loading model." });
+      this.issues.push({ severity: 'error', message: 'Error loading model.' });
     }
 
-    this.editor.emit("objectsChanged", [this]);
-    this.editor.emit("selectionChanged");
+    this.editor.emit('objectsChanged', [this]);
+    this.editor.emit('selectionChanged');
     this.hideLoadingCube();
 
     return this;
@@ -257,7 +257,7 @@ export default class ModelNode extends EditorNodeMixin(Model) {
   getAttribution() {
     // Sketchfab models use an extra object inside the asset object
     // Blender & Google Poly exporters add a copyright property to the asset object
-    const name = this.name.replace(/\.[^/.]+$/, "");
+    const name = this.name.replace(/\.[^/.]+$/, '');
     const assetDef = this.gltfJson.asset;
     const attributions = {};
     Object.assign(
@@ -308,7 +308,7 @@ export default class ModelNode extends EditorNodeMixin(Model) {
       for (const animation of this.model.animations) {
         for (const track of animation.tracks) {
           const { nodeName: uuid } = PropertyBinding.parseTrackName(track.name);
-          const animatedNode = this.model.getObjectByProperty("uuid", uuid);
+          const animatedNode = this.model.getObjectByProperty('uuid', uuid);
 
           if (!animatedNode) {
             throw new Error(
@@ -324,7 +324,7 @@ export default class ModelNode extends EditorNodeMixin(Model) {
 
   serialize() {
     const components = {
-      "gltf-model": {
+      'gltf-model': {
         src: this._canonicalUrl,
         attribution: this.attribution
       },
@@ -335,7 +335,7 @@ export default class ModelNode extends EditorNodeMixin(Model) {
     };
 
     if (this.activeClipIndices.length > 0) {
-      components["loop-animation"] = {
+      components['loop-animation'] = {
         activeClipIndices: this.activeClipIndices
       };
     }
@@ -377,7 +377,7 @@ export default class ModelNode extends EditorNodeMixin(Model) {
 
   prepareForExport(ctx) {
     super.prepareForExport();
-    this.addGLTFComponent("shadow", {
+    this.addGLTFComponent('shadow', {
       cast: this.castShadow,
       receive: this.receiveShadow
     });
@@ -389,13 +389,13 @@ export default class ModelNode extends EditorNodeMixin(Model) {
     this.model.traverse(child => {
       const components = getComponents(child);
 
-      if (components && components["loop-animation"]) {
-        delete components["loop-animation"];
+      if (components && components['loop-animation']) {
+        delete components['loop-animation'];
       }
     });
 
     if (clipIndices.length > 0) {
-      this.addGLTFComponent("loop-animation", {
+      this.addGLTFComponent('loop-animation', {
         activeClipIndices: clipIndices
       });
     }

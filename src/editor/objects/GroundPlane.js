@@ -1,4 +1,4 @@
-import { Object3D, CircleBufferGeometry, MeshStandardMaterial, Mesh } from "three";
+import { Object3D, CircleBufferGeometry, MeshStandardMaterial, Mesh } from 'three';
 
 export default class GroundPlane extends Object3D {
   static _geometry = new CircleBufferGeometry(4000, 32);
@@ -8,9 +8,9 @@ export default class GroundPlane extends Object3D {
 
     this._receiveShadow = true;
 
-    const material = new MeshStandardMaterial({ roughness: 1, metalness: 0, color: "#5DE336" });
+    const material = new MeshStandardMaterial({ roughness: 1, metalness: 0, color: '#5DE336' });
     const mesh = new Mesh(GroundPlane._geometry, material);
-    mesh.name = "GroundPlaneMesh";
+    mesh.name = 'GroundPlaneMesh';
     mesh.position.y = -0.05;
     mesh.rotation.x = -Math.PI / 2;
     this.mesh = mesh;

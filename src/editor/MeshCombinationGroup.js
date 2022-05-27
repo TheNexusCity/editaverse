@@ -1,10 +1,10 @@
-import { Mesh } from "three";
-import { BufferGeometryUtils } from "three/examples/jsm/utils/BufferGeometryUtils";
-import { isStatic } from "./StaticMode";
-import asyncTraverse from "./utils/asyncTraverse";
-import keysEqual from "./utils/keysEqual";
-import hashImage from "./utils/hashImage";
-import { collectUniqueMaterials } from "./utils/materials";
+import { Mesh } from 'three';
+import { BufferGeometryUtils } from 'three/examples/jsm/utils/BufferGeometryUtils';
+import { isStatic } from './StaticMode';
+import asyncTraverse from './utils/asyncTraverse';
+import keysEqual from './utils/keysEqual';
+import hashImage from './utils/hashImage';
+import { collectUniqueMaterials } from './utils/materials';
 
 export async function getImageHash(hashCache, img) {
   let hash = hashCache.get(img.src);
@@ -160,7 +160,7 @@ export default class MeshCombinationGroup {
 
   constructor(initialObject, imageHashes) {
     if (!initialObject.isMesh) {
-      throw new Error("MeshCombinationGroup must be initialized with a Mesh.");
+      throw new Error('MeshCombinationGroup must be initialized with a Mesh.');
     }
 
     this.initialObject = initialObject;
@@ -237,7 +237,7 @@ export default class MeshCombinationGroup {
     const combinedGeometry = BufferGeometryUtils.mergeBufferGeometries(bufferGeometries);
     delete combinedGeometry.userData.mergedUserData;
     const combinedMesh = new Mesh(combinedGeometry, originalMesh.material);
-    combinedMesh.name = "CombinedMesh";
+    combinedMesh.name = 'CombinedMesh';
     combinedMesh.userData.gltfExtensions = {
       MOZ_hubs_components: {
         visible: {

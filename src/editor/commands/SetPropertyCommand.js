@@ -1,5 +1,5 @@
-import Command from "./Command";
-import { serializeObject3D, serializeProperty } from "../utils/debug";
+import Command from './Command';
+import { serializeObject3D, serializeProperty } from '../utils/debug';
 
 export default class SetPropertyCommand extends Command {
   constructor(editor, object, propertyName, value, disableCopy) {

@@ -1,22 +1,22 @@
-import { Material, BoxBufferGeometry, Object3D, Mesh, BoxHelper, Vector3 } from "three";
-import EditorNodeMixin from "./EditorNodeMixin";
+import { Material, BoxBufferGeometry, Object3D, Mesh, BoxHelper, Vector3 } from 'three';
+import EditorNodeMixin from './EditorNodeMixin';
 
 const requiredProperties = [
-  "target",
-  "enterComponent",
-  "enterProperty",
-  "enterValue",
-  "leaveComponent",
-  "leaveProperty",
-  "leaveValue"
+  'target',
+  'enterComponent',
+  'enterProperty',
+  'enterValue',
+  'leaveComponent',
+  'leaveProperty',
+  'leaveValue'
 ];
 
 export default class TriggerVolumeNode extends EditorNodeMixin(Object3D) {
-  static legacyComponentName = "trigger-volume";
+  static legacyComponentName = 'trigger-volume';
 
   static experimental = true;
 
-  static nodeName = "Trigger Volume";
+  static nodeName = 'Trigger Volume';
 
   static _geometry = new BoxBufferGeometry();
 
@@ -25,7 +25,7 @@ export default class TriggerVolumeNode extends EditorNodeMixin(Object3D) {
   static async deserialize(editor, json) {
     const node = await super.deserialize(editor, json);
 
-    const props = json.components.find(c => c.name === "trigger-volume").props;
+    const props = json.components.find(c => c.name === 'trigger-volume').props;
 
     node.target = props.target;
     node.enterComponent = props.enterComponent;
@@ -83,7 +83,7 @@ export default class TriggerVolumeNode extends EditorNodeMixin(Object3D) {
 
   serialize() {
     return super.serialize({
-      "trigger-volume": {
+      'trigger-volume': {
         target: this.target,
         enterComponent: this.enterComponent,
         enterProperty: this.enterProperty,
@@ -109,7 +109,7 @@ export default class TriggerVolumeNode extends EditorNodeMixin(Object3D) {
     const scale = new Vector3();
     this.getWorldScale(scale);
 
-    this.addGLTFComponent("trigger-volume", {
+    this.addGLTFComponent('trigger-volume', {
       size: { x: scale.x, y: scale.y, z: scale.z },
       target: this.gltfIndexForUUID(this.target),
       enterComponent: this.enterComponent,

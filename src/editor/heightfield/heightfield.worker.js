@@ -1,5 +1,5 @@
-import * as THREE from "three";
-import { acceleratedRaycast, computeBoundsTree } from "three-mesh-bvh";
+import * as THREE from 'three';
+import { acceleratedRaycast, computeBoundsTree } from 'three-mesh-bvh';
 
 THREE.Mesh.prototype.raycast = acceleratedRaycast;
 THREE.BufferGeometry.prototype.computeBoundsTree = computeBoundsTree;
@@ -66,7 +66,7 @@ function generateHeightfield(geometry, params) {
   const heightfieldMesh = new THREE.Mesh(geometry);
 
   const maxSide = Math.max(size.x, size.z);
-  const distance = Object.prototype.hasOwnProperty.call(params, "distance")
+  const distance = Object.prototype.hasOwnProperty.call(params, 'distance')
     ? params.distance
     : Math.max(0.25, Math.pow(maxSide, 1 / 2) / 10);
   const resolution = Math.ceil(maxSide / distance);
@@ -152,7 +152,7 @@ self.onmessage = async event => {
   const params = Object.assign({}, defaultParams, message.params || {});
 
   const geometry = new THREE.BufferGeometry();
-  geometry.addAttribute("position", new THREE.Float32BufferAttribute(message.verts, 3));
+  geometry.addAttribute('position', new THREE.Float32BufferAttribute(message.verts, 3));
   const heightfield = generateHeightfield(geometry, params);
 
   self.postMessage({ heightfield });

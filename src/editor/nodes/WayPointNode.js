@@ -1,14 +1,14 @@
-import { Object3D } from "three";
-import { GLTFLoader } from "../gltf/GLTFLoader";
-import EditorNodeMixin from "./EditorNodeMixin";
-import wayPointModelUrl from "../../assets/spawn-point.glb?url";
+import { Object3D } from 'three';
+import { GLTFLoader } from '../gltf/GLTFLoader';
+import EditorNodeMixin from './EditorNodeMixin';
+import wayPointModelUrl from '../../assets/spawn-point.glb?url';
 
 let wayPointHelperModel = null;
 
 export default class WayPointNode extends EditorNodeMixin(Object3D) {
-  static legacyComponentName = "waypoint";
+  static legacyComponentName = 'waypoint';
 
-  static nodeName = "Way Point";
+  static nodeName = 'Way Point';
 
   static async load() {
     const { scene } = await new GLTFLoader(wayPointModelUrl).loadGLTF();
@@ -36,7 +36,7 @@ export default class WayPointNode extends EditorNodeMixin(Object3D) {
       this.helper = wayPointHelperModel.clone();
       this.add(this.helper);
     } else {
-      console.warn("WayPointNode: helper model was not loaded before creating a new WayPointNode");
+      console.warn('WayPointNode: helper model was not loaded before creating a new WayPointNode');
       this.helper = null;
     }
   }
@@ -83,7 +83,7 @@ export default class WayPointNode extends EditorNodeMixin(Object3D) {
   static async deserialize(editor, json) {
     const node = await super.deserialize(editor, json);
 
-    const waypoint = json.components.find(c => c.name === "waypoint");
+    const waypoint = json.components.find(c => c.name === 'waypoint');
 
     node.canBeSpawnPoint = waypoint.props.canBeSpawnPoint;
     node.canBeOccupied = waypoint.props.canBeOccupied;
@@ -98,7 +98,7 @@ export default class WayPointNode extends EditorNodeMixin(Object3D) {
   prepareForExport() {
     super.prepareForExport();
     this.remove(this.helper);
-    this.addGLTFComponent("waypoint", {
+    this.addGLTFComponent('waypoint', {
       canBeSpawnPoint: this.canBeSpawnPoint,
       canBeOccupied: this.canBeOccupied,
       canBeClicked: this.canBeClicked,
@@ -107,7 +107,7 @@ export default class WayPointNode extends EditorNodeMixin(Object3D) {
       snapToNavMesh: this.snapToNavMesh,
       willMaintainInitialOrientation: this.willMaintainInitialOrientation
     });
-    this.addGLTFComponent("networked", {
+    this.addGLTFComponent('networked', {
       id: this.uuid
     });
   }

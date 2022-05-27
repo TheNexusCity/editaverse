@@ -1,4 +1,4 @@
-import { Object3D, HemisphereLight } from "three";
+import { Object3D, HemisphereLight } from 'three';
 
 export default class PhysicalHemisphereLight extends HemisphereLight {
   constructor() {

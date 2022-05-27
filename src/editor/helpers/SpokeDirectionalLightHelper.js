@@ -1,11 +1,11 @@
-import { Line, Object3D, BufferGeometry, LineBasicMaterial, Float32BufferAttribute } from "three";
-import { addIsHelperFlag } from "./utils";
+import { Line, Object3D, BufferGeometry, LineBasicMaterial, Float32BufferAttribute } from 'three';
+import { addIsHelperFlag } from './utils';
 
 export default class SpokeDirectionalLightHelper extends Object3D {
   constructor(light, size, color) {
     super();
 
-    this.name = "SpokeDirectionalLightHelper";
+    this.name = 'SpokeDirectionalLightHelper';
 
     this.light = light;
 
@@ -15,7 +15,7 @@ export default class SpokeDirectionalLightHelper extends Object3D {
 
     let geometry = new BufferGeometry();
     geometry.addAttribute(
-      "position",
+      'position',
       new Float32BufferAttribute([-size, size, 0, size, size, 0, size, -size, 0, -size, -size, 0, -size, size, 0], 3)
     );
 
@@ -26,7 +26,7 @@ export default class SpokeDirectionalLightHelper extends Object3D {
     this.add(this.lightPlane);
 
     geometry = new BufferGeometry();
-    geometry.addAttribute("position", new Float32BufferAttribute([0, 0, 0, 0, 0, 1], 3));
+    geometry.addAttribute('position', new Float32BufferAttribute([0, 0, 0, 0, 0, 1], 3));
 
     this.targetLine = new Line(geometry, material);
     this.targetLine.layers.set(1);

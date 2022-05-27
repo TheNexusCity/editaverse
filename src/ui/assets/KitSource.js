@@ -1,9 +1,9 @@
-import Fuse from "fuse.js";
-import { proxiedUrlFor } from "../../api/Api";
-import { BaseSource } from "./sources/index";
-import { ItemTypes } from "../dnd";
-import KitSourcePanel from "./KitSourcePanel";
-import KitPieceNode from "../../editor/nodes/KitPieceNode";
+import Fuse from 'fuse.js';
+import { proxiedUrlFor } from '../../api/Api';
+import { BaseSource } from './sources/index';
+import { ItemTypes } from '../dnd';
+import KitSourcePanel from './KitSourcePanel';
+import KitPieceNode from '../../editor/nodes/KitPieceNode';
 
 function hasTags(result, tags) {
   for (const { value } of tags) {
@@ -37,9 +37,9 @@ export default class KitSource extends BaseSource {
         if (
           node.extensions &&
           node.extensions.MOZ_hubs_components &&
-          node.extensions.MOZ_hubs_components["kit-piece"]
+          node.extensions.MOZ_hubs_components['kit-piece']
         ) {
-          const { id, thumbnailUrl, name, tags } = node.extensions.MOZ_hubs_components["kit-piece"];
+          const { id, thumbnailUrl, name, tags } = node.extensions.MOZ_hubs_components['kit-piece'];
 
           if (tags) {
             for (const tag of tags) {
@@ -69,7 +69,7 @@ export default class KitSource extends BaseSource {
       const tagTree = [];
 
       for (const tag of uniqueTags) {
-        const parts = tag.split("/");
+        const parts = tag.split('/');
 
         let curPart = parts.shift();
         let curArray = tagTree;
@@ -108,7 +108,7 @@ export default class KitSource extends BaseSource {
       distance: 100,
       maxPatternLength: 32,
       minMatchCharLength: 1,
-      keys: ["label", "tags"]
+      keys: ['label', 'tags']
     };
 
     this.fuse = new Fuse(this.assets, options);

@@ -1,6 +1,6 @@
 import React from "react";
 import { MediaGrid, ImageMediaGridItem } from "./MediaGrid";
-import defaultThumbnailUrl from "../../assets/default-thumbnail.png";
+import defaultThumbnailUrl from "../../assets/default-thumbnail.png?url";
 import { VerticalScrollContainer } from "./Flex";
 
 export default {

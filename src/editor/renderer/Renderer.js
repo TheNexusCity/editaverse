@@ -1,12 +1,12 @@
-import { Vector2, Color, MeshBasicMaterial, MeshNormalMaterial, Layers } from "three";
-import { BatchManager } from "@mozillareality/three-batch-manager";
-import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer";
-import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass";
-import OutlinePass from "./OutlinePass";
-import { getCanvasBlob } from "../utils/thumbnails";
-import makeRenderer from "./makeRenderer";
-import SpokeBatchRawUniformGroup from "./SpokeBatchRawUniformGroup";
-import ScenePreviewCameraNode from "../nodes/ScenePreviewCameraNode";
+import { Vector2, Color, MeshBasicMaterial, MeshNormalMaterial, Layers } from 'three';
+import { BatchManager } from '@mozillareality/three-batch-manager';
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
+import OutlinePass from './OutlinePass';
+import { getCanvasBlob } from '../utils/thumbnails';
+import makeRenderer from './makeRenderer';
+import SpokeBatchRawUniformGroup from './SpokeBatchRawUniformGroup';
+import ScenePreviewCameraNode from '../nodes/ScenePreviewCameraNode';
 
 /**
  * @author mrdoob / http://mrdoob.com/
@@ -14,7 +14,7 @@ import ScenePreviewCameraNode from "../nodes/ScenePreviewCameraNode";
 
 class RenderMode {
   constructor(renderer, editor) {
-    this.name = "Default";
+    this.name = 'Default';
     this.renderer = renderer;
     this.editor = editor;
     this.passes = [];
@@ -27,7 +27,7 @@ class RenderMode {
 class UnlitRenderMode extends RenderMode {
   constructor(renderer, editor, spokeRenderer) {
     super(renderer, editor);
-    this.name = "Unlit";
+    this.name = 'Unlit';
     this.effectComposer = new EffectComposer(renderer);
     this.renderPass = new RenderPass(editor.scene, editor.camera);
     this.effectComposer.addPass(this.renderPass);
@@ -44,7 +44,7 @@ class UnlitRenderMode extends RenderMode {
       editor.selectedTransformRoots,
       spokeRenderer
     );
-    this.outlinePass.edgeColor = new Color("#c4005d");
+    this.outlinePass.edgeColor = new Color('#c4005d');
     this.outlinePass.renderToScreen = true;
     this.effectComposer.addPass(this.outlinePass);
     this.enableShadows = false;
@@ -110,7 +110,7 @@ class UnlitRenderMode extends RenderMode {
 class LitRenderMode extends UnlitRenderMode {
   constructor(renderer, editor, spokeRenderer) {
     super(renderer, editor, spokeRenderer);
-    this.name = "Lit";
+    this.name = 'Lit';
     this.enableShadows = false;
     this.disableBatching = true;
   }
@@ -119,7 +119,7 @@ class LitRenderMode extends UnlitRenderMode {
 class ShadowsRenderMode extends UnlitRenderMode {
   constructor(renderer, editor, spokeRenderer) {
     super(renderer, editor, spokeRenderer);
-    this.name = "Shadows";
+    this.name = 'Shadows';
     this.disableBatching = true;
     this.enableShadows = true;
   }
@@ -128,7 +128,7 @@ class ShadowsRenderMode extends UnlitRenderMode {
 class WireframeRenderMode extends UnlitRenderMode {
   constructor(renderer, editor, spokeRenderer) {
     super(renderer, editor, spokeRenderer);
-    this.name = "Wireframe";
+    this.name = 'Wireframe';
     this.enableShadows = false;
     this.disableBatching = true;
     this.renderPass.overrideMaterial = new MeshBasicMaterial({ wireframe: true });
@@ -138,7 +138,7 @@ class WireframeRenderMode extends UnlitRenderMode {
 class NormalsRenderMode extends UnlitRenderMode {
   constructor(renderer, editor, spokeRenderer) {
     super(renderer, editor, spokeRenderer);
-    this.name = "Normals";
+    this.name = 'Normals';
     this.enableShadows = false;
     this.disableBatching = true;
     this.renderPass.overrideMaterial = new MeshNormalMaterial();

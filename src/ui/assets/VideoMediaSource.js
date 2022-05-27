@@ -1,7 +1,7 @@
-import { BaseSource } from "./sources/index";
-import { ItemTypes } from "../dnd";
-import VideoSourcePanel from "./VideoSourcePanel";
-import VideoNode from "../../editor/nodes/VideoNode";
+import { BaseSource } from './sources/index';
+import { ItemTypes } from '../dnd';
+import VideoSourcePanel from './VideoSourcePanel';
+import VideoNode from '../../editor/nodes/VideoNode';
 
 export default class VideoMediaSource extends BaseSource {
   constructor(api) {

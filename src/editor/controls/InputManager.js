@@ -1,5 +1,5 @@
-import Mousetrap from "mousetrap";
-import isInputSelected from "../utils/isInputSelected";
+import Mousetrap from 'mousetrap';
+import isInputSelected from '../utils/isInputSelected';
 
 const _globalCallbacks = {};
 const _originalStopCallback = Mousetrap.prototype.stopCallback;
@@ -55,7 +55,7 @@ function initializeValue(source, initialState, state, resetKeys, value, reset, r
     if (Object.prototype.hasOwnProperty.call(source, sourceKey)) {
       const targetKey = source[sourceKey];
 
-      if (sourceKey === "event") {
+      if (sourceKey === 'event') {
         for (const { defaultValue, action, reset } of targetKey) {
           if (action !== undefined && defaultValue !== undefined) {
             initialState[action] = defaultValue;
@@ -67,7 +67,7 @@ function initializeValue(source, initialState, state, resetKeys, value, reset, r
           }
         }
         continue;
-      } else if (sourceKey === "position") {
+      } else if (sourceKey === 'position') {
         initialState[targetKey] = { x: 0, y: 0 };
         state[targetKey] = state[targetKey] !== undefined ? state[targetKey] : { x: 0, y: 0 };
 
@@ -155,15 +155,15 @@ function deleteValues(state, mappingObj) {
   }
 }
 
-const mouseButtons = ["left", "middle", "right", "button4", "button5"];
+const mouseButtons = ['left', 'middle', 'right', 'button4', 'button5'];
 
 const SPECIAL_ALIASES = {
-  option: "alt",
-  command: "meta",
-  return: "enter",
-  escape: "esc",
-  plus: "+",
-  mod: /Mac|iPod|iPhone|iPad/.test(navigator.platform) ? "meta" : "control"
+  option: 'alt',
+  command: 'meta',
+  return: 'enter',
+  escape: 'esc',
+  plus: '+',
+  mod: /Mac|iPod|iPhone|iPad/.test(navigator.platform) ? 'meta' : 'control'
 };
 
 export default class InputManager {
@@ -178,18 +178,18 @@ export default class InputManager {
     this.boundingClientRect = this.canvas.getBoundingClientRect();
     this.mouseDownTarget = null;
 
-    window.addEventListener("keydown", this.onKeyDown);
-    window.addEventListener("keyup", this.onKeyUp);
-    canvas.addEventListener("wheel", this.onWheel);
-    canvas.addEventListener("mousemove", this.onMouseMove);
-    canvas.addEventListener("mousedown", this.onMouseDown);
-    window.addEventListener("mousedown", this.onWindowMouseDown);
-    canvas.addEventListener("mouseup", this.onMouseUp);
-    window.addEventListener("mouseup", this.onWindowMouseUp);
-    canvas.addEventListener("dblclick", this.onDoubleClick);
-    canvas.addEventListener("click", this.onClick);
-    canvas.addEventListener("contextmenu", this.onContextMenu);
-    window.addEventListener("blur", this.onWindowBlur);
+    window.addEventListener('keydown', this.onKeyDown);
+    window.addEventListener('keyup', this.onKeyUp);
+    canvas.addEventListener('wheel', this.onWheel);
+    canvas.addEventListener('mousemove', this.onMouseMove);
+    canvas.addEventListener('mousedown', this.onMouseDown);
+    window.addEventListener('mousedown', this.onWindowMouseDown);
+    canvas.addEventListener('mouseup', this.onMouseUp);
+    window.addEventListener('mouseup', this.onWindowMouseUp);
+    canvas.addEventListener('dblclick', this.onDoubleClick);
+    canvas.addEventListener('click', this.onClick);
+    canvas.addEventListener('contextmenu', this.onContextMenu);
+    window.addEventListener('blur', this.onWindowBlur);
   }
 
   enableInputMapping(key, mapping) {
@@ -554,15 +554,15 @@ export default class InputManager {
 
     for (const key in moveMapping) {
       if (Object.prototype.hasOwnProperty.call(moveMapping, key)) {
-        if (key === "event") {
+        if (key === 'event') {
           this.handleEventMappings(moveMapping.event, event);
-        } else if (key === "movementX" || key === "movementY") {
+        } else if (key === 'movementX' || key === 'movementY') {
           this.state[moveMapping[key]] += event[key];
-        } else if (key === "normalizedMovementX") {
+        } else if (key === 'normalizedMovementX') {
           this.state[moveMapping[key]] += -event.movementX / this.canvas.clientWidth;
-        } else if (key === "normalizedMovementY") {
+        } else if (key === 'normalizedMovementY') {
           this.state[moveMapping[key]] += -event.movementY / this.canvas.clientHeight;
-        } else if (key === "position") {
+        } else if (key === 'position') {
           this.handlePosition(moveMapping.position, event);
         } else {
           this.state[moveMapping[key]] = event[key];
@@ -584,13 +584,13 @@ export default class InputManager {
 
     for (const key in wheelMapping) {
       if (Object.prototype.hasOwnProperty.call(wheelMapping, key)) {
-        if (key === "event") {
+        if (key === 'event') {
           this.handleEventMappings(wheelMapping.event, event);
-        } else if (key === "deltaX" || key === "deltaY") {
+        } else if (key === 'deltaX' || key === 'deltaY') {
           this.state[wheelMapping[key]] += event[key];
-        } else if (key === "normalizedDeltaX") {
+        } else if (key === 'normalizedDeltaX') {
           this.state[wheelMapping[key]] = normalizeWheel(event.deltaX);
-        } else if (key === "normalizedDeltaY") {
+        } else if (key === 'normalizedDeltaY') {
           this.state[wheelMapping[key]] = normalizeWheel(event.deltaY);
         } else {
           this.state[wheelMapping[key]] = event[key];
@@ -674,7 +674,7 @@ export default class InputManager {
       const actionState = this.state[key];
       const initialActionState = this.initialState[key];
 
-      if (typeof actionState === "object" && typeof initialState === "object") {
+      if (typeof actionState === 'object' && typeof initialState === 'object') {
         if (actionState !== null && initialActionState !== null) {
           this.state[key] = Object.assign(this.state[key], initialActionState);
         } else if (initialActionState !== null) {
@@ -693,17 +693,17 @@ export default class InputManager {
   dispose() {
     const canvas = this.canvas;
 
-    window.removeEventListener("keydown", this.onKeyDown);
-    window.removeEventListener("keyup", this.onKeyUp);
-    canvas.removeEventListener("wheel", this.onWheel);
-    canvas.removeEventListener("mousemove", this.onMouseMove);
-    canvas.removeEventListener("mousedown", this.onMouseDown);
-    window.removeEventListener("mousedown", this.onWindowMouseDown);
-    canvas.removeEventListener("mouseup", this.onMouseUp);
-    window.removeEventListener("mouseup", this.onWindowMouseUp);
-    canvas.removeEventListener("dblclick", this.onDoubleClick);
-    canvas.removeEventListener("click", this.onClick);
-    canvas.removeEventListener("contextmenu", this.onContextMenu);
-    window.removeEventListener("blur", this.onWindowBlur);
+    window.removeEventListener('keydown', this.onKeyDown);
+    window.removeEventListener('keyup', this.onKeyUp);
+    canvas.removeEventListener('wheel', this.onWheel);
+    canvas.removeEventListener('mousemove', this.onMouseMove);
+    canvas.removeEventListener('mousedown', this.onMouseDown);
+    window.removeEventListener('mousedown', this.onWindowMouseDown);
+    canvas.removeEventListener('mouseup', this.onMouseUp);
+    window.removeEventListener('mouseup', this.onWindowMouseUp);
+    canvas.removeEventListener('dblclick', this.onDoubleClick);
+    canvas.removeEventListener('click', this.onClick);
+    canvas.removeEventListener('contextmenu', this.onContextMenu);
+    window.removeEventListener('blur', this.onWindowBlur);
   }
 }

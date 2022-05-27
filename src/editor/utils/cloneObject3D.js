@@ -1,4 +1,4 @@
-import { PropertyBinding, AnimationClip } from "three";
+import { PropertyBinding, AnimationClip } from 'three';
 
 // Modified version of Don McCurdy's AnimationUtils.clone
 // https://github.com/mrdoob/three.js/pull/14494
@@ -21,7 +21,7 @@ function cloneKeyframeTrack(sourceKeyframeTrack, cloneUUIDLookup) {
     sourceKeyframeTrack.name
   );
 
-  let path = "";
+  let path = '';
 
   if (uuid !== undefined) {
     const clonedUUID = cloneUUIDLookup.get(uuid);
@@ -34,19 +34,19 @@ function cloneKeyframeTrack(sourceKeyframeTrack, cloneUUIDLookup) {
   }
 
   if (objectName !== undefined) {
-    path += "." + objectName;
+    path += '.' + objectName;
   }
 
   if (objectIndex !== undefined) {
-    path += "[" + objectIndex + "]";
+    path += '[' + objectIndex + ']';
   }
 
   if (propertyName !== undefined) {
-    path += "." + propertyName;
+    path += '.' + propertyName;
   }
 
   if (propertyIndex !== undefined) {
-    path += "[" + propertyIndex + "]";
+    path += '[' + propertyIndex + ']';
   }
 
   const clonedKeyframeTrack = sourceKeyframeTrack.clone();
@@ -113,7 +113,7 @@ export default function cloneObject3D(source, preserveUUIDs) {
 
     clonedNode.skeleton.bones = sourceBones.map(sourceBone => {
       if (!cloneLookup.has(sourceBone)) {
-        throw new Error("Required bones are not descendants of the given object.");
+        throw new Error('Required bones are not descendants of the given object.');
       }
 
       return cloneLookup.get(sourceBone);

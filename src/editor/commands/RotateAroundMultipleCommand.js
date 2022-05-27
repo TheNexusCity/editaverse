@@ -1,7 +1,7 @@
-import Command from "./Command";
-import { TransformSpace } from "../Editor";
-import arrayShallowEqual from "../utils/arrayShallowEqual";
-import { serializeObject3DArray, serializeVector3 } from "../utils/debug";
+import Command from './Command';
+import { TransformSpace } from '../Editor';
+import arrayShallowEqual from '../utils/arrayShallowEqual';
+import { serializeObject3DArray, serializeVector3 } from '../utils/debug';
 
 export default class RotateAroundMultipleCommand extends Command {
   constructor(editor, objects, pivot, axis, angle) {
@@ -40,7 +40,7 @@ export default class RotateAroundMultipleCommand extends Command {
       this.editor.setPosition(this.objects[i], this.oldPositions[i], TransformSpace.Local, false, false);
     }
 
-    this.editor.emit("objectsChanged", this.objects, "matrix");
+    this.editor.emit('objectsChanged', this.objects, 'matrix');
   }
 
   toString() {

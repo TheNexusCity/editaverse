@@ -1,14 +1,14 @@
-import { GLTFLoader } from "../gltf/GLTFLoader";
-import { GLTFExporter } from "../gltf/GLTFExporter";
-import JSZip from "jszip";
-import ThumbnailRenderer from "../renderer/ThumbnailRenderer";
-import { getComponent } from "../gltf/moz-hubs-components";
+import { GLTFLoader } from '../gltf/GLTFLoader';
+import { GLTFExporter } from '../gltf/GLTFExporter';
+import JSZip from 'jszip';
+import ThumbnailRenderer from '../renderer/ThumbnailRenderer';
+import { getComponent } from '../gltf/moz-hubs-components';
 
 async function getBlobContentHash(blob) {
   const imageBuffer = await blob.arrayBuffer();
-  const digest = await crypto.subtle.digest("SHA-1", imageBuffer);
+  const digest = await crypto.subtle.digest('SHA-1', imageBuffer);
   const hashArray = Array.from(new Uint8Array(digest));
-  return hashArray.map(b => ("00" + b.toString(16)).slice(-2)).join("");
+  return hashArray.map(b => ('00' + b.toString(16)).slice(-2)).join('');
 }
 
 export default class KitPackager {
@@ -18,7 +18,7 @@ export default class KitPackager {
   }
 
   async package(kitName, url, onProgress) {
-    onProgress("Loading glb...");
+    onProgress('Loading glb...');
 
     const loader = new GLTFLoader(url, undefined, { revokeObjectURLs: false, addUnknownExtensionsToUserData: true });
 
@@ -28,7 +28,7 @@ export default class KitPackager {
 
     if (json.materials) {
       for (let i = 0; i < json.materials.length; i++) {
-        pendingMaterials.push(loader.getDependency("material", i));
+        pendingMaterials.push(loader.getDependency('material', i));
       }
     }
 
@@ -39,13 +39,13 @@ export default class KitPackager {
     const kitPieceComponents = {};
 
     scene.traverse(object => {
-      const kitPieceComponent = getComponent(object, "kit-piece");
+      const kitPieceComponent = getComponent(object, 'kit-piece');
       if (kitPieceComponent) {
         kitPieceComponents[kitPieceComponent.id] = kitPieceComponent;
         pieces.push(object.clone());
       }
 
-      const altMaterialsComponent = getComponent(object, "kit-alt-materials");
+      const altMaterialsComponent = getComponent(object, 'kit-alt-materials');
 
       if (altMaterialsComponent) {
         altMaterialsComponent.defaultMaterials = altMaterialsComponent.defaultMaterials.map(
@@ -62,18 +62,18 @@ export default class KitPackager {
     });
 
     if (pieces.length === 0) {
-      throw new Error("No kit pieces defined in kit");
+      throw new Error('No kit pieces defined in kit');
     }
 
     const thumbnailRenderer = new ThumbnailRenderer();
 
     const zip = new JSZip();
-    const thumbnailsFolder = zip.folder("thumbnails");
+    const thumbnailsFolder = zip.folder('thumbnails');
 
     for (let i = 0; i < pieces.length; i++) {
       const piece = pieces[i];
 
-      const component = getComponent(piece, "kit-piece");
+      const component = getComponent(piece, 'kit-piece');
 
       onProgress(`Generating thumbnail for "${component.name}" ${i} out of ${pieces.length}`);
 
@@ -83,7 +83,7 @@ export default class KitPackager {
       const clonedPiece = piece.clone();
 
       clonedPiece.traverse(object => {
-        const altMaterialsComponent = getComponent(object, "kit-alt-materials");
+        const altMaterialsComponent = getComponent(object, 'kit-alt-materials');
 
         if (!altMaterialsComponent || !altMaterialsComponent.defaultMaterials) {
           return;
@@ -103,14 +103,14 @@ export default class KitPackager {
       const thumbnailBlob = await thumbnailRenderer.generateThumbnail(piece, this.thumbnailWidth, this.thumbnailHeight);
 
       const exportedComponent = kitPieceComponents[component.id];
-      const thumbnailFileName = exportedComponent.name + ".jpeg";
+      const thumbnailFileName = exportedComponent.name + '.jpeg';
 
       thumbnailsFolder.file(thumbnailFileName, thumbnailBlob);
-      exportedComponent.thumbnailUrl = "./thumbnails/" + thumbnailFileName;
+      exportedComponent.thumbnailUrl = './thumbnails/' + thumbnailFileName;
     }
 
     const exporter = new GLTFExporter({
-      mode: "gltf",
+      mode: 'gltf',
       onlyVisible: false,
       includeCustomExtensions: true
     });
@@ -123,7 +123,7 @@ export default class KitPackager {
       const bufferDef = bufferDefs[0];
       const bufferBlob = chunks.buffers[0];
       const contentHash = await getBlobContentHash(bufferBlob);
-      const bufferUrl = "buffer-" + contentHash + ".bin";
+      const bufferUrl = 'buffer-' + contentHash + '.bin';
       bufferDef.uri = bufferUrl;
       zip.file(bufferUrl, bufferBlob);
     } else {
@@ -131,7 +131,7 @@ export default class KitPackager {
         const bufferDef = bufferDefs[i];
         const bufferBlob = chunks.buffers[i];
         const contentHash = await getBlobContentHash(bufferBlob);
-        const bufferUrl = "buffer" + i + "-" + contentHash + ".bin";
+        const bufferUrl = 'buffer' + i + '-' + contentHash + '.bin';
         bufferDef.uri = bufferUrl;
         zip.file(bufferUrl, bufferBlob);
       }
@@ -145,19 +145,19 @@ export default class KitPackager {
       const imageBlob = imageChunks[i].blob;
       const contentHash = await getBlobContentHash(imageBlob);
       const mimeType = imageDef.mimeType;
-      const fileExtension = mimeType === "image/png" ? ".png" : ".jpg";
-      const imageUrl = imageDef.name + "-" + contentHash + fileExtension;
+      const fileExtension = mimeType === 'image/png' ? '.png' : '.jpg';
+      const imageUrl = imageDef.name + '-' + contentHash + fileExtension;
       imageDef.uri = imageUrl;
       zip.file(imageUrl, imageBlob);
     }
 
     const jsonString = JSON.stringify(chunks.json);
-    const jsonBlob = new Blob([jsonString], { type: "application/json" });
+    const jsonBlob = new Blob([jsonString], { type: 'application/json' });
     const contentHash = await getBlobContentHash(jsonBlob);
-    const gltfUrl = kitName + "-" + contentHash + ".gltf";
+    const gltfUrl = kitName + '-' + contentHash + '.gltf';
     zip.file(gltfUrl, jsonBlob);
 
-    const zipBlob = await zip.generateAsync({ type: "blob" }, ({ percent, currentFile }) => {
+    const zipBlob = await zip.generateAsync({ type: 'blob' }, ({ percent, currentFile }) => {
       if (currentFile) {
         onProgress(`Zipping "${currentFile}" ${percent.toFixed(2)}% complete`);
       }

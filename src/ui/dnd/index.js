@@ -1,14 +1,14 @@
-import { NativeTypes } from "react-dnd-html5-backend";
+import { NativeTypes } from 'react-dnd-html5-backend';
 
 export const ItemTypes = {
   File: NativeTypes.FILE,
-  Node: "Node",
-  Model: "Model",
-  Image: "Image",
-  Video: "Video",
-  Audio: "Audio",
-  Element: "Element",
-  KitPiece: "KitPiece"
+  Node: 'Node',
+  Model: 'Model',
+  Image: 'Image',
+  Video: 'Video',
+  Audio: 'Audio',
+  Element: 'Element',
+  KitPiece: 'KitPiece'
 };
 
 export const AssetTypes = [

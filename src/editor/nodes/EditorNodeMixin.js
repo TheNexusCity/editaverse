@@ -5,16 +5,16 @@ import {
   isDynamic,
   isInherits,
   isStatic
-} from "../StaticMode";
-import { Color, Object3D } from "three";
-import serializeColor from "../utils/serializeColor";
-import LoadingCube from "../objects/LoadingCube";
-import ErrorIcon from "../objects/ErrorIcon";
-import traverseFilteredSubtrees from "../utils/traverseFilteredSubtrees";
+} from '../StaticMode';
+import { Color, Object3D } from 'three';
+import serializeColor from '../utils/serializeColor';
+import LoadingCube from '../objects/LoadingCube';
+import ErrorIcon from '../objects/ErrorIcon';
+import traverseFilteredSubtrees from '../utils/traverseFilteredSubtrees';
 
 export default function EditorNodeMixin(Object3DClass) {
   return class extends Object3DClass {
-    static nodeName = "Unknown Node";
+    static nodeName = 'Unknown Node';
 
     static disableTransform = false;
 
@@ -45,7 +45,7 @@ export default function EditorNodeMixin(Object3DClass) {
       node.name = json.name;
 
       if (json.components) {
-        const transformComponent = json.components.find(c => c.name === "transform");
+        const transformComponent = json.components.find(c => c.name === 'transform');
 
         if (transformComponent) {
           const { position, rotation, scale } = transformComponent.props;
@@ -54,13 +54,13 @@ export default function EditorNodeMixin(Object3DClass) {
           node.scale.set(scale.x, scale.y, scale.z);
         }
 
-        const visibleComponent = json.components.find(c => c.name === "visible");
+        const visibleComponent = json.components.find(c => c.name === 'visible');
 
         if (visibleComponent) {
           node._visible = visibleComponent.props.visible;
         }
 
-        const editorSettingsComponent = json.components.find(c => c.name === "editor-settings");
+        const editorSettingsComponent = json.components.find(c => c.name === 'editor-settings');
 
         if (editorSettingsComponent) {
           node.enabled = editorSettingsComponent.props.enabled;
@@ -159,7 +159,7 @@ export default function EditorNodeMixin(Object3DClass) {
         name: this.name,
         components: [
           {
-            name: "transform",
+            name: 'transform',
             props: {
               position: {
                 x: this.position.x,
@@ -179,13 +179,13 @@ export default function EditorNodeMixin(Object3DClass) {
             }
           },
           {
-            name: "visible",
+            name: 'visible',
             props: {
               visible: this._visible
             }
           },
           {
-            name: "editor-settings",
+            name: 'editor-settings',
             props: {
               enabled: this.enabled
             }
@@ -227,7 +227,7 @@ export default function EditorNodeMixin(Object3DClass) {
         name: this.name,
         components: [
           {
-            name: "transform",
+            name: 'transform',
             props: {
               position: {
                 x: this.position.x,
@@ -247,13 +247,13 @@ export default function EditorNodeMixin(Object3DClass) {
             }
           },
           {
-            name: "visible",
+            name: 'visible',
             props: {
               visible: this._visible
             }
           },
           {
-            name: "editor-settings",
+            name: 'editor-settings',
             props: {
               enabled: this.enabled
             }
@@ -294,7 +294,7 @@ export default function EditorNodeMixin(Object3DClass) {
       this.userData.MOZ_spoke_uuid = this.uuid;
 
       if (!this.visible) {
-        this.addGLTFComponent("visible", {
+        this.addGLTFComponent('visible', {
           visible: this.visible
         });
       }
@@ -316,8 +316,8 @@ export default function EditorNodeMixin(Object3DClass) {
         this.userData.gltfExtensions.MOZ_hubs_components = {};
       }
 
-      if (props !== undefined && typeof props !== "object") {
-        throw new Error("glTF component props must be an object or undefined");
+      if (props !== undefined && typeof props !== 'object') {
+        throw new Error('glTF component props must be an object or undefined');
       }
 
       const componentProps = {};
@@ -362,7 +362,7 @@ export default function EditorNodeMixin(Object3DClass) {
     }
 
     getObjectByUUID(uuid) {
-      return this.getObjectByProperty("uuid", uuid);
+      return this.getObjectByProperty('uuid', uuid);
     }
 
     computeStaticMode() {
@@ -490,7 +490,7 @@ export default function EditorNodeMixin(Object3DClass) {
     // This should be overriding by nodes that can provide a more specific info (ie. models based on GLTF)
     getAttribution() {
       return {
-        title: this.name.replace(/\.[^/.]+$/, "")
+        title: this.name.replace(/\.[^/.]+$/, '')
       };
     }
 
@@ -502,8 +502,8 @@ export default function EditorNodeMixin(Object3DClass) {
       if (this.meta) {
         Object.assign(
           this.attribution,
-          this.meta.author ? { author: this.meta.author ? this.meta.author.replace(/ \(http.+\)/, "") : "" } : null,
-          this.meta.name ? { title: this.meta.name } : this.name ? { title: this.name.replace(/\.[^/.]+$/, "") } : null,
+          this.meta.author ? { author: this.meta.author ? this.meta.author.replace(/ \(http.+\)/, '') : '' } : null,
+          this.meta.name ? { title: this.meta.name } : this.name ? { title: this.name.replace(/\.[^/.]+$/, '') } : null,
           this.meta.author && this.meta.name && this._canonicalUrl ? { url: this._canonicalUrl } : null
         );
       }
@@ -517,8 +517,8 @@ export default function EditorNodeMixin(Object3DClass) {
       // If the GLTF attribution info has keys that are missing form the API source, we add them
       for (const key in attribution) {
         if (!Object.prototype.hasOwnProperty.call(this.attribution, key)) {
-          if (key === "author") {
-            this.attribution[key] = attribution[key] ? attribution[key].replace(/ \(http.+\)/, "") : "";
+          if (key === 'author') {
+            this.attribution[key] = attribution[key] ? attribution[key].replace(/ \(http.+\)/, '') : '';
           } else {
             this.attribution[key] = attribution[key];
           }

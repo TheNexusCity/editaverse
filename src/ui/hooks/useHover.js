@@ -1,5 +1,5 @@
 // https://usehooks.com/useHover/
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from 'react';
 
 export default function useHover() {
   const [value, setValue] = useState(false);
@@ -15,14 +15,14 @@ export default function useHover() {
       const node = ref.current;
 
       if (node) {
-        node.addEventListener("mouseenter", handleMouseOver);
+        node.addEventListener('mouseenter', handleMouseOver);
 
-        node.addEventListener("mouseleave", handleMouseOut);
+        node.addEventListener('mouseleave', handleMouseOut);
 
         return () => {
-          node.removeEventListener("mouseenter", handleMouseOver);
+          node.removeEventListener('mouseenter', handleMouseOver);
 
-          node.removeEventListener("mouseleave", handleMouseOut);
+          node.removeEventListener('mouseleave', handleMouseOut);
         };
       }
     },

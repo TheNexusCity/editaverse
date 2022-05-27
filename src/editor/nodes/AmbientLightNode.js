@@ -1,10 +1,10 @@
-import { AmbientLight } from "three";
-import EditorNodeMixin from "./EditorNodeMixin";
+import { AmbientLight } from 'three';
+import EditorNodeMixin from './EditorNodeMixin';
 
 export default class AmbientLightNode extends EditorNodeMixin(AmbientLight) {
-  static legacyComponentName = "ambient-light";
+  static legacyComponentName = 'ambient-light';
 
-  static nodeName = "Ambient Light";
+  static nodeName = 'Ambient Light';
 
   static disableTransform = true;
 
@@ -15,7 +15,7 @@ export default class AmbientLightNode extends EditorNodeMixin(AmbientLight) {
   static async deserialize(editor, json) {
     const node = await super.deserialize(editor, json);
 
-    const { color, intensity } = json.components.find(c => c.name === "ambient-light").props;
+    const { color, intensity } = json.components.find(c => c.name === 'ambient-light').props;
 
     node.color.set(color);
     node.intensity = intensity;
@@ -25,7 +25,7 @@ export default class AmbientLightNode extends EditorNodeMixin(AmbientLight) {
 
   serialize() {
     return super.serialize({
-      "ambient-light": {
+      'ambient-light': {
         color: this.color,
         intensity: this.intensity
       }
@@ -34,7 +34,7 @@ export default class AmbientLightNode extends EditorNodeMixin(AmbientLight) {
 
   prepareForExport() {
     super.prepareForExport();
-    this.addGLTFComponent("ambient-light", {
+    this.addGLTFComponent('ambient-light', {
       color: this.color,
       intensity: this.intensity
     });

@@ -1,4 +1,4 @@
-import findObject from "../utils/findObject";
+import findObject from '../utils/findObject';
 
 export function getComponents(object) {
   return (
@@ -23,12 +23,12 @@ export function getGLTFComponent(gltfDef, componentName) {
 }
 
 export function isKitPieceNode(nodeDef, kitPieceId) {
-  const kitPiece = getGLTFComponent(nodeDef, "kit-piece");
+  const kitPiece = getGLTFComponent(nodeDef, 'kit-piece');
   return kitPiece && kitPiece.id === kitPieceId;
 }
 
 export function getKitPieceComponent(object) {
-  return getComponent(object, "kit-piece");
+  return getComponent(object, 'kit-piece');
 }
 
 export function isPiece(object, pieceId) {

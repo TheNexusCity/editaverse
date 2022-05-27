@@ -1,4 +1,4 @@
-import { useRef, useState, useCallback, useEffect } from "react";
+import { useRef, useState, useCallback, useEffect } from 'react';
 
 export function useSelectionHandler(items, selectedItems, setSelectedItems, multiselect = false) {
   const currentItems = useRef(items);

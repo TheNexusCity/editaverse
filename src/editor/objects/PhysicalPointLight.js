@@ -1,5 +1,5 @@
-import { PointLight, Object3D } from "three";
-import createShadowMapResolutionProxy from "../utils/createShadowMapResolutionProxy";
+import { PointLight, Object3D } from 'three';
+import createShadowMapResolutionProxy from '../utils/createShadowMapResolutionProxy';
 
 export default class PhysicalPointLight extends PointLight {
   constructor() {

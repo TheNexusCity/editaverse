@@ -1,5 +1,5 @@
-import Command from "./Command";
-import { serializeObject3D } from "../utils/debug";
+import Command from './Command';
+import { serializeObject3D } from '../utils/debug';
 
 export default class RemoveObjectCommand extends Command {
   constructor(editor, object) {

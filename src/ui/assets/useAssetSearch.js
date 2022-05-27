@@ -1,5 +1,5 @@
-import { useRef, useState, useCallback, useEffect } from "react";
-import { useDebouncedCallback } from "use-debounce";
+import { useRef, useState, useCallback, useEffect } from 'react';
+import { useDebouncedCallback } from 'use-debounce';
 
 function useIsMounted() {
   const ref = useRef(false);
@@ -132,10 +132,10 @@ export function useAssetSearch(source, initialParams = {}, initialResults = [], 
       loadAsync(params);
     };
 
-    source.addListener("resultsChanged", onResultsChanged);
+    source.addListener('resultsChanged', onResultsChanged);
 
     return () => {
-      source.removeListener("resultsChanged", onResultsChanged);
+      source.removeListener('resultsChanged', onResultsChanged);
     };
   }, [source, loadAsync, params]);
 

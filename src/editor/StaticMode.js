@@ -1,7 +1,7 @@
 export const StaticModes = {
-  Static: "static",
-  Dynamic: "dynamic",
-  Inherits: "inherits"
+  Static: 'static',
+  Dynamic: 'dynamic',
+  Inherits: 'inherits'
 };
 
 export function setOriginalStaticMode(node, mode) {

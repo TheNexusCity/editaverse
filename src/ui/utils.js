@@ -26,9 +26,9 @@ export function unique(arr, maybeComp) {
 
   let comp = maybeComp;
 
-  if (typeof comp === "undefined") {
+  if (typeof comp === 'undefined') {
     comp = item => item;
-  } else if (typeof comp === "string") {
+  } else if (typeof comp === 'string') {
     comp = item => item[maybeComp];
   }
 
@@ -47,7 +47,7 @@ export function unique(arr, maybeComp) {
 
 export const isApple = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform);
 
-export const cmdOrCtrlString = isApple ? "⌘" : "ctrl";
+export const cmdOrCtrlString = isApple ? '⌘' : 'ctrl';
 
 export function getStepSize(event, smallStep, mediumStep, largeStep) {
   if (event.altKey) {
@@ -77,11 +77,11 @@ export function camelPad(str) {
   return (
     str
       // Look for long acronyms and filter out the last letter
-      .replace(/([A-Z]+)([A-Z][a-z])/g, " $1 $2")
+      .replace(/([A-Z]+)([A-Z][a-z])/g, ' $1 $2')
       // Look for lower-case letters followed by upper-case letters
-      .replace(/([a-z\d])([A-Z])/g, "$1 $2")
+      .replace(/([a-z\d])([A-Z])/g, '$1 $2')
       // Look for lower-case letters followed by numbers
-      .replace(/([a-zA-Z])(\d)/g, "$1 $2")
+      .replace(/([a-zA-Z])(\d)/g, '$1 $2')
       .replace(/^./, function(str) {
         return str.toUpperCase();
       })
@@ -92,20 +92,20 @@ export function camelPad(str) {
 
 // https://stackoverflow.com/a/18650828
 export function bytesToSize(bytes) {
-  const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
-  if (bytes == 0) return "0 Byte";
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+  if (bytes == 0) return '0 Byte';
   const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
-  return Math.round(bytes / Math.pow(1024, i), 2) + " " + sizes[i];
+  return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
 }
 
 export function parseQuery(queryString) {
   const query = {};
-  const pairs = (queryString[0] === "?" ? queryString.substr(1) : queryString).split("&");
+  const pairs = (queryString[0] === '?' ? queryString.substr(1) : queryString).split('&');
   for (let i = 0; i < pairs.length; i++) {
-    const pair = pairs[i].split("=");
+    const pair = pairs[i].split('=');
     const k = decodeURIComponent(pair[0]);
     if (k) {
-      const v = decodeURIComponent(pair[1] || "");
+      const v = decodeURIComponent(pair[1] || '');
       query[k] = v;
     }
   }

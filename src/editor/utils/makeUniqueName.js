@@ -1,4 +1,4 @@
-const namePattern = new RegExp("(.*) \\d+$");
+const namePattern = new RegExp('(.*) \\d+$');
 
 function getNameWithoutIndex(name) {
   let cacheName = name;
@@ -24,11 +24,11 @@ export default function makeUniqueName(scene, object) {
     const nameWithoutIndex = getNameWithoutIndex(object.name);
 
     let counter = 1;
-    let curName = nameWithoutIndex + " " + counter;
+    let curName = nameWithoutIndex + ' ' + counter;
 
     while (uniqueNames.has(curName)) {
       counter++;
-      curName = nameWithoutIndex + " " + counter;
+      curName = nameWithoutIndex + ' ' + counter;
     }
 
     object.name = curName;

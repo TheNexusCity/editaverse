@@ -1,23 +1,23 @@
-import configs from "../../configs";
-import EditorNodeMixin from "./EditorNodeMixin";
-import { Mesh, MeshBasicMaterial, Box3, Vector3, PlaneBufferGeometry, Object3D } from "three";
-import FloorPlan from "../objects/FloorPlan";
-import GroundPlaneNode from "./GroundPlaneNode";
-import BoxColliderNode from "./BoxColliderNode";
-import mergeMeshGeometries from "../utils/mergeMeshGeometries";
-import RecastClient from "../recast/RecastClient";
-import HeightfieldClient from "../heightfield/HeightfieldClient";
-import SpawnPointNode from "../nodes/SpawnPointNode";
-import * as recastWasmUrl from "recast-wasm/dist/recast.wasm";
-import traverseFilteredSubtrees from "../utils/traverseFilteredSubtrees";
+import configs from '../../configs';
+import EditorNodeMixin from './EditorNodeMixin';
+import { Mesh, MeshBasicMaterial, Box3, Vector3, PlaneBufferGeometry, Object3D } from 'three';
+import FloorPlan from '../objects/FloorPlan';
+import GroundPlaneNode from './GroundPlaneNode';
+import BoxColliderNode from './BoxColliderNode';
+import mergeMeshGeometries from '../utils/mergeMeshGeometries';
+import RecastClient from '../recast/RecastClient';
+import HeightfieldClient from '../heightfield/HeightfieldClient';
+import SpawnPointNode from '../nodes/SpawnPointNode';
+import * as recastWasmUrl from 'recast-wasm/dist/recast.wasm';
+import traverseFilteredSubtrees from '../utils/traverseFilteredSubtrees';
 
 const recastClient = new RecastClient();
 const heightfieldClient = new HeightfieldClient();
 
 export default class FloorPlanNode extends EditorNodeMixin(FloorPlan) {
-  static nodeName = "Floor Plan";
+  static nodeName = 'Floor Plan';
 
-  static legacyComponentName = "floor-plan";
+  static legacyComponentName = 'floor-plan';
 
   static disableTransform = true;
 
@@ -39,7 +39,7 @@ export default class FloorPlanNode extends EditorNodeMixin(FloorPlan) {
       regionMinSize,
       maxTriangles,
       forceTrimesh
-    } = json.components.find(c => c.name === "floor-plan").props;
+    } = json.components.find(c => c.name === 'floor-plan').props;
 
     node.autoCellSize = autoCellSize;
     node.cellSize = cellSize;
@@ -223,7 +223,7 @@ export default class FloorPlanNode extends EditorNodeMixin(FloorPlan) {
         heightfieldMeshGeometry,
         new MeshBasicMaterial({ wireframe: true, color: 0xffff00 })
       );
-      heightfieldMesh.name = "HeightfieldMesh";
+      heightfieldMesh.name = 'HeightfieldMesh';
 
       this.heightfieldMesh = heightfieldMesh;
 
@@ -279,7 +279,7 @@ export default class FloorPlanNode extends EditorNodeMixin(FloorPlan) {
 
   serialize() {
     return super.serialize({
-      "floor-plan": {
+      'floor-plan': {
         autoCellSize: this.autoCellSize,
         cellSize: this.cellSize,
         cellHeight: this.cellHeight,
@@ -305,16 +305,16 @@ export default class FloorPlanNode extends EditorNodeMixin(FloorPlan) {
     navMeshMaterial.transparent = true;
     navMeshMaterial.opacity = 0;
 
-    this.navMesh.name = "navMesh";
+    this.navMesh.name = 'navMesh';
     this.navMesh.userData.gltfExtensions = {
       MOZ_hubs_components: {
-        "nav-mesh": {},
+        'nav-mesh': {},
         visible: { visible: false }
       }
     };
 
     if (this.trimesh) {
-      this.trimesh.name = "trimesh";
+      this.trimesh.name = 'trimesh';
       const trimeshMaterial = this.trimesh.material;
       trimeshMaterial.transparent = true;
       trimeshMaterial.opacity = 0;
@@ -330,7 +330,7 @@ export default class FloorPlanNode extends EditorNodeMixin(FloorPlan) {
 
     if (this.heightfield) {
       const heightfield = new Object3D();
-      heightfield.name = "heightfield";
+      heightfield.name = 'heightfield';
       heightfield.userData.gltfExtensions = {
         MOZ_hubs_components: {
           heightfield: this.heightfield

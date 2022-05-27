@@ -1,7 +1,7 @@
-import { Object3D, AnimationMixer, Vector3 } from "three";
-import { GLTFLoader } from "../gltf/GLTFLoader";
-import loadingCubeUrl from "../../assets/loading-cube.glb?url";
-import cloneObject3D from "../utils/cloneObject3D";
+import { Object3D, AnimationMixer, Vector3 } from 'three';
+import { GLTFLoader } from '../gltf/GLTFLoader';
+import loadingCubeUrl from '../../assets/loading-cube.glb?url';
+import cloneObject3D from '../utils/cloneObject3D';
 
 let cubeGltf = null;
 
@@ -20,11 +20,11 @@ export default class LoadingCube extends Object3D {
 
   constructor() {
     super();
-    this.name = "LoadingCube";
-    this.type = "LoadingCube";
+    this.name = 'LoadingCube';
+    this.type = 'LoadingCube';
 
     if (!cubeGltf) {
-      throw new Error("LoadingCube must be loaded before it can be used. Await LoadingCube.load()");
+      throw new Error('LoadingCube must be loaded before it can be used. Await LoadingCube.load()');
     }
 
     this.model = cloneObject3D(cubeGltf.scene);

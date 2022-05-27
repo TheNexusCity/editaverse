@@ -1,15 +1,15 @@
-import { Line, Object3D, BufferGeometry, LineBasicMaterial, Float32BufferAttribute } from "three";
-import { addIsHelperFlag } from "./utils";
+import { Line, Object3D, BufferGeometry, LineBasicMaterial, Float32BufferAttribute } from 'three';
+import { addIsHelperFlag } from './utils';
 
 export default class DirectionalPlaneHelper extends Object3D {
   constructor(size = 1) {
     super();
 
-    this.name = "DirectionalPlaneHelper";
+    this.name = 'DirectionalPlaneHelper';
 
     let geometry = new BufferGeometry();
     geometry.addAttribute(
-      "position",
+      'position',
       new Float32BufferAttribute([-size, size, 0, size, size, 0, size, -size, 0, -size, -size, 0, -size, size, 0], 3)
     );
 
@@ -20,7 +20,7 @@ export default class DirectionalPlaneHelper extends Object3D {
     this.add(this.plane);
 
     geometry = new BufferGeometry();
-    geometry.addAttribute("position", new Float32BufferAttribute([0, 0, 0, 0, 0, 1], 3));
+    geometry.addAttribute('position', new Float32BufferAttribute([0, 0, 0, 0, 0, 1], 3));
 
     this.directionLine = new Line(geometry, material);
     this.directionLine.layers.set(1);

@@ -1,6 +1,6 @@
-import Command from "./Command";
-import { serializeObject3DArray, serializeObject3D } from "../utils/debug";
-import reverseDepthFirstTraverse from "../utils/reverseDepthFirstTraverse";
+import Command from './Command';
+import { serializeObject3DArray, serializeObject3D } from '../utils/debug';
+import reverseDepthFirstTraverse from '../utils/reverseDepthFirstTraverse';
 
 export default class ReparentMultipleCommand extends Command {
   constructor(editor, objects, newParent, newBefore) {
@@ -51,7 +51,7 @@ export default class ReparentMultipleCommand extends Command {
 
     this.editor.updateTransformRoots();
 
-    this.editor.emit("sceneGraphChanged");
+    this.editor.emit('sceneGraphChanged');
   }
 
   toString() {

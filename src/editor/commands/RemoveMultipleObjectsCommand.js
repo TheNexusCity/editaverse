@@ -1,5 +1,5 @@
-import Command from "./Command";
-import { serializeObject3DArray } from "../utils/debug";
+import Command from './Command';
+import { serializeObject3DArray } from '../utils/debug';
 
 export default class RemoveMultipleObjectsCommand extends Command {
   constructor(editor, objects) {

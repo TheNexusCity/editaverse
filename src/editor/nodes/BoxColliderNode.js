@@ -1,10 +1,10 @@
-import { Object3D, BoxBufferGeometry, Material, Mesh, BoxHelper } from "three";
-import EditorNodeMixin from "./EditorNodeMixin";
+import { Object3D, BoxBufferGeometry, Material, Mesh, BoxHelper } from 'three';
+import EditorNodeMixin from './EditorNodeMixin';
 
 export default class BoxColliderNode extends EditorNodeMixin(Object3D) {
-  static legacyComponentName = "box-collider";
+  static legacyComponentName = 'box-collider';
 
-  static nodeName = "Box Collider";
+  static nodeName = 'Box Collider';
 
   static _geometry = new BoxBufferGeometry();
 
@@ -13,7 +13,7 @@ export default class BoxColliderNode extends EditorNodeMixin(Object3D) {
   static async deserialize(editor, json) {
     const node = await super.deserialize(editor, json);
 
-    node.walkable = !!json.components.find(c => c.name === "walkable");
+    node.walkable = !!json.components.find(c => c.name === 'walkable');
 
     return node;
   }
@@ -56,7 +56,7 @@ export default class BoxColliderNode extends EditorNodeMixin(Object3D) {
 
   serialize() {
     const components = {
-      "box-collider": {}
+      'box-collider': {}
     };
 
     if (this.walkable) {
@@ -69,7 +69,7 @@ export default class BoxColliderNode extends EditorNodeMixin(Object3D) {
   prepareForExport() {
     super.prepareForExport();
     this.remove(this.helper);
-    this.addGLTFComponent("box-collider", {
+    this.addGLTFComponent('box-collider', {
       // TODO: Remove exporting these properties. They are already included in the transform props.
       position: this.position,
       rotation: {

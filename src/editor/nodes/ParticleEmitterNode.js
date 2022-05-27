@@ -1,15 +1,15 @@
-import { ParticleEmitter } from "@mozillareality/three-particle-emitter";
-import EditorNodeMixin from "./EditorNodeMixin";
-import defaultParticleUrl from "../../assets/dot.png";
-import DirectionalPlaneHelper from "../helpers/DirectionalPlaneHelper";
-import loadTexture from "../utils/loadTexture";
+import { ParticleEmitter } from '@mozillareality/three-particle-emitter';
+import EditorNodeMixin from './EditorNodeMixin';
+import defaultParticleUrl from '../../assets/dot.png?url';
+import DirectionalPlaneHelper from '../helpers/DirectionalPlaneHelper';
+import loadTexture from '../utils/loadTexture';
 
 let defaultParticleSprite = null;
 
 export default class ParticleEmitterNode extends EditorNodeMixin(ParticleEmitter) {
-  static legacyComponentName = "particle-emitter";
+  static legacyComponentName = 'particle-emitter';
 
-  static nodeName = "Particle Emitter";
+  static nodeName = 'Particle Emitter';
 
   static initialElementProps = {
     src: new URL(defaultParticleUrl, location).href
@@ -39,7 +39,7 @@ export default class ParticleEmitterNode extends EditorNodeMixin(ParticleEmitter
       ageRandomness,
       lifetime,
       lifetimeRandomness
-    } = json.components.find(c => c.name === "particle-emitter").props;
+    } = json.components.find(c => c.name === 'particle-emitter').props;
 
     node.startColor.set(startColor);
     node.middleColor.set(middleColor);
@@ -79,7 +79,7 @@ export default class ParticleEmitterNode extends EditorNodeMixin(ParticleEmitter
   constructor(editor) {
     super(editor, defaultParticleSprite);
     this.disableOutline = true;
-    this._canonicalUrl = "";
+    this._canonicalUrl = '';
     this.helper = new DirectionalPlaneHelper();
     this.helper.visible = false;
     this.add(this.helper);
@@ -94,7 +94,7 @@ export default class ParticleEmitterNode extends EditorNodeMixin(ParticleEmitter
   }
 
   async load(src, onError) {
-    const nextSrc = src || "";
+    const nextSrc = src || '';
     if (nextSrc === this._canonicalUrl) {
       return;
     }
@@ -138,7 +138,7 @@ export default class ParticleEmitterNode extends EditorNodeMixin(ParticleEmitter
       const helperIndex = source.children.indexOf(source.helper);
 
       if (helperIndex === -1) {
-        throw new Error("Source helper could not be found.");
+        throw new Error('Source helper could not be found.');
       }
 
       this.helper = this.children[helperIndex];
@@ -151,7 +151,7 @@ export default class ParticleEmitterNode extends EditorNodeMixin(ParticleEmitter
 
   serialize() {
     return super.serialize({
-      "particle-emitter": {
+      'particle-emitter': {
         src: this._canonicalUrl,
         startColor: this.startColor,
         middleColor: this.middleColor,
@@ -178,7 +178,7 @@ export default class ParticleEmitterNode extends EditorNodeMixin(ParticleEmitter
 
   prepareForExport() {
     super.prepareForExport();
-    this.addGLTFComponent("particle-emitter", {
+    this.addGLTFComponent('particle-emitter', {
       src: this._canonicalUrl,
       startColor: this.startColor,
       middleColor: this.middleColor,

@@ -1,12 +1,12 @@
-import Fuse from "fuse.js";
-import { proxiedUrlFor } from "../../api/Api";
-import { BaseSource } from "./sources/index";
-import KitSourcePanel from "./KitSourcePanel";
-import { ItemTypes } from "../dnd";
-import AudioNode from "../../editor/nodes/AudioNode";
-import ImageNode from "../../editor/nodes/ImageNode";
-import VideoNode from "../../editor/nodes/VideoNode";
-import ModelNode from "../../editor/nodes/ModelNode";
+import Fuse from 'fuse.js';
+import { proxiedUrlFor } from '../../api/Api';
+import { BaseSource } from './sources/index';
+import KitSourcePanel from './KitSourcePanel';
+import { ItemTypes } from '../dnd';
+import AudioNode from '../../editor/nodes/AudioNode';
+import ImageNode from '../../editor/nodes/ImageNode';
+import VideoNode from '../../editor/nodes/VideoNode';
+import ModelNode from '../../editor/nodes/ModelNode';
 
 function hasTags(result, tags) {
   for (const { value } of tags) {
@@ -76,7 +76,7 @@ export default class AssetManifestSource extends BaseSource {
       distance: 100,
       maxPatternLength: 32,
       minMatchCharLength: 1,
-      keys: ["label", "tags"]
+      keys: ['label', 'tags']
     };
 
     this.fuse = new Fuse(this.assets, options);

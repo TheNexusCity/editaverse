@@ -1,11 +1,11 @@
-import { Object3D, AnimationMixer, LoopRepeat } from "three";
-import { GLTFLoader } from "../gltf/GLTFLoader";
-import cloneObject3D from "../utils/cloneObject3D";
+import { Object3D, AnimationMixer, LoopRepeat } from 'three';
+import { GLTFLoader } from '../gltf/GLTFLoader';
+import cloneObject3D from '../utils/cloneObject3D';
 
 export default class Model extends Object3D {
   constructor() {
     super();
-    this.type = "Model";
+    this.type = 'Model';
 
     this.model = null;
     this._src = null;
@@ -66,7 +66,7 @@ export default class Model extends Object3D {
         ? this.model.animations.map((clip, index) => ({ label: clip.name, value: index }))
         : [];
     if (clipOptions.length == 0) {
-      clipOptions.unshift({ label: "None", value: -1 });
+      clipOptions.unshift({ label: 'None', value: -1 });
     }
     return clipOptions;
   }

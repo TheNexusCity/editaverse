@@ -1,14 +1,14 @@
-import { Object3D } from "three";
-import { GLTFLoader } from "../gltf/GLTFLoader";
-import EditorNodeMixin from "./EditorNodeMixin";
-import spawnPointModelUrl from "../../assets/spawn-point.glb?url";
+import { Object3D } from 'three';
+import { GLTFLoader } from '../gltf/GLTFLoader';
+import EditorNodeMixin from './EditorNodeMixin';
+import spawnPointModelUrl from '../../assets/spawn-point.glb?url';
 
 let spawnPointHelperModel = null;
 
 export default class SpawnPointNode extends EditorNodeMixin(Object3D) {
-  static legacyComponentName = "spawn-point";
+  static legacyComponentName = 'spawn-point';
 
-  static nodeName = "Spawn Point";
+  static nodeName = 'Spawn Point';
 
   static async load() {
     const { scene } = await new GLTFLoader(spawnPointModelUrl).loadGLTF();
@@ -29,7 +29,7 @@ export default class SpawnPointNode extends EditorNodeMixin(Object3D) {
       this.helper = spawnPointHelperModel.clone();
       this.add(this.helper);
     } else {
-      console.warn("SpawnPointNode: helper model was not loaded before creating a new SpawnPointNode");
+      console.warn('SpawnPointNode: helper model was not loaded before creating a new SpawnPointNode');
       this.helper = null;
     }
   }
@@ -54,13 +54,13 @@ export default class SpawnPointNode extends EditorNodeMixin(Object3D) {
 
   serialize() {
     return super.serialize({
-      "spawn-point": {}
+      'spawn-point': {}
     });
   }
 
   prepareForExport() {
     super.prepareForExport();
     this.remove(this.helper);
-    this.addGLTFComponent("spawn-point", {});
+    this.addGLTFComponent('spawn-point', {});
   }
 }

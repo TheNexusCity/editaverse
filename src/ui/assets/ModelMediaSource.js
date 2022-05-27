@@ -1,7 +1,7 @@
-import { BaseSource } from "./sources/index";
-import { ItemTypes } from "../dnd";
-import ModelSourcePanel from "./ModelSourcePanel";
-import ModelNode from "../../editor/nodes/ModelNode";
+import { BaseSource } from './sources/index';
+import { ItemTypes } from '../dnd';
+import ModelSourcePanel from './ModelSourcePanel';
+import ModelNode from '../../editor/nodes/ModelNode';
 
 export default class ModelMediaSource extends BaseSource {
   constructor(api) {
@@ -12,7 +12,7 @@ export default class ModelMediaSource extends BaseSource {
 
   async search(params, cursor, abortSignal) {
     const additionalNodeProps = {
-      initialScale: "fit"
+      initialScale: 'fit'
     };
 
     const additionalItemProps = {};
@@ -23,7 +23,7 @@ export default class ModelMediaSource extends BaseSource {
 
     if (params.tags && params.tags.length > 0) {
       const tag = params.tags[0];
-      const paramsKey = tag.paramsKey !== undefined ? tag.paramsKey : "filter";
+      const paramsKey = tag.paramsKey !== undefined ? tag.paramsKey : 'filter';
       queryParams[paramsKey] = tag.value;
 
       if (tag.initialNodeProps) {

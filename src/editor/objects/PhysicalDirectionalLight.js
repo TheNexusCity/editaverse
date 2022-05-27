@@ -1,5 +1,5 @@
-import { DirectionalLight, Object3D } from "three";
-import createShadowMapResolutionProxy from "../utils/createShadowMapResolutionProxy";
+import { DirectionalLight, Object3D } from 'three';
+import createShadowMapResolutionProxy from '../utils/createShadowMapResolutionProxy';
 
 export default class PhysicalDirectionalLight extends DirectionalLight {
   constructor() {

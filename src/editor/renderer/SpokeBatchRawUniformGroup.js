@@ -1,5 +1,5 @@
-import { Color, Matrix4, ClampToEdgeWrapping } from "three";
-import { BatchRawUniformGroup } from "@mozillareality/three-batch-manager";
+import { Color, Matrix4, ClampToEdgeWrapping } from 'three';
+import { BatchRawUniformGroup } from '@mozillareality/three-batch-manager';
 
 const DEFAULT_COLOR = new Color(1, 1, 1);
 const HIDE_MATRIX = new Matrix4().makeScale(0, 0, 0);
@@ -49,7 +49,7 @@ export default class SpokeBatchRawUniformGroup extends BatchRawUniformGroup {
         if (material.map) {
           const textureId = atlas.addTexture(material.map, tempUvTransform);
           if (textureId === undefined) {
-            console.warn("Mesh could not be batched. Texture atlas full.");
+            console.warn('Mesh could not be batched. Texture atlas full.');
             this.freeId(instanceId);
             return false;
           }

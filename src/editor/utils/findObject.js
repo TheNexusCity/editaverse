@@ -1,4 +1,4 @@
-import traverseEarlyOut from "./traverseEarlyOut";
+import traverseEarlyOut from './traverseEarlyOut';
 
 export default function findObject(object, callback) {
   let result;

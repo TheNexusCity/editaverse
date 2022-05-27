@@ -1,4 +1,4 @@
-import EventEmitter from "eventemitter3";
+import EventEmitter from 'eventemitter3';
 import {
   Matrix4,
   Vector2,
@@ -10,84 +10,84 @@ import {
   Raycaster,
   Clock,
   Scene
-} from "three";
-import { GLTFExporter } from "./gltf/GLTFExporter";
-import { GLTFLoader } from "./gltf/GLTFLoader";
-import History from "./History";
-import Renderer from "./renderer/Renderer";
-import ThumbnailRenderer from "./renderer/ThumbnailRenderer";
+} from 'three';
+import { GLTFExporter } from './gltf/GLTFExporter';
+import { GLTFLoader } from './gltf/GLTFLoader';
+import History from './History';
+import Renderer from './renderer/Renderer';
+import ThumbnailRenderer from './renderer/ThumbnailRenderer';
 
-import SceneNode from "./nodes/SceneNode";
-import FloorPlanNode from "./nodes/FloorPlanNode";
+import SceneNode from './nodes/SceneNode';
+import FloorPlanNode from './nodes/FloorPlanNode';
 
-import LoadingCube from "./objects/LoadingCube";
-import ErrorIcon from "./objects/ErrorIcon";
-import TransformGizmo from "./objects/TransformGizmo";
-import SpokeInfiniteGridHelper from "./helpers/SpokeInfiniteGridHelper";
+import LoadingCube from './objects/LoadingCube';
+import ErrorIcon from './objects/ErrorIcon';
+import TransformGizmo from './objects/TransformGizmo';
+import SpokeInfiniteGridHelper from './helpers/SpokeInfiniteGridHelper';
 
-import GLTFCache from "./caches/GLTFCache";
-import TextureCache from "./caches/TextureCache";
+import GLTFCache from './caches/GLTFCache';
+import TextureCache from './caches/TextureCache';
 
-import getDetachedObjectsRoots from "./utils/getDetachedObjectsRoots";
-import { loadEnvironmentMap } from "./utils/EnvironmentMap";
-import makeUniqueName from "./utils/makeUniqueName";
-import { RethrownError, MultiError } from "./utils/errors";
-import cloneObject3D from "./utils/cloneObject3D";
-import isEmptyObject from "./utils/isEmptyObject";
-import getIntersectingNode from "./utils/getIntersectingNode";
-import { generateImageFileThumbnail, generateVideoFileThumbnail } from "./utils/thumbnails";
-import resizeShadowCameraFrustum from "./utils/resizeShadowCameraFrustum";
-import isInputSelected from "./utils/isInputSelected";
-import { calculateGLTFPerformanceScores } from "./utils/performance";
+import getDetachedObjectsRoots from './utils/getDetachedObjectsRoots';
+import { loadEnvironmentMap } from './utils/EnvironmentMap';
+import makeUniqueName from './utils/makeUniqueName';
+import { RethrownError, MultiError } from './utils/errors';
+import cloneObject3D from './utils/cloneObject3D';
+import isEmptyObject from './utils/isEmptyObject';
+import getIntersectingNode from './utils/getIntersectingNode';
+import { generateImageFileThumbnail, generateVideoFileThumbnail } from './utils/thumbnails';
+import resizeShadowCameraFrustum from './utils/resizeShadowCameraFrustum';
+import isInputSelected from './utils/isInputSelected';
+import { calculateGLTFPerformanceScores } from './utils/performance';
 
-import InputManager from "./controls/InputManager";
-import FlyControls from "./controls/FlyControls";
-import SpokeControls, { TransformMode } from "./controls/SpokeControls";
-import PlayModeControls from "./controls/PlayModeControls";
+import InputManager from './controls/InputManager';
+import FlyControls from './controls/FlyControls';
+import SpokeControls, { TransformMode } from './controls/SpokeControls';
+import PlayModeControls from './controls/PlayModeControls';
 
-import AddMultipleObjectsCommand from "./commands/AddMultipleObjectsCommand";
-import AddObjectCommand from "./commands/AddObjectCommand";
-import DeselectCommand from "./commands/DeselectCommand";
-import DeselectMultipleCommand from "./commands/DeselectMultipleCommand";
-import DuplicateCommand from "./commands/DuplicateCommand";
-import DuplicateMultipleCommand from "./commands/DuplicateMultipleCommand";
-import RemoveMultipleObjectsCommand from "./commands/RemoveMultipleObjectsCommand";
-import RemoveObjectCommand from "./commands/RemoveObjectCommand";
-import ReparentCommand from "./commands/ReparentCommand";
-import ReparentMultipleCommand from "./commands/ReparentMultipleCommand";
-import RotateAroundCommand from "./commands/RotateAroundCommand";
-import RotateAroundMultipleCommand from "./commands/RotateAroundMultipleCommand";
-import RotateOnAxisCommand from "./commands/RotateOnAxisCommand";
-import RotateOnAxisMultipleCommand from "./commands/RotateOnAxisMultipleCommand";
-import ScaleCommand from "./commands/ScaleCommand";
-import ScaleMultipleCommand from "./commands/ScaleMultipleCommand";
-import SelectCommand from "./commands/SelectCommand";
-import SelectMultipleCommand from "./commands/SelectMultipleCommand";
-import SetPositionCommand from "./commands/SetPositionCommand";
-import SetPositionMultipleCommand from "./commands/SetPositionMultipleCommand";
-import SetPropertiesCommand from "./commands/SetPropertiesCommand";
-import SetPropertiesMultipleCommand from "./commands/SetPropertiesMultipleCommand";
-import SetPropertyCommand from "./commands/SetPropertyCommand";
-import SetPropertyMultipleCommand from "./commands/SetPropertyMultipleCommand";
-import SetRotationCommand from "./commands/SetRotationCommand";
-import SetRotationMultipleCommand from "./commands/SetRotationMultipleCommand";
-import SetScaleCommand from "./commands/SetScaleCommand";
-import SetScaleMultipleCommand from "./commands/SetScaleMultipleCommand";
-import SetSelectionCommand from "./commands/SetSelectionCommand";
-import TranslateCommand from "./commands/TranslateCommand";
-import TranslateMultipleCommand from "./commands/TranslateMultipleCommand";
-import GroupMultipleCommand from "./commands/GroupMultipleCommand";
-import ReparentMultipleWithPositionCommand from "./commands/ReparentMultipleWithPositionCommand";
-import LoadMaterialSlotCommand from "./commands/LoadMaterialSlotCommand";
-import LoadMaterialSlotMultipleCommand from "./commands/LoadMaterialSlotMultipleCommand";
+import AddMultipleObjectsCommand from './commands/AddMultipleObjectsCommand';
+import AddObjectCommand from './commands/AddObjectCommand';
+import DeselectCommand from './commands/DeselectCommand';
+import DeselectMultipleCommand from './commands/DeselectMultipleCommand';
+import DuplicateCommand from './commands/DuplicateCommand';
+import DuplicateMultipleCommand from './commands/DuplicateMultipleCommand';
+import RemoveMultipleObjectsCommand from './commands/RemoveMultipleObjectsCommand';
+import RemoveObjectCommand from './commands/RemoveObjectCommand';
+import ReparentCommand from './commands/ReparentCommand';
+import ReparentMultipleCommand from './commands/ReparentMultipleCommand';
+import RotateAroundCommand from './commands/RotateAroundCommand';
+import RotateAroundMultipleCommand from './commands/RotateAroundMultipleCommand';
+import RotateOnAxisCommand from './commands/RotateOnAxisCommand';
+import RotateOnAxisMultipleCommand from './commands/RotateOnAxisMultipleCommand';
+import ScaleCommand from './commands/ScaleCommand';
+import ScaleMultipleCommand from './commands/ScaleMultipleCommand';
+import SelectCommand from './commands/SelectCommand';
+import SelectMultipleCommand from './commands/SelectMultipleCommand';
+import SetPositionCommand from './commands/SetPositionCommand';
+import SetPositionMultipleCommand from './commands/SetPositionMultipleCommand';
+import SetPropertiesCommand from './commands/SetPropertiesCommand';
+import SetPropertiesMultipleCommand from './commands/SetPropertiesMultipleCommand';
+import SetPropertyCommand from './commands/SetPropertyCommand';
+import SetPropertyMultipleCommand from './commands/SetPropertyMultipleCommand';
+import SetRotationCommand from './commands/SetRotationCommand';
+import SetRotationMultipleCommand from './commands/SetRotationMultipleCommand';
+import SetScaleCommand from './commands/SetScaleCommand';
+import SetScaleMultipleCommand from './commands/SetScaleMultipleCommand';
+import SetSelectionCommand from './commands/SetSelectionCommand';
+import TranslateCommand from './commands/TranslateCommand';
+import TranslateMultipleCommand from './commands/TranslateMultipleCommand';
+import GroupMultipleCommand from './commands/GroupMultipleCommand';
+import ReparentMultipleWithPositionCommand from './commands/ReparentMultipleWithPositionCommand';
+import LoadMaterialSlotCommand from './commands/LoadMaterialSlotCommand';
+import LoadMaterialSlotMultipleCommand from './commands/LoadMaterialSlotMultipleCommand';
 
-import GroupNode from "./nodes/GroupNode";
-import ModelNode from "./nodes/ModelNode";
-import VideoNode from "./nodes/VideoNode";
-import ImageNode from "./nodes/ImageNode";
-import AudioNode from "./nodes/AudioNode";
-import LinkNode from "./nodes/LinkNode";
-import AssetManifestSource from "../ui/assets/AssetManifestSource";
+import GroupNode from './nodes/GroupNode';
+import ModelNode from './nodes/ModelNode';
+import VideoNode from './nodes/VideoNode';
+import ImageNode from './nodes/ImageNode';
+import AudioNode from './nodes/AudioNode';
+import LinkNode from './nodes/LinkNode';
+import AssetManifestSource from '../ui/assets/AssetManifestSource';
 
 const tempMatrix1 = new Matrix4();
 const tempMatrix2 = new Matrix4();
@@ -99,9 +99,9 @@ const tempQuaternion2 = new Quaternion();
 const tempVector1 = new Vector3();
 
 export const TransformSpace = {
-  World: "World",
-  Local: "Local",
-  LocalSelection: "LocalSelection" // The local space of the last selected object
+  World: 'World',
+  Local: 'Local',
+  LocalSelection: 'LocalSelection' // The local space of the last selected object
 };
 
 let resolveRenderer;
@@ -147,7 +147,7 @@ export default class Editor extends EventEmitter {
     this.audioListener = new AudioListener();
     this.camera.add(this.audioListener);
     this.camera.layers.enable(1);
-    this.camera.name = "Camera";
+    this.camera.name = 'Camera';
 
     this.helperScene = new Scene();
 
@@ -188,7 +188,7 @@ export default class Editor extends EventEmitter {
     const res = await this.api.fetch(proxiedUrl);
     const json = await res.json();
     this.sources.push(new AssetManifestSource(this, json.name, manifestUrl));
-    this.emit("settingsChanged");
+    this.emit('settingsChanged');
   }
 
   getSource(sourceId) {
@@ -196,7 +196,7 @@ export default class Editor extends EventEmitter {
   }
 
   setSource(sourceId) {
-    this.emit("setSource", sourceId);
+    this.emit('setSource', sourceId);
   }
 
   emit(eventName, ...args) {
@@ -224,12 +224,12 @@ export default class Editor extends EventEmitter {
         };
 
         cleanup = () => {
-          this.removeListener("initialized", onInitialize);
-          this.removeListener("error", onError);
+          this.removeListener('initialized', onInitialize);
+          this.removeListener('error', onError);
         };
 
-        this.addListener("initialized", onInitialize);
-        this.addListener("error", onError);
+        this.addListener('initialized', onInitialize);
+        this.addListener('error', onError);
       });
     }
 
@@ -249,19 +249,19 @@ export default class Editor extends EventEmitter {
     this.playModeControls = new PlayModeControls(this.inputManager, this.spokeControls, this.flyControls);
     this.spokeControls.enable();
 
-    window.addEventListener("copy", this.onCopy);
-    window.addEventListener("paste", this.onPaste);
+    window.addEventListener('copy', this.onCopy);
+    window.addEventListener('paste', this.onPaste);
 
     this.rafId = requestAnimationFrame(this.update);
 
     this.initialized = true;
 
-    this.emit("initialized");
+    this.emit('initialized');
   }
 
   onEmitSceneModified() {
     this.sceneModified = true;
-    this.emit("sceneModified");
+    this.emit('sceneModified');
   }
 
   initializeRenderer(canvas) {
@@ -280,8 +280,8 @@ export default class Editor extends EventEmitter {
   }
 
   async loadProject(projectFile, isScn = false) {
-    this.removeListener("objectsChanged", this.onEmitSceneModified);
-    this.removeListener("sceneGraphChanged", this.onEmitSceneModified);
+    this.removeListener('objectsChanged', this.onEmitSceneModified);
+    this.removeListener('sceneGraphChanged', this.onEmitSceneModified);
 
     this.clearCaches();
 
@@ -292,7 +292,7 @@ export default class Editor extends EventEmitter {
     const [scene, errors] = isScn
       ? await SceneNode.loadProjectScn(this, projectFile)
       : await SceneNode.loadProject(this, projectFile);
-    if (errors) console.log("errors", errors);
+    if (errors) console.log('errors', errors);
     this.sceneLoading = false;
     this.disableUpdate = false;
     this.scene = scene;
@@ -320,17 +320,17 @@ export default class Editor extends EventEmitter {
     });
 
     if (errors.length === 0) {
-      this.emit("projectLoaded");
+      this.emit('projectLoaded');
     }
 
-    this.emit("sceneGraphChanged");
+    this.emit('sceneGraphChanged');
 
-    this.addListener("objectsChanged", this.onEmitSceneModified);
-    this.addListener("sceneGraphChanged", this.onEmitSceneModified);
+    this.addListener('objectsChanged', this.onEmitSceneModified);
+    this.addListener('sceneGraphChanged', this.onEmitSceneModified);
 
     if (errors.length > 0) {
-      const error = new MultiError("Errors loading project", errors);
-      this.emit("error", error);
+      const error = new MultiError('Errors loading project', errors);
+      this.emit('error', error);
       throw error;
     }
 
@@ -362,10 +362,10 @@ export default class Editor extends EventEmitter {
       for (const track of clip.tracks) {
         const { nodeName: uuid } = PropertyBinding.parseTrackName(track.name);
 
-        const object = clonedScene.getObjectByProperty("uuid", uuid);
+        const object = clonedScene.getObjectByProperty('uuid', uuid);
 
         if (!object) {
-          const originalSceneObject = scene.getObjectByProperty("uuid", uuid);
+          const originalSceneObject = scene.getObjectByProperty('uuid', uuid);
 
           if (originalSceneObject) {
             console.log(`Couldn't find object with uuid: "${uuid}" in cloned scene but was found in original scene!`);
@@ -389,7 +389,7 @@ export default class Editor extends EventEmitter {
     }
 
     const exporter = new GLTFExporter({
-      mode: "glb",
+      mode: 'glb',
       onlyVisible: false,
       includeCustomExtensions: true,
       animations
@@ -437,8 +437,8 @@ export default class Editor extends EventEmitter {
 
               if (
                 property !== null &&
-                typeof property === "object" &&
-                Object.prototype.hasOwnProperty.call(property, "__gltfIndexForUUID")
+                typeof property === 'object' &&
+                Object.prototype.hasOwnProperty.call(property, '__gltfIndexForUUID')
               ) {
                 component[propertyName] = uuidToIndexMap[property.__gltfIndexForUUID];
               }
@@ -470,7 +470,7 @@ export default class Editor extends EventEmitter {
 
       return { glbBlob, chunks, scores };
     } catch (error) {
-      throw new RethrownError("Error creating glb blob", error);
+      throw new RethrownError('Error creating glb blob', error);
     }
   }
 
@@ -523,12 +523,12 @@ export default class Editor extends EventEmitter {
 
     let blob;
 
-    if (file.name.toLowerCase().endsWith(".glb")) {
+    if (file.name.toLowerCase().endsWith('.glb')) {
       const { scene } = await new GLTFLoader(url).loadGLTF();
       blob = await this.thumbnailRenderer.generateThumbnail(scene, width, height);
-    } else if ([".png", ".jpg", ".jpeg", ".gif", ".webp"].some(ext => file.name.toLowerCase().endsWith(ext))) {
+    } else if (['.png', '.jpg', '.jpeg', '.gif', '.webp'].some(ext => file.name.toLowerCase().endsWith(ext))) {
       blob = await generateImageFileThumbnail(file);
-    } else if (file.name.toLowerCase().endsWith(".mp4")) {
+    } else if (file.name.toLowerCase().endsWith('.mp4')) {
       blob = await generateVideoFileThumbnail(file);
     }
 
@@ -551,7 +551,7 @@ export default class Editor extends EventEmitter {
         node.onPlay();
       }
     });
-    this.emit("playModeChanged");
+    this.emit('playModeChanged');
   }
 
   leavePlayMode() {
@@ -563,7 +563,7 @@ export default class Editor extends EventEmitter {
         node.onPause();
       }
     });
-    this.emit("playModeChanged");
+    this.emit('playModeChanged');
   }
 
   update = () => {
@@ -597,7 +597,7 @@ export default class Editor extends EventEmitter {
   onResize = () => {
     this.inputManager.onResize();
     this.renderer.onResize();
-    this.emit("resize");
+    this.emit('resize');
   };
 
   revert(checkpointId) {
@@ -618,7 +618,7 @@ export default class Editor extends EventEmitter {
     }
 
     if (emitEvent) {
-      this.emit("beforeSelectionChanged");
+      this.emit('beforeSelectionChanged');
     }
 
     if (useHistory) {
@@ -636,7 +636,7 @@ export default class Editor extends EventEmitter {
     }
 
     if (emitEvent) {
-      this.emit("selectionChanged");
+      this.emit('selectionChanged');
     }
 
     return this.selected;
@@ -657,7 +657,7 @@ export default class Editor extends EventEmitter {
     }
 
     if (emitEvent) {
-      this.emit("beforeSelectionChanged");
+      this.emit('beforeSelectionChanged');
     }
 
     if (useHistory) {
@@ -669,7 +669,7 @@ export default class Editor extends EventEmitter {
     }
 
     if (emitEvent) {
-      this.emit("selectionChanged");
+      this.emit('selectionChanged');
     }
 
     if (updateTransformRoots) {
@@ -691,7 +691,7 @@ export default class Editor extends EventEmitter {
     }
 
     if (emitEvent) {
-      this.emit("beforeSelectionChanged");
+      this.emit('beforeSelectionChanged');
     }
 
     if (useHistory) {
@@ -705,7 +705,7 @@ export default class Editor extends EventEmitter {
     }
 
     if (emitEvent) {
-      this.emit("selectionChanged");
+      this.emit('selectionChanged');
     }
 
     if (updateTransformRoots) {
@@ -730,7 +730,7 @@ export default class Editor extends EventEmitter {
     }
 
     if (emitEvent) {
-      this.emit("beforeSelectionChanged");
+      this.emit('beforeSelectionChanged');
     }
 
     if (useHistory) {
@@ -742,7 +742,7 @@ export default class Editor extends EventEmitter {
     }
 
     if (emitEvent) {
-      this.emit("selectionChanged");
+      this.emit('selectionChanged');
     }
 
     if (updateTransformRoots) {
@@ -782,7 +782,7 @@ export default class Editor extends EventEmitter {
     }
 
     if (emitEvent) {
-      this.emit("beforeSelectionChanged");
+      this.emit('beforeSelectionChanged');
     }
 
     if (useHistory) {
@@ -810,7 +810,7 @@ export default class Editor extends EventEmitter {
     }
 
     if (emitEvent) {
-      this.emit("selectionChanged");
+      this.emit('selectionChanged');
     }
 
     if (updateTransformRoots) {
@@ -822,7 +822,7 @@ export default class Editor extends EventEmitter {
 
   addObject(object, parent, before, useHistory = true, emitEvent = true, selectObject = true, useUniqueName = false) {
     if (emitEvent && selectObject) {
-      this.emit("beforeSelectionChanged");
+      this.emit('beforeSelectionChanged');
     }
 
     // TODO: Add makeUniqueName option
@@ -837,7 +837,7 @@ export default class Editor extends EventEmitter {
         const index = parent.children.indexOf(before);
 
         if (index === -1) {
-          throw new Error("addObject: before object not found");
+          throw new Error('addObject: before object not found');
         }
 
         parent.children.splice(index, 0, object);
@@ -868,10 +868,10 @@ export default class Editor extends EventEmitter {
 
     if (emitEvent) {
       if (selectObject) {
-        this.emit("selectionChanged");
+        this.emit('selectionChanged');
       }
 
-      this.emit("sceneGraphChanged");
+      this.emit('sceneGraphChanged');
     }
 
     return object;
@@ -887,7 +887,7 @@ export default class Editor extends EventEmitter {
     useUniqueName = false
   ) {
     if (selectObjects && emitEvent) {
-      this.emit("beforeSelectionChanged");
+      this.emit('beforeSelectionChanged');
     }
 
     if (useHistory) {
@@ -906,10 +906,10 @@ export default class Editor extends EventEmitter {
 
     if (emitEvent) {
       if (selectObjects) {
-        this.emit("selectionChanged");
+        this.emit('selectionChanged');
       }
 
-      this.emit("sceneGraphChanged");
+      this.emit('sceneGraphChanged');
     }
 
     return rootObjects;
@@ -934,7 +934,7 @@ export default class Editor extends EventEmitter {
     }
 
     if (emitEvent) {
-      this.emit("sceneGraphChanged");
+      this.emit('sceneGraphChanged');
     }
   }
 
@@ -952,7 +952,7 @@ export default class Editor extends EventEmitter {
 
         if (index === -1) {
           throw new Error(
-            "removeObject: node not found. This is due to removing a node that is no longer in the scene."
+            'removeObject: node not found. This is due to removing a node that is no longer in the scene.'
           );
         }
 
@@ -967,7 +967,7 @@ export default class Editor extends EventEmitter {
     }
 
     if (emitEvent) {
-      this.emit("sceneGraphChanged");
+      this.emit('sceneGraphChanged');
     }
 
     return object;
@@ -989,7 +989,7 @@ export default class Editor extends EventEmitter {
     }
 
     if (emitEvent) {
-      this.emit("sceneGraphChanged");
+      this.emit('sceneGraphChanged');
     }
 
     return removeObjectsRoots;
@@ -1001,7 +1001,7 @@ export default class Editor extends EventEmitter {
 
   duplicate(object, parent, before, useHistory = true, emitEvent = true, selectObject = true) {
     if (emitEvent && selectObject) {
-      this.emit("beforeSelectionChanged");
+      this.emit('beforeSelectionChanged');
     }
 
     if (useHistory) {
@@ -1030,10 +1030,10 @@ export default class Editor extends EventEmitter {
 
     if (emitEvent) {
       if (selectObject) {
-        this.emit("selectionChanged");
+        this.emit('selectionChanged');
       }
 
-      this.emit("sceneGraphChanged");
+      this.emit('sceneGraphChanged');
     }
 
     return clonedObject;
@@ -1041,7 +1041,7 @@ export default class Editor extends EventEmitter {
 
   duplicateMultiple(objects, parent, before, useHistory = true, emitEvent = true, selectObjects = true) {
     if (emitEvent && selectObjects) {
-      this.emit("beforeSelectionChanged");
+      this.emit('beforeSelectionChanged');
     }
 
     if (useHistory) {
@@ -1068,10 +1068,10 @@ export default class Editor extends EventEmitter {
 
     if (emitEvent) {
       if (selectObjects) {
-        this.emit("selectionChanged");
+        this.emit('selectionChanged');
       }
 
-      this.emit("sceneGraphChanged");
+      this.emit('sceneGraphChanged');
     }
 
     return duplicatedRoots;
@@ -1091,11 +1091,11 @@ export default class Editor extends EventEmitter {
     }
 
     if (!newParent) {
-      throw new Error("editor.reparent: newParent is undefined");
+      throw new Error('editor.reparent: newParent is undefined');
     }
 
     if (emitEvent && selectObject) {
-      this.emit("beforeSelectionChanged");
+      this.emit('beforeSelectionChanged');
     }
 
     if (useHistory) {
@@ -1138,10 +1138,10 @@ export default class Editor extends EventEmitter {
 
     if (emitEvent) {
       if (selectObject) {
-        this.emit("selectionChanged");
+        this.emit('selectionChanged');
       }
 
-      this.emit("sceneGraphChanged");
+      this.emit('sceneGraphChanged');
     }
 
     return object;
@@ -1149,7 +1149,7 @@ export default class Editor extends EventEmitter {
 
   reparentMultiple(objects, newParent, newBefore, useHistory = true, emitEvent = true, selectObjects = true) {
     if (emitEvent && selectObjects) {
-      this.emit("beforeSelectionChanged");
+      this.emit('beforeSelectionChanged');
     }
 
     if (useHistory) {
@@ -1168,10 +1168,10 @@ export default class Editor extends EventEmitter {
 
     if (emitEvent) {
       if (selectObjects) {
-        this.emit("selectionChanged");
+        this.emit('selectionChanged');
       }
 
-      this.emit("sceneGraphChanged");
+      this.emit('sceneGraphChanged');
     }
 
     return objects;
@@ -1183,7 +1183,7 @@ export default class Editor extends EventEmitter {
 
   groupMultiple(objects, groupParent, groupBefore, useHistory = true, emitEvent = true, selectObject = true) {
     if (emitEvent && selectObject) {
-      this.emit("beforeSelectionChanged");
+      this.emit('beforeSelectionChanged');
     }
 
     if (useHistory) {
@@ -1204,10 +1204,10 @@ export default class Editor extends EventEmitter {
 
     if (emitEvent) {
       if (selectObject) {
-        this.emit("selectionChanged");
+        this.emit('selectionChanged');
       }
 
-      this.emit("sceneGraphChanged");
+      this.emit('sceneGraphChanged');
     }
 
     return groupNode;
@@ -1259,10 +1259,10 @@ export default class Editor extends EventEmitter {
 
     object.updateMatrixWorld(true);
 
-    object.onChange("position");
+    object.onChange('position');
 
     if (emitEvent) {
-      this.emit("objectsChanged", [object], "position");
+      this.emit('objectsChanged', [object], 'position');
     }
 
     return object;
@@ -1288,7 +1288,7 @@ export default class Editor extends EventEmitter {
     }
 
     if (emitEvent) {
-      this.emit("objectsChanged", objects, "position");
+      this.emit('objectsChanged', objects, 'position');
     }
 
     return objects;
@@ -1333,10 +1333,10 @@ export default class Editor extends EventEmitter {
 
     object.updateMatrixWorld(true);
 
-    object.onChange("position");
+    object.onChange('position');
 
     if (emitEvent) {
-      this.emit("objectsChanged", [object], "position");
+      this.emit('objectsChanged', [object], 'position');
     }
 
     return object;
@@ -1362,7 +1362,7 @@ export default class Editor extends EventEmitter {
     }
 
     if (emitEvent) {
-      this.emit("objectsChanged", objects, "position");
+      this.emit('objectsChanged', objects, 'position');
     }
 
     return objects;
@@ -1406,10 +1406,10 @@ export default class Editor extends EventEmitter {
 
     object.updateMatrixWorld(true);
 
-    object.onChange("rotation");
+    object.onChange('rotation');
 
     if (emitEvent) {
-      this.emit("objectsChanged", [object], "rotation");
+      this.emit('objectsChanged', [object], 'rotation');
     }
 
     return object;
@@ -1435,7 +1435,7 @@ export default class Editor extends EventEmitter {
     }
 
     if (emitEvent) {
-      this.emit("objectsChanged", objects, "rotation");
+      this.emit('objectsChanged', objects, 'rotation');
     }
 
     return objects;
@@ -1479,10 +1479,10 @@ export default class Editor extends EventEmitter {
 
     object.updateMatrixWorld(true);
 
-    object.onChange("position");
+    object.onChange('position');
 
     if (emitEvent) {
-      this.emit("objectsChanged", [object], "position");
+      this.emit('objectsChanged', [object], 'position');
     }
 
     return object;
@@ -1508,7 +1508,7 @@ export default class Editor extends EventEmitter {
     }
 
     if (emitEvent) {
-      this.emit("objectsChanged", objects, "rotation");
+      this.emit('objectsChanged', objects, 'rotation');
     }
 
     return objects;
@@ -1543,7 +1543,7 @@ export default class Editor extends EventEmitter {
     object.updateMatrixWorld();
 
     if (emitEvent) {
-      this.emit("objectsChanged", [object], "matrix");
+      this.emit('objectsChanged', [object], 'matrix');
     }
 
     return object;
@@ -1559,7 +1559,7 @@ export default class Editor extends EventEmitter {
     }
 
     if (emitEvent) {
-      this.emit("objectsChanged", objects, "matrix");
+      this.emit('objectsChanged', objects, 'matrix');
     }
 
     return objects;
@@ -1575,17 +1575,17 @@ export default class Editor extends EventEmitter {
     }
 
     if (space === TransformSpace.World && (scale.x !== scale.y || scale.x !== scale.z || scale.y !== scale.z)) {
-      console.warn("Scaling an object in world space with a non-uniform scale is not supported");
+      console.warn('Scaling an object in world space with a non-uniform scale is not supported');
     }
 
     object.scale.multiply(scale);
 
     object.updateMatrixWorld(true);
 
-    object.onChange("scale");
+    object.onChange('scale');
 
     if (emitEvent) {
-      this.emit("objectsChanged", [object], "scale");
+      this.emit('objectsChanged', [object], 'scale');
     }
 
     return object;
@@ -1601,7 +1601,7 @@ export default class Editor extends EventEmitter {
     }
 
     if (emitEvent) {
-      this.emit("objectsChanged", objects, "scale");
+      this.emit('objectsChanged', objects, 'scale');
     }
 
     return objects;
@@ -1659,10 +1659,10 @@ export default class Editor extends EventEmitter {
 
     object.updateMatrixWorld(true);
 
-    object.onChange("scale");
+    object.onChange('scale');
 
     if (emitEvent) {
-      this.emit("objectsChanged", [object], "scale");
+      this.emit('objectsChanged', [object], 'scale');
     }
 
     return object;
@@ -1688,7 +1688,7 @@ export default class Editor extends EventEmitter {
     }
 
     if (emitEvent) {
-      this.emit("objectsChanged", objects, "scale");
+      this.emit('objectsChanged', objects, 'scale');
     }
 
     return objects;
@@ -1714,7 +1714,7 @@ export default class Editor extends EventEmitter {
     }
 
     if (emitEvent) {
-      this.emit("objectsChanged", [object], propertyName);
+      this.emit('objectsChanged', [object], propertyName);
     }
 
     return object;
@@ -1730,7 +1730,7 @@ export default class Editor extends EventEmitter {
     }
 
     if (emitEvent) {
-      this.emit("objectsChanged", objects, propertyName);
+      this.emit('objectsChanged', objects, propertyName);
     }
 
     return objects;
@@ -1760,7 +1760,7 @@ export default class Editor extends EventEmitter {
     object.onChange();
 
     if (emitEvent) {
-      this.emit("objectsChanged", [object]);
+      this.emit('objectsChanged', [object]);
     }
 
     return object;
@@ -1776,7 +1776,7 @@ export default class Editor extends EventEmitter {
     }
 
     if (emitEvent) {
-      this.emit("objectsChanged", objects);
+      this.emit('objectsChanged', objects);
     }
 
     return objects;
@@ -1794,11 +1794,11 @@ export default class Editor extends EventEmitter {
     object.loadMaterialSlot(subPieceId, materialSlotId, materialId).catch(console.error);
 
     if (object.onChange) {
-      object.onChange("materialSlot");
+      object.onChange('materialSlot');
     }
 
     if (emitEvent) {
-      this.emit("objectsChanged", [object], "materialSlot");
+      this.emit('objectsChanged', [object], 'materialSlot');
     }
 
     return object;
@@ -1815,12 +1815,12 @@ export default class Editor extends EventEmitter {
       object.loadMaterialSlot(subPieceId, materialSlotId, materialId).catch(console.error);
 
       if (object.onChange) {
-        object.onChange("materialSlot");
+        object.onChange('materialSlot');
       }
     }
 
     if (emitEvent) {
-      this.emit("objectsChanged", objects, "materialSlot");
+      this.emit('objectsChanged', objects, 'materialSlot');
     }
 
     return objects;
@@ -1878,7 +1878,7 @@ export default class Editor extends EventEmitter {
     // TODO: Prevent copying objects with a disabled transform
     if (this.selected.length > 0) {
       event.clipboardData.setData(
-        "application/vnd.spoke.nodes",
+        'application/vnd.spoke.nodes',
         JSON.stringify({ nodeUUIDs: this.selected.map(node => node.uuid) })
       );
     }
@@ -1893,7 +1893,7 @@ export default class Editor extends EventEmitter {
 
     let data;
 
-    if ((data = event.clipboardData.getData("application/vnd.spoke.nodes")) !== "") {
+    if ((data = event.clipboardData.getData('application/vnd.spoke.nodes')) !== '') {
       const { nodeUUIDs } = JSON.parse(data);
 
       if (!Array.isArray(nodeUUIDs)) {
@@ -1903,46 +1903,46 @@ export default class Editor extends EventEmitter {
       const nodes = nodeUUIDs.map(uuid => this.scene.getObjectByUUID(uuid)).filter(uuid => uuid !== undefined);
 
       this.duplicateMultiple(nodes);
-    } else if ((data = event.clipboardData.getData("text")) !== "") {
+    } else if ((data = event.clipboardData.getData('text')) !== '') {
       try {
         const url = new URL(data);
-        this.addMedia(url.href).catch(error => this.emit("error", error));
+        this.addMedia(url.href).catch(error => this.emit('error', error));
       } catch (e) {
-        console.warn("Clipboard contents did not contain a valid url");
+        console.warn('Clipboard contents did not contain a valid url');
       }
     }
   };
 
   async addMedia(url, parent, before) {
-    let contentType = "";
+    let contentType = '';
 
     const { hostname } = new URL(url);
 
     try {
-      contentType = (await this.api.getContentType(url)) || "";
+      contentType = (await this.api.getContentType(url)) || '';
     } catch (error) {
       console.warn(`Couldn't fetch content type for url ${url}. Using LinkNode instead.`);
     }
 
     let node;
 
-    if (contentType.startsWith("model/gltf")) {
+    if (contentType.startsWith('model/gltf')) {
       node = new ModelNode(this);
       this.getSpawnPosition(node.position);
       this.addObject(node, parent, before);
-      node.initialScale = "fit";
+      node.initialScale = 'fit';
       await node.load(url);
-    } else if (contentType.startsWith("video/") || hostname === "www.twitch.tv") {
+    } else if (contentType.startsWith('video/') || hostname === 'www.twitch.tv') {
       node = new VideoNode(this);
       this.getSpawnPosition(node.position);
       this.addObject(node, parent, before);
       await node.load(url);
-    } else if (contentType.startsWith("image/")) {
+    } else if (contentType.startsWith('image/')) {
       node = new ImageNode(this);
       this.getSpawnPosition(node.position);
       this.addObject(node, parent, before);
       await node.load(url);
-    } else if (contentType.startsWith("audio/")) {
+    } else if (contentType.startsWith('audio/')) {
       node = new AudioNode(this);
       this.getSpawnPosition(node.position);
       this.addObject(node, parent, before);
@@ -1983,12 +1983,12 @@ export default class Editor extends EventEmitter {
 
   setGridHeight(value) {
     this.grid.position.y = value;
-    this.emit("gridHeightChanged", value);
+    this.emit('gridHeightChanged', value);
   }
 
   toggleGridVisible() {
     this.grid.visible = !this.grid.visible;
-    this.emit("gridVisibilityChanged", this.grid.visible);
+    this.emit('gridVisibilityChanged', this.grid.visible);
   }
 
   dispose() {

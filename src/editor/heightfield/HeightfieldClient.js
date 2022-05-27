@@ -1,4 +1,4 @@
-import HeightfieldWorker from "./heightfield.worker.js?worker";
+import HeightfieldWorker from './heightfield.worker.js?worker';
 
 export default class HeightfieldClient {
   constructor() {
@@ -8,7 +8,7 @@ export default class HeightfieldClient {
 
   async buildHeightfield(geometry, params, signal) {
     if (this.working) {
-      throw new Error("Already building heightfield");
+      throw new Error('Already building heightfield');
     }
 
     this.working = true;
@@ -24,9 +24,9 @@ export default class HeightfieldClient {
       let onAbort = null;
 
       const cleanUp = () => {
-        signal.removeEventListener("abort", onAbort);
-        this.worker.removeEventListener("message", onMessage);
-        this.worker.removeEventListener("message", onError);
+        signal.removeEventListener('abort', onAbort);
+        this.worker.removeEventListener('message', onMessage);
+        this.worker.removeEventListener('message', onError);
         this.working = false;
       };
 
@@ -38,7 +38,7 @@ export default class HeightfieldClient {
       onAbort = () => {
         this.worker.terminate();
         this.worker = new HeightfieldWorker();
-        const error = new Error("Canceled heightfield generation.");
+        const error = new Error('Canceled heightfield generation.');
         error.aborted = true;
         reject(error);
         cleanUp();
@@ -49,9 +49,9 @@ export default class HeightfieldClient {
         cleanUp();
       };
 
-      signal.addEventListener("abort", onAbort);
-      this.worker.addEventListener("message", onMessage);
-      this.worker.addEventListener("error", onError);
+      signal.addEventListener('abort', onAbort);
+      this.worker.addEventListener('message', onMessage);
+      this.worker.addEventListener('error', onError);
     });
 
     const verts = geometry.attributes.position.array;

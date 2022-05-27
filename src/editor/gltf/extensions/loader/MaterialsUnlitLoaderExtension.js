@@ -1,6 +1,6 @@
-import { DoubleSide, MeshBasicMaterial, sRGBEncoding, RGBFormat, RGBAFormat } from "three";
-import { ALPHA_MODES } from "../../GLTFLoader";
-import { LoaderExtension } from "./LoaderExtension";
+import { DoubleSide, MeshBasicMaterial, sRGBEncoding, RGBFormat, RGBAFormat } from 'three';
+import { ALPHA_MODES } from '../../GLTFLoader';
+import { LoaderExtension } from './LoaderExtension';
 
 function getUnlitMaterial(materialDef) {
   return materialDef.extensions && materialDef.extensions[MaterialsUnlitLoaderExtension.extensionName];
@@ -15,14 +15,14 @@ function shouldSetMaterialParams(_material, materialDef) {
 }
 
 export class MaterialsUnlitLoaderExtension extends LoaderExtension {
-  static extensionName = "KHR_materials_unlit";
+  static extensionName = 'KHR_materials_unlit';
 
   extensionNames = [MaterialsUnlitLoaderExtension.extensionName];
 
   onLoad() {
     if (this.loader.usesExtension(MaterialsUnlitLoaderExtension.extensionName)) {
-      this.loader.addHook("createMaterial", shouldCreateMaterial, this.createMaterial);
-      this.loader.addHook("setMaterialParams", shouldSetMaterialParams, this.setMaterialParams);
+      this.loader.addHook('createMaterial', shouldCreateMaterial, this.createMaterial);
+      this.loader.addHook('setMaterialParams', shouldSetMaterialParams, this.setMaterialParams);
     }
   }
 
@@ -49,7 +49,7 @@ export class MaterialsUnlitLoaderExtension extends LoaderExtension {
       if (metallicRoughness.baseColorTexture !== undefined) {
         const format = alphaMode === ALPHA_MODES.OPAQUE ? RGBFormat : RGBAFormat;
         pending.push(
-          this.loader.assignTexture(material, "map", metallicRoughness.baseColorTexture, sRGBEncoding, format)
+          this.loader.assignTexture(material, 'map', metallicRoughness.baseColorTexture, sRGBEncoding, format)
         );
       }
     }

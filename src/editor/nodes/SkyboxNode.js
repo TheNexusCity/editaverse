@@ -1,14 +1,14 @@
-import EditorNodeMixin from "./EditorNodeMixin";
-import Sky from "../objects/Sky";
+import EditorNodeMixin from './EditorNodeMixin';
+import Sky from '../objects/Sky';
 
 export default class SkyboxNode extends EditorNodeMixin(Sky) {
-  static legacyComponentName = "skybox";
+  static legacyComponentName = 'skybox';
 
   static disableTransform = true;
 
   static ignoreRaycast = true;
 
-  static nodeName = "Skybox";
+  static nodeName = 'Skybox';
 
   static canAddNode(editor) {
     return editor.scene.findNodeByType(SkyboxNode) === null;
@@ -26,7 +26,7 @@ export default class SkyboxNode extends EditorNodeMixin(Sky) {
       inclination,
       azimuth,
       distance
-    } = json.components.find(c => c.name === "skybox").props;
+    } = json.components.find(c => c.name === 'skybox').props;
 
     node.turbidity = turbidity;
     node.rayleigh = rayleigh;
@@ -79,7 +79,7 @@ export default class SkyboxNode extends EditorNodeMixin(Sky) {
 
   prepareForExport() {
     super.prepareForExport();
-    this.addGLTFComponent("skybox", {
+    this.addGLTFComponent('skybox', {
       turbidity: this.turbidity,
       rayleigh: this.rayleigh,
       luminance: this.luminance,

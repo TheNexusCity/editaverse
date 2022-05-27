@@ -110,7 +110,6 @@ const templates = [
 
 function transformUrls(templates) {
   const searchParams = new URLSearchParams();
-debugger;
   for (const template of templates) {
     searchParams.set("template", template.project_url);
     template.url = "/projects/new?" + searchParams;

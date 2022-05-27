@@ -1,10 +1,10 @@
-import { useCallback, useContext } from "react";
-import ErrorDialog from "../dialogs/ErrorDialog";
-import ProgressDialog from "../dialogs/ProgressDialog";
-import LoginDialog from "../../api/LoginDialog";
-import { DialogContext } from "../contexts/DialogContext";
-import { EditorContext } from "../contexts/EditorContext";
-import { AllFileTypes } from "../assets/fileTypes";
+import { useCallback, useContext } from 'react';
+import ErrorDialog from '../dialogs/ErrorDialog';
+import ProgressDialog from '../dialogs/ProgressDialog';
+import LoginDialog from '../../api/LoginDialog';
+import { DialogContext } from '../contexts/DialogContext';
+import { EditorContext } from '../contexts/EditorContext';
+import { AllFileTypes } from '../assets/fileTypes';
 
 export default function useUpload(options = {}) {
   const editor = useContext(EditorContext);
@@ -20,7 +20,7 @@ export default function useUpload(options = {}) {
 
       try {
         if (!multiple && files.length > 1) {
-          throw new Error("Input does not accept multiple files.");
+          throw new Error('Input does not accept multiple files.');
         }
 
         if (accepts) {
@@ -28,7 +28,7 @@ export default function useUpload(options = {}) {
             let accepted = false;
 
             for (const pattern of accepts) {
-              if (pattern.startsWith(".")) {
+              if (pattern.startsWith('.')) {
                 if (file.name.endsWith(pattern)) {
                   accepted = true;
                   break;
@@ -41,7 +41,7 @@ export default function useUpload(options = {}) {
 
             if (!accepted) {
               throw new Error(
-                `"${file.name}" does not match the following mime types or extensions: ${accepts.join(", ")}`
+                `"${file.name}" does not match the following mime types or extensions: ${accepts.join(', ')}`
               );
             }
           }
@@ -65,7 +65,7 @@ export default function useUpload(options = {}) {
         const abortController = new AbortController();
 
         showDialog(ProgressDialog, {
-          title: "Uploading Files",
+          title: 'Uploading Files',
           message: `Uploading files 1 of ${files.length}: 0%`,
           cancelable: true,
           onCancel: () => {
@@ -78,7 +78,7 @@ export default function useUpload(options = {}) {
           files,
           (item, total, progress) => {
             showDialog(ProgressDialog, {
-              title: "Uploading Files",
+              title: 'Uploading Files',
               message: `Uploading files: ${item} of ${total}: ${Math.round(progress * 100)}%`,
               cancelable: true,
               onCancel: () => {
@@ -94,8 +94,8 @@ export default function useUpload(options = {}) {
       } catch (error) {
         console.error(error);
         showDialog(ErrorDialog, {
-          title: "Upload Error",
-          message: `Error uploading file: ${error.message || "There was an unknown error."}`,
+          title: 'Upload Error',
+          message: `Error uploading file: ${error.message || 'There was an unknown error.'}`,
           error
         });
 

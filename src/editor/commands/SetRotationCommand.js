@@ -1,6 +1,6 @@
-import Command from "./Command";
-import { TransformSpace } from "../Editor";
-import { serializeObject3D, serializeEuler } from "../utils/debug";
+import Command from './Command';
+import { TransformSpace } from '../Editor';
+import { serializeObject3D, serializeEuler } from '../utils/debug';
 
 export default class SetRotationCommand extends Command {
   constructor(editor, object, rotation, space) {

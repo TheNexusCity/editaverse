@@ -1,16 +1,16 @@
-import EditorNodeMixin from "./EditorNodeMixin";
-import { PlaneBufferGeometry, MeshBasicMaterial, Mesh, DoubleSide } from "three";
-import audioIconUrl from "../../assets/audio-icon.png";
-import AudioSource from "../objects/AudioSource";
-import loadTexture from "../utils/loadTexture";
-import { RethrownError } from "../utils/errors";
+import EditorNodeMixin from './EditorNodeMixin';
+import { PlaneBufferGeometry, MeshBasicMaterial, Mesh, DoubleSide } from 'three';
+import audioIconUrl from '../../assets/audio-icon.png?url';
+import AudioSource from '../objects/AudioSource';
+import loadTexture from '../utils/loadTexture';
+import { RethrownError } from '../utils/errors';
 
 let audioHelperTexture = null;
 
 export default class AudioNode extends EditorNodeMixin(AudioSource) {
-  static legacyComponentName = "audio";
+  static legacyComponentName = 'audio';
 
-  static nodeName = "Audio";
+  static nodeName = 'Audio';
 
   static async load() {
     audioHelperTexture = await loadTexture(audioIconUrl);
@@ -33,7 +33,7 @@ export default class AudioNode extends EditorNodeMixin(AudioSource) {
       coneInnerAngle,
       coneOuterAngle,
       coneOuterGain
-    } = json.components.find(c => c.name === "audio").props;
+    } = json.components.find(c => c.name === 'audio').props;
 
     loadAsync(
       (async () => {
@@ -59,7 +59,7 @@ export default class AudioNode extends EditorNodeMixin(AudioSource) {
   constructor(editor) {
     super(editor, editor.audioListener);
 
-    this._canonicalUrl = "";
+    this._canonicalUrl = '';
     this._autoPlay = true;
     this.volume = 0.5;
     this.controls = true;
@@ -91,13 +91,13 @@ export default class AudioNode extends EditorNodeMixin(AudioSource) {
   }
 
   async load(src, onError) {
-    const nextSrc = src || "";
+    const nextSrc = src || '';
 
-    if (nextSrc === this._canonicalUrl && nextSrc !== "") {
+    if (nextSrc === this._canonicalUrl && nextSrc !== '') {
       return;
     }
 
-    this._canonicalUrl = src || "";
+    this._canonicalUrl = src || '';
 
     this.helper.visible = false;
     this.hideErrorIcon();
@@ -129,8 +129,8 @@ export default class AudioNode extends EditorNodeMixin(AudioSource) {
       console.error(audioError);
     }
 
-    this.editor.emit("objectsChanged", [this]);
-    this.editor.emit("selectionChanged");
+    this.editor.emit('objectsChanged', [this]);
+    this.editor.emit('selectionChanged');
     this.hideLoadingCube();
 
     return this;
@@ -195,7 +195,7 @@ export default class AudioNode extends EditorNodeMixin(AudioSource) {
   prepareForExport() {
     super.prepareForExport();
     this.remove(this.helper);
-    this.addGLTFComponent("audio", {
+    this.addGLTFComponent('audio', {
       src: this._canonicalUrl,
       controls: this.controls,
       autoPlay: this.autoPlay,
@@ -210,7 +210,7 @@ export default class AudioNode extends EditorNodeMixin(AudioSource) {
       coneOuterAngle: this.coneOuterAngle,
       coneOuterGain: this.coneOuterGain
     });
-    this.addGLTFComponent("networked", {
+    this.addGLTFComponent('networked', {
       id: this.uuid
     });
     this.replaceObject();

@@ -1,6 +1,6 @@
-import { TextureLoader } from "three";
-import Cache from "./Cache";
-import loadTexture from "../utils/loadTexture";
+import { TextureLoader } from 'three';
+import Cache from './Cache';
+import loadTexture from '../utils/loadTexture';
 
 export default class TextureCache extends Cache {
   constructor() {

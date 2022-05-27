@@ -1,11 +1,11 @@
-import EditorNodeMixin from "./EditorNodeMixin";
-import PhysicalSpotLight from "../objects/PhysicalSpotLight";
-import SpokeSpotLightHelper from "../helpers/SpokeSpotLightHelper";
+import EditorNodeMixin from './EditorNodeMixin';
+import PhysicalSpotLight from '../objects/PhysicalSpotLight';
+import SpokeSpotLightHelper from '../helpers/SpokeSpotLightHelper';
 
 export default class SpotLightNode extends EditorNodeMixin(PhysicalSpotLight) {
-  static legacyComponentName = "spot-light";
+  static legacyComponentName = 'spot-light';
 
-  static nodeName = "Spot Light";
+  static nodeName = 'Spot Light';
 
   static ignoreRaycast = true;
 
@@ -22,7 +22,7 @@ export default class SpotLightNode extends EditorNodeMixin(PhysicalSpotLight) {
       shadowMapResolution,
       shadowBias,
       shadowRadius
-    } = json.components.find(c => c.name === "spot-light").props;
+    } = json.components.find(c => c.name === 'spot-light').props;
 
     node.color.set(color);
     node.intensity = intensity;
@@ -90,7 +90,7 @@ export default class SpotLightNode extends EditorNodeMixin(PhysicalSpotLight) {
 
   serialize() {
     return super.serialize({
-      "spot-light": {
+      'spot-light': {
         color: this.color,
         intensity: this.intensity,
         range: this.range,
@@ -107,7 +107,7 @@ export default class SpotLightNode extends EditorNodeMixin(PhysicalSpotLight) {
   prepareForExport() {
     super.prepareForExport();
     this.remove(this.helper);
-    this.addGLTFComponent("spot-light", {
+    this.addGLTFComponent('spot-light', {
       color: this.color,
       intensity: this.intensity,
       range: this.range,

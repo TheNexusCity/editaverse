@@ -1,5 +1,5 @@
-import { Fly, FlyMapping } from "./input-mappings";
-import { Vector3, Matrix4, Quaternion, Math as _Math } from "three";
+import { Fly, FlyMapping } from './input-mappings';
+import { Vector3, Matrix4, Quaternion, Math as _Math } from 'three';
 
 const EPSILON = 10e-5;
 const UP = new Vector3(0, 1, 0);
@@ -35,13 +35,13 @@ export default class FlyControls {
   enable() {
     this.enabled = true;
     this.inputManager.enableInputMapping(Fly, FlyMapping);
-    this.inputManager.canvas.addEventListener("mouseup", this.onMouseUp);
+    this.inputManager.canvas.addEventListener('mouseup', this.onMouseUp);
   }
 
   disable() {
     this.enabled = false;
     this.inputManager.disableInputMapping(Fly);
-    this.inputManager.canvas.removeEventListener("mouseup", this.onMouseUp);
+    this.inputManager.canvas.removeEventListener('mouseup', this.onMouseUp);
   }
 
   update(dt) {

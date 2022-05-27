@@ -1,6 +1,6 @@
-import Command from "./Command";
-import { TransformSpace } from "../Editor";
-import { serializeVector3, serializeObject3D } from "../utils/debug";
+import Command from './Command';
+import { TransformSpace } from '../Editor';
+import { serializeVector3, serializeObject3D } from '../utils/debug';
 
 export default class SetScaleCommand extends Command {
   constructor(editor, object, scale, space) {

@@ -29,11 +29,11 @@ export function serializeObject3D(value) {
 }
 
 export function serializeObject3DArray(value) {
-  return value.map(o => serializeObject3D(o)).join(",");
+  return value.map(o => serializeObject3D(o)).join(',');
 }
 
 export function serializeProperty(value) {
-  if (typeof value !== "object" || value === null) {
+  if (typeof value !== 'object' || value === null) {
     return value;
   } else if (value.isVector2) {
     return serializeVector2(value);

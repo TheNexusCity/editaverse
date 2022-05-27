@@ -12,8 +12,8 @@
  * @author Don McCurdy / https://www.donmccurdy.com
  */
 
-import { RethrownError } from "../utils/errors";
-import loadTexture from "../utils/loadTexture";
+import { RethrownError } from '../utils/errors';
+import loadTexture from '../utils/loadTexture';
 
 import {
   AnimationClip,
@@ -67,10 +67,10 @@ import {
   VectorKeyframeTrack,
   VertexColors,
   sRGBEncoding
-} from "three";
+} from 'three';
 
-import { MaterialsUnlitLoaderExtension } from "./extensions/loader/MaterialsUnlitLoaderExtension";
-import { LightmapLoaderExtension } from "./extensions/loader/LightmapLoaderExtension";
+import { MaterialsUnlitLoaderExtension } from './extensions/loader/MaterialsUnlitLoaderExtension';
+import { LightmapLoaderExtension } from './extensions/loader/LightmapLoaderExtension';
 
 /* CONSTANTS */
 
@@ -131,21 +131,21 @@ export const WEBGL_TYPE_SIZES = {
 };
 
 export const ATTRIBUTES = {
-  POSITION: "position",
-  NORMAL: "normal",
-  TANGENT: "tangent",
-  TEXCOORD_0: "uv",
-  TEXCOORD_1: "uv2",
-  COLOR_0: "color",
-  WEIGHTS_0: "skinWeight",
-  JOINTS_0: "skinIndex"
+  POSITION: 'position',
+  NORMAL: 'normal',
+  TANGENT: 'tangent',
+  TEXCOORD_0: 'uv',
+  TEXCOORD_1: 'uv2',
+  COLOR_0: 'color',
+  WEIGHTS_0: 'skinWeight',
+  JOINTS_0: 'skinIndex'
 };
 
 export const PATH_PROPERTIES = {
-  scale: "scale",
-  translation: "position",
-  rotation: "quaternion",
-  weights: "morphTargetInfluences"
+  scale: 'scale',
+  translation: 'position',
+  rotation: 'quaternion',
+  weights: 'morphTargetInfluences'
 };
 
 export const INTERPOLATION = {
@@ -156,14 +156,14 @@ export const INTERPOLATION = {
 };
 
 export const ALPHA_MODES = {
-  OPAQUE: "OPAQUE",
-  MASK: "MASK",
-  BLEND: "BLEND"
+  OPAQUE: 'OPAQUE',
+  MASK: 'MASK',
+  BLEND: 'BLEND'
 };
 
 export const MIME_TYPE_FORMATS = {
-  "image/png": RGBAFormat,
-  "image/jpeg": RGBFormat
+  'image/png': RGBAFormat,
+  'image/jpeg': RGBFormat
 };
 
 /*********************************/
@@ -171,24 +171,24 @@ export const MIME_TYPE_FORMATS = {
 /*********************************/
 
 const EXTENSIONS = {
-  KHR_BINARY_GLTF: "KHR_binary_glTF",
-  KHR_DRACO_MESH_COMPRESSION: "KHR_draco_mesh_compression",
-  KHR_LIGHTS_PUNCTUAL: "KHR_lights_punctual",
-  KHR_MATERIALS_CLEARCOAT: "KHR_materials_clearcoat",
-  KHR_MATERIALS_PBR_SPECULAR_GLOSSINESS: "KHR_materials_pbrSpecularGlossiness",
-  KHR_MATERIALS_TRANSMISSION: "KHR_materials_transmission",
-  KHR_MATERIALS_UNLIT: "KHR_materials_unlit",
-  KHR_TEXTURE_BASISU: "KHR_texture_basisu",
-  KHR_TEXTURE_TRANSFORM: "KHR_texture_transform",
-  KHR_MESH_QUANTIZATION: "KHR_mesh_quantization",
-  MSFT_TEXTURE_DDS: "MSFT_texture_dds"
+  KHR_BINARY_GLTF: 'KHR_binary_glTF',
+  KHR_DRACO_MESH_COMPRESSION: 'KHR_draco_mesh_compression',
+  KHR_LIGHTS_PUNCTUAL: 'KHR_lights_punctual',
+  KHR_MATERIALS_CLEARCOAT: 'KHR_materials_clearcoat',
+  KHR_MATERIALS_PBR_SPECULAR_GLOSSINESS: 'KHR_materials_pbrSpecularGlossiness',
+  KHR_MATERIALS_TRANSMISSION: 'KHR_materials_transmission',
+  KHR_MATERIALS_UNLIT: 'KHR_materials_unlit',
+  KHR_TEXTURE_BASISU: 'KHR_texture_basisu',
+  KHR_TEXTURE_TRANSFORM: 'KHR_texture_transform',
+  KHR_MESH_QUANTIZATION: 'KHR_mesh_quantization',
+  MSFT_TEXTURE_DDS: 'MSFT_texture_dds'
 };
 
 /*********************************/
 /********** EXTENSIONS ***********/
 /*********************************/
 
-const GLB_HEADER_MAGIC = "glTF";
+const GLB_HEADER_MAGIC = 'glTF';
 const GLB_HEADER_LENGTH = 12;
 const GLB_CHUNK_TYPES = { JSON: 0x4e4f534a, BIN: 0x004e4942 };
 
@@ -302,9 +302,9 @@ class GLTFLoader {
     this.textureLoader.setCrossOrigin(this.options.crossOrigin);
 
     this.fileLoader = new FileLoader(this.manager);
-    this.fileLoader.setResponseType("arraybuffer");
+    this.fileLoader.setResponseType('arraybuffer');
 
-    if (this.options.crossOrigin === "use-credentials") {
+    if (this.options.crossOrigin === 'use-credentials') {
       this.fileLoader.setWithCredentials(true);
     }
 
@@ -383,9 +383,9 @@ class GLTFLoader {
     const fileLoader = new FileLoader(this.manager);
 
     fileLoader.setPath(this.path);
-    fileLoader.setResponseType("arraybuffer");
+    fileLoader.setResponseType('arraybuffer');
 
-    if (this.options.crossOrigin === "use-credentials") {
+    if (this.options.crossOrigin === 'use-credentials') {
       fileLoader.setWithCredentials(true);
     }
 
@@ -400,7 +400,7 @@ class GLTFLoader {
 
       let content;
 
-      if (typeof data === "string") {
+      if (typeof data === 'string') {
         content = data;
       } else {
         const magic = LoaderUtils.decodeText(new Uint8Array(data, 0, 4));
@@ -415,9 +415,9 @@ class GLTFLoader {
           };
 
           if (header.magic !== GLB_HEADER_MAGIC) {
-            throw new Error("THREE.GLTFLoader: Unsupported glTF-Binary header.");
+            throw new Error('THREE.GLTFLoader: Unsupported glTF-Binary header.');
           } else if (header.version < 2.0) {
-            throw new Error("THREE.GLTFLoader: Legacy binary file detected. Use LegacyGLTFLoader instead.");
+            throw new Error('THREE.GLTFLoader: Legacy binary file detected. Use LegacyGLTFLoader instead.');
           }
 
           const chunkView = new DataView(data, GLB_HEADER_LENGTH);
@@ -444,7 +444,7 @@ class GLTFLoader {
           }
 
           if (content === null) {
-            throw new Error("THREE.GLTFLoader: JSON content not found.");
+            throw new Error('THREE.GLTFLoader: JSON content not found.');
           }
         } else {
           content = LoaderUtils.decodeText(new Uint8Array(data));
@@ -457,7 +457,7 @@ class GLTFLoader {
 
       if (json.asset === undefined || json.asset.version[0] < 2) {
         throw new Error(
-          "THREE.GLTFLoader: Unsupported asset. glTF versions >=2.0 are supported. Use LegacyGLTFLoader instead."
+          'THREE.GLTFLoader: Unsupported asset. glTF versions >=2.0 are supported. Use LegacyGLTFLoader instead.'
         );
       }
 
@@ -546,75 +546,75 @@ class GLTFLoader {
     let cacheKey = type;
 
     if (index !== undefined) {
-      cacheKey += ":" + index;
+      cacheKey += ':' + index;
     }
 
     if (key !== undefined) {
-      cacheKey = cacheKey + ":" + key;
+      cacheKey = cacheKey + ':' + key;
     }
 
     let dependency = this.cache.get(cacheKey);
 
     if (!dependency) {
       switch (type) {
-        case "gltf":
+        case 'gltf':
           dependency = this.loadGLTF();
           break;
 
-        case "sceneAnimations":
+        case 'sceneAnimations':
           dependency = this.loadSceneAnimations(index);
           break;
 
-        case "root":
+        case 'root':
           dependency = this.loadRoot();
           break;
 
-        case "scene":
+        case 'scene':
           dependency = this.loadScene(index);
           break;
 
-        case "node":
+        case 'node':
           dependency = this.loadNode(index, options);
           break;
 
-        case "mesh":
+        case 'mesh':
           dependency = this.loadMesh(index, options);
           break;
 
-        case "accessor":
+        case 'accessor':
           dependency = this.loadAccessor(index);
           break;
 
-        case "bufferView":
+        case 'bufferView':
           dependency = this.loadBufferView(index);
           break;
 
-        case "buffer":
+        case 'buffer':
           dependency = this.loadBuffer(index);
           break;
 
-        case "material":
+        case 'material':
           dependency = this.loadMaterial(index);
           break;
 
-        case "texture":
+        case 'texture':
           dependency = this.loadTexture(index);
           break;
 
-        case "skin":
+        case 'skin':
           dependency = this.loadSkin(index);
           break;
 
-        case "animation":
+        case 'animation':
           dependency = this.loadAnimation(index);
           break;
 
-        case "camera":
+        case 'camera':
           dependency = this.loadCamera(index);
           break;
 
         default:
-          throw new Error("Unknown type: " + type);
+          throw new Error('Unknown type: ' + type);
       }
 
       this.cache.set(cacheKey, dependency);
@@ -625,10 +625,10 @@ class GLTFLoader {
 
   async loadGLTF() {
     try {
-      const { json } = await this.getDependency("root");
+      const { json } = await this.getDependency('root');
       const sceneIndex = json.scene || 0;
-      const scene = await this.getDependency("scene", sceneIndex);
-      const sceneAnimations = await this.getDependency("sceneAnimations", sceneIndex);
+      const scene = await this.getDependency('scene', sceneIndex);
+      const sceneAnimations = await this.getDependency('sceneAnimations', sceneIndex);
       scene.animations = sceneAnimations || [];
 
       const stats = this.stats;
@@ -659,7 +659,7 @@ class GLTFLoader {
    * @return {Promise<Scene>}
    */
   async loadScene(sceneIndex) {
-    const { json } = await this.getDependency("root");
+    const { json } = await this.getDependency('root');
 
     const sceneDef = json.scenes[sceneIndex];
 
@@ -675,7 +675,7 @@ class GLTFLoader {
     const pending = [];
 
     for (let i = 0, il = nodeIds.length; i < il; i++) {
-      pending.push(this.getDependency("node", nodeIds[i]));
+      pending.push(this.getDependency('node', nodeIds[i]));
     }
 
     const children = await Promise.all(pending);
@@ -693,7 +693,7 @@ class GLTFLoader {
    * @return {Promise<Object3D>}
    */
   async loadNode(nodeIndex, options) {
-    const { json } = await this.getDependency("root");
+    const { json } = await this.getDependency('root');
 
     const meshReferences = this.meshReferences;
     const meshUses = this.meshUses;
@@ -706,19 +706,19 @@ class GLTFLoader {
     if (nodeDef.isBone === true) {
       node = new Bone();
     } else if (nodeDef.mesh !== undefined) {
-      const mesh = await this.getDependency("mesh", nodeDef.mesh, options);
+      const mesh = await this.getDependency('mesh', nodeDef.mesh, options);
 
       if (meshReferences[nodeDef.mesh] > 1) {
         const instanceNum = meshUses[nodeDef.mesh]++;
 
         node = mesh.clone();
-        node.name += "_instance_" + instanceNum;
+        node.name += '_instance_' + instanceNum;
 
         // onBeforeRender copy for Specular-Glossiness
         node.onBeforeRender = mesh.onBeforeRender;
 
         for (let i = 0, il = node.children.length; i < il; i++) {
-          node.children[i].name += "_instance_" + instanceNum;
+          node.children[i].name += '_instance_' + instanceNum;
           node.children[i].onBeforeRender = mesh.children[i].onBeforeRender;
         }
       } else {
@@ -736,7 +736,7 @@ class GLTFLoader {
         });
       }
     } else if (nodeDef.camera !== undefined) {
-      node = await this.getDependency("camera", nodeDef.camera);
+      node = await this.getDependency('camera', nodeDef.camera);
     } else {
       node = new Object3D();
     }
@@ -770,12 +770,12 @@ class GLTFLoader {
     if (nodeDef.skin !== undefined) {
       // build skeleton here as well
 
-      const skin = await this.getDependency("skin", nodeDef.skin);
+      const skin = await this.getDependency('skin', nodeDef.skin);
 
       const pendingJoints = [];
 
       for (let i = 0, il = skin.joints.length; i < il; i++) {
-        pendingJoints.push(this.getDependency("node", skin.joints[i], options));
+        pendingJoints.push(this.getDependency('node', skin.joints[i], options));
       }
 
       const jointNodes = await Promise.all(pendingJoints);
@@ -814,7 +814,7 @@ class GLTFLoader {
       const pending = [];
 
       for (let i = 0, il = nodeDef.children.length; i < il; i++) {
-        pending.push(this.getDependency("node", nodeDef.children[i], options));
+        pending.push(this.getDependency('node', nodeDef.children[i], options));
       }
 
       const children = await Promise.all(pending);
@@ -828,7 +828,7 @@ class GLTFLoader {
   }
 
   async loadSceneAnimations(sceneIndex) {
-    const { json } = await this.getDependency("root");
+    const { json } = await this.getDependency('root');
     const sceneDef = json.scenes[sceneIndex];
 
     const decendantNodeIds = [];
@@ -843,7 +843,7 @@ class GLTFLoader {
   }
 
   async loadNodeAnimations(nodeIndex) {
-    const { json } = await this.getDependency("root");
+    const { json } = await this.getDependency('root');
     const decendantNodeIds = this.gatherDecendantNodeIds(json, nodeIndex, []);
     return this.loadAnimationsForNodes(json, decendantNodeIds);
   }
@@ -887,7 +887,7 @@ class GLTFLoader {
    * @return {Promise<AnimationClip>}
    */
   async loadAnimation(animationIndex) {
-    const { json } = await this.getDependency("root");
+    const { json } = await this.getDependency('root');
 
     const animationDef = json.animations[animationIndex];
 
@@ -905,9 +905,9 @@ class GLTFLoader {
       const input = animationDef.parameters !== undefined ? animationDef.parameters[sampler.input] : sampler.input;
       const output = animationDef.parameters !== undefined ? animationDef.parameters[sampler.output] : sampler.output;
 
-      pendingNodes.push(this.getDependency("node", name));
-      pendingInputAccessors.push(this.getDependency("accessor", input));
-      pendingOutputAccessors.push(this.getDependency("accessor", output));
+      pendingNodes.push(this.getDependency('node', name));
+      pendingInputAccessors.push(this.getDependency('accessor', input));
+      pendingOutputAccessors.push(this.getDependency('accessor', output));
       pendingSamplers.push(sampler);
       pendingTargets.push(target);
     }
@@ -982,7 +982,7 @@ class GLTFLoader {
         } else if (outputArray.constructor === Uint16Array) {
           scale = 1 / 65535;
         } else {
-          throw new Error("THREE.GLTFLoader: Unsupported output accessor component type.");
+          throw new Error('THREE.GLTFLoader: Unsupported output accessor component type.');
         }
 
         const scaled = new Float32Array(outputArray.length);
@@ -996,14 +996,14 @@ class GLTFLoader {
 
       for (let j = 0, jl = targetNames.length; j < jl; j++) {
         const track = new TypedKeyframeTrack(
-          targetNames[j] + "." + PATH_PROPERTIES[target.path],
+          targetNames[j] + '.' + PATH_PROPERTIES[target.path],
           inputAccessor.array,
           outputArray,
           interpolation
         );
 
         // Override interpolation with custom factory method.
-        if (sampler.interpolation === "CUBICSPLINE") {
+        if (sampler.interpolation === 'CUBICSPLINE') {
           track.createInterpolant = function InterpolantFactoryMethodGLTFCubicSpline(result) {
             // A CUBICSPLINE keyframe in glTF has three output values for each input value,
             // representing inTangent, splineVertex, and outTangent. As a result, track.getValueSize()
@@ -1020,7 +1020,7 @@ class GLTFLoader {
       }
     }
 
-    const name = animationDef.name !== undefined ? animationDef.name : "animation_" + animationIndex;
+    const name = animationDef.name !== undefined ? animationDef.name : 'animation_' + animationIndex;
 
     return new AnimationClip(name, undefined, tracks);
   }
@@ -1031,7 +1031,7 @@ class GLTFLoader {
    * @return {Promise<Object>}
    */
   async loadSkin(skinIndex) {
-    const { json } = await this.getDependency("root");
+    const { json } = await this.getDependency('root');
     const skinDef = json.skins[skinIndex];
 
     const skinEntry = { joints: skinDef.joints };
@@ -1040,7 +1040,7 @@ class GLTFLoader {
       return skinEntry;
     }
 
-    const accessor = await this.getDependency("accessor", skinDef.inverseBindMatrices);
+    const accessor = await this.getDependency('accessor', skinDef.inverseBindMatrices);
     skinEntry.inverseBindMatrices = accessor;
 
     return skinEntry;
@@ -1052,24 +1052,24 @@ class GLTFLoader {
    * @return {Promise<THREE.Camera>}
    */
   async loadCamera(cameraIndex) {
-    const { json } = await this.getDependency("root");
+    const { json } = await this.getDependency('root');
     let camera;
     const cameraDef = json.cameras[cameraIndex];
     const params = cameraDef[cameraDef.type];
 
     if (!params) {
-      console.warn("THREE.GLTFLoader: Missing camera parameters.");
+      console.warn('THREE.GLTFLoader: Missing camera parameters.');
       return;
     }
 
-    if (cameraDef.type === "perspective") {
+    if (cameraDef.type === 'perspective') {
       camera = new PerspectiveCamera(
         _Math.radToDeg(params.yfov),
         params.aspectRatio || 1,
         params.znear || 1,
         params.zfar || 2e6
       );
-    } else if (cameraDef.type === "orthographic") {
+    } else if (cameraDef.type === 'orthographic') {
       camera = new OrthographicCamera(
         params.xmag / -2,
         params.xmag / 2,
@@ -1093,7 +1093,7 @@ class GLTFLoader {
    * @return {Promise<Group|Mesh|SkinnedMesh>}
    */
   async loadMesh(meshIndex, options) {
-    const { json } = await this.getDependency("root");
+    const { json } = await this.getDependency('root');
 
     const meshDef = json.meshes[meshIndex];
     const primitives = meshDef.primitives;
@@ -1105,7 +1105,7 @@ class GLTFLoader {
       const material =
         primitives[i].material === undefined || loadDefaultMaterial
           ? this.createDefaultMaterial()
-          : this.getDependency("material", primitives[i].material);
+          : this.getDependency('material', primitives[i].material);
 
       pending.push(material);
     }
@@ -1128,7 +1128,7 @@ class GLTFLoader {
 
       const material = originalMaterials[i];
 
-      let mesh = await this.runFirstHook("createPrimitive", meshDef, primitive, geometry, material);
+      let mesh = await this.runFirstHook('createPrimitive', meshDef, primitive, geometry, material);
 
       if (!mesh) {
         if (
@@ -1148,7 +1148,7 @@ class GLTFLoader {
         } else if (primitive.mode === WEBGL_CONSTANTS.POINTS) {
           mesh = new Points(geometry, material);
         } else {
-          throw new Error("THREE.GLTFLoader: Primitive mode unsupported: " + primitive.mode);
+          throw new Error('THREE.GLTFLoader: Primitive mode unsupported: ' + primitive.mode);
         }
       }
 
@@ -1181,9 +1181,9 @@ class GLTFLoader {
         this.updateMorphTargets(mesh, meshDef);
       }
 
-      mesh.name = meshDef.name || "mesh_" + meshIndex;
+      mesh.name = meshDef.name || 'mesh_' + meshIndex;
 
-      if (geometries.length > 1) mesh.name += "_" + i;
+      if (geometries.length > 1) mesh.name += '_' + i;
 
       this.assignExtrasToUserData(mesh, meshDef);
 
@@ -1254,7 +1254,7 @@ class GLTFLoader {
     const pending = [];
 
     const assignAttributeAccessor = (accessorIndex, attributeName) => {
-      return this.getDependency("accessor", accessorIndex).then(function(accessor) {
+      return this.getDependency('accessor', accessorIndex).then(function(accessor) {
         geometry.addAttribute(attributeName, accessor);
       });
     };
@@ -1271,7 +1271,7 @@ class GLTFLoader {
     }
 
     if (primitiveDef.indices !== undefined && !geometry.index) {
-      const accessor = this.getDependency("accessor", primitiveDef.indices).then(function(accessor) {
+      const accessor = this.getDependency('accessor', primitiveDef.indices).then(function(accessor) {
         geometry.setIndex(accessor);
       });
 
@@ -1318,7 +1318,7 @@ class GLTFLoader {
       if (hasMorphPosition) {
         const pendingAccessor =
           target.POSITION !== undefined
-            ? this.getDependency("accessor", target.POSITION)
+            ? this.getDependency('accessor', target.POSITION)
             : geometry.attributes.position;
 
         pendingPositionAccessors.push(pendingAccessor);
@@ -1326,7 +1326,7 @@ class GLTFLoader {
 
       if (hasMorphNormal) {
         const pendingAccessor =
-          target.NORMAL !== undefined ? this.getDependency("accessor", target.NORMAL) : geometry.attributes.normal;
+          target.NORMAL !== undefined ? this.getDependency('accessor', target.NORMAL) : geometry.attributes.normal;
 
         pendingNormalAccessors.push(pendingAccessor);
       }
@@ -1353,7 +1353,7 @@ class GLTFLoader {
 
     for (let i = 0, il = targets.length; i < il; i++) {
       const target = targets[i];
-      const attributeName = "morphTarget" + i;
+      const attributeName = 'morphTarget' + i;
 
       if (hasMorphPosition) {
         // Three.js morph position is absolute value. The formula is
@@ -1436,7 +1436,7 @@ class GLTFLoader {
           mesh.morphTargetDictionary[targetNames[i]] = i;
         }
       } else {
-        console.warn("THREE.GLTFLoader: Invalid extras.targetNames length. Ignoring names.");
+        console.warn('THREE.GLTFLoader: Invalid extras.targetNames length. Ignoring names.');
       }
     }
   }
@@ -1447,16 +1447,16 @@ class GLTFLoader {
    * @return {Promise<Material>}
    */
   async loadMaterial(materialIndex) {
-    const { json } = await this.getDependency("root");
+    const { json } = await this.getDependency('root');
     const materialDef = json.materials[materialIndex];
 
-    let material = await this.runFirstHook("createMaterial", materialDef);
+    let material = await this.runFirstHook('createMaterial', materialDef);
 
     if (!material) {
       material = await this.createStandardMaterial(materialDef);
     }
 
-    await this.runAllHooks("setMaterialParams", material, materialDef);
+    await this.runAllHooks('setMaterialParams', material, materialDef);
 
     if (materialDef.name !== undefined) material.name = materialDef.name;
 
@@ -1491,7 +1491,7 @@ class GLTFLoader {
 
     if (metallicRoughness.baseColorTexture !== undefined) {
       const format = alphaMode === ALPHA_MODES.OPAQUE ? RGBFormat : RGBAFormat;
-      pending.push(this.assignTexture(material, "map", metallicRoughness.baseColorTexture, sRGBEncoding, format));
+      pending.push(this.assignTexture(material, 'map', metallicRoughness.baseColorTexture, sRGBEncoding, format));
     }
 
     material.metalness = metallicRoughness.metallicFactor !== undefined ? metallicRoughness.metallicFactor : 1.0;
@@ -1499,10 +1499,10 @@ class GLTFLoader {
 
     if (metallicRoughness.metallicRoughnessTexture !== undefined) {
       pending.push(
-        this.assignTexture(material, "metalnessMap", metallicRoughness.metallicRoughnessTexture, undefined, RGBFormat)
+        this.assignTexture(material, 'metalnessMap', metallicRoughness.metallicRoughnessTexture, undefined, RGBFormat)
       );
       pending.push(
-        this.assignTexture(material, "roughnessMap", metallicRoughness.metallicRoughnessTexture, undefined, RGBFormat)
+        this.assignTexture(material, 'roughnessMap', metallicRoughness.metallicRoughnessTexture, undefined, RGBFormat)
       );
     }
 
@@ -1521,7 +1521,7 @@ class GLTFLoader {
     }
 
     if (materialDef.normalTexture !== undefined) {
-      pending.push(this.assignTexture(material, "normalMap", materialDef.normalTexture, undefined, RGBFormat));
+      pending.push(this.assignTexture(material, 'normalMap', materialDef.normalTexture, undefined, RGBFormat));
 
       material.normalScale.set(1, 1);
 
@@ -1531,7 +1531,7 @@ class GLTFLoader {
     }
 
     if (materialDef.occlusionTexture !== undefined) {
-      pending.push(this.assignTexture(material, "aoMap", materialDef.occlusionTexture, undefined, RGBFormat));
+      pending.push(this.assignTexture(material, 'aoMap', materialDef.occlusionTexture, undefined, RGBFormat));
 
       if (materialDef.occlusionTexture.strength !== undefined) {
         material.aoMapIntensity = materialDef.occlusionTexture.strength;
@@ -1543,7 +1543,7 @@ class GLTFLoader {
     }
 
     if (materialDef.emissiveTexture !== undefined) {
-      pending.push(this.assignTexture(material, "emissiveMap", materialDef.emissiveTexture, sRGBEncoding, RGBFormat));
+      pending.push(this.assignTexture(material, 'emissiveMap', materialDef.emissiveTexture, sRGBEncoding, RGBFormat));
     }
 
     await Promise.all(pending);
@@ -1571,7 +1571,7 @@ class GLTFLoader {
     const useMorphNormals = useMorphTargets && geometry.morphAttributes.normal !== undefined;
 
     if (mesh.isPoints) {
-      const cacheKey = "PointsMaterial:" + material.uuid;
+      const cacheKey = 'PointsMaterial:' + material.uuid;
 
       let pointsMaterial = this.cache.get(cacheKey);
 
@@ -1587,7 +1587,7 @@ class GLTFLoader {
 
       material = pointsMaterial;
     } else if (mesh.isLine) {
-      const cacheKey = "LineBasicMaterial:" + material.uuid;
+      const cacheKey = 'LineBasicMaterial:' + material.uuid;
 
       let lineMaterial = this.cache.get(cacheKey);
 
@@ -1605,15 +1605,15 @@ class GLTFLoader {
 
     // Clone the material if it will be modified
     if (useVertexTangents || useVertexColors || useFlatShading || useSkinning || useMorphTargets) {
-      let cacheKey = "ClonedMaterial:" + material.uuid + ":";
+      let cacheKey = 'ClonedMaterial:' + material.uuid + ':';
 
-      if (material.isGLTFSpecularGlossinessMaterial) cacheKey += "specular-glossiness:";
-      if (useSkinning) cacheKey += "skinning:";
-      if (useVertexTangents) cacheKey += "vertex-tangents:";
-      if (useVertexColors) cacheKey += "vertex-colors:";
-      if (useFlatShading) cacheKey += "flat-shading:";
-      if (useMorphTargets) cacheKey += "morph-targets:";
-      if (useMorphNormals) cacheKey += "morph-normals:";
+      if (material.isGLTFSpecularGlossinessMaterial) cacheKey += 'specular-glossiness:';
+      if (useSkinning) cacheKey += 'skinning:';
+      if (useVertexTangents) cacheKey += 'vertex-tangents:';
+      if (useVertexColors) cacheKey += 'vertex-colors:';
+      if (useFlatShading) cacheKey += 'flat-shading:';
+      if (useMorphTargets) cacheKey += 'morph-targets:';
+      if (useMorphNormals) cacheKey += 'morph-normals:';
 
       let cachedMaterial = this.cache.get(cacheKey);
 
@@ -1636,7 +1636,7 @@ class GLTFLoader {
     // workarounds for mesh and geometry
 
     if (material.aoMap && geometry.attributes.uv2 === undefined && geometry.attributes.uv !== undefined) {
-      geometry.addAttribute("uv2", new BufferAttribute(geometry.attributes.uv.array, 2));
+      geometry.addAttribute('uv2', new BufferAttribute(geometry.attributes.uv.array, 2));
     }
 
     mesh.material = material;
@@ -1648,7 +1648,7 @@ class GLTFLoader {
    * @return {Promise<Texture>}
    */
   async loadTexture(textureIndex) {
-    const { json } = await this.getDependency("root");
+    const { json } = await this.getDependency('root');
     const options = this.options;
     const textureLoader = this.textureLoader;
 
@@ -1665,7 +1665,7 @@ class GLTFLoader {
 
     if (source.bufferView !== undefined) {
       // Load binary image data from bufferView, if provided.
-      const bufferView = await this.getDependency("bufferView", source.bufferView);
+      const bufferView = await this.getDependency('bufferView', source.bufferView);
       isObjectURL = true;
       const blob = new Blob([bufferView], { type: source.mimeType });
       sourceURI = URL.createObjectURL(blob);
@@ -1740,7 +1740,7 @@ class GLTFLoader {
   async assignTexture(materialParams, mapName, mapDef, overrideEncoding, overrideFormat) {
     const parser = this;
 
-    return this.getDependency("texture", mapDef.index).then(function(texture) {
+    return this.getDependency('texture', mapDef.index).then(function(texture) {
       if (mapDef.extensions !== undefined && mapDef.extensions[EXTENSIONS.KHR_TEXTURE_TRANSFORM]) {
         const transform = mapDef.extensions[EXTENSIONS.KHR_TEXTURE_TRANSFORM];
         if (transform) {
@@ -1795,7 +1795,7 @@ class GLTFLoader {
    * @return {Promise<BufferAttribute|InterleavedBufferAttribute>}
    */
   async loadAccessor(accessorIndex) {
-    const { json } = await this.getDependency("root");
+    const { json } = await this.getDependency('root');
 
     const accessorDef = json.accessors[accessorIndex];
 
@@ -1809,14 +1809,14 @@ class GLTFLoader {
     const pendingBufferViews = [];
 
     if (accessorDef.bufferView !== undefined) {
-      pendingBufferViews.push(this.getDependency("bufferView", accessorDef.bufferView));
+      pendingBufferViews.push(this.getDependency('bufferView', accessorDef.bufferView));
     } else {
       pendingBufferViews.push(null);
     }
 
     if (accessorDef.sparse !== undefined) {
-      pendingBufferViews.push(this.getDependency("bufferView", accessorDef.sparse.indices.bufferView));
-      pendingBufferViews.push(this.getDependency("bufferView", accessorDef.sparse.values.bufferView));
+      pendingBufferViews.push(this.getDependency('bufferView', accessorDef.sparse.indices.bufferView));
+      pendingBufferViews.push(this.getDependency('bufferView', accessorDef.sparse.values.bufferView));
     }
 
     const bufferViews = await Promise.all(pendingBufferViews);
@@ -1885,7 +1885,7 @@ class GLTFLoader {
         if (itemSize >= 2) bufferAttribute.setY(index, sparseValues[i * itemSize + 1]);
         if (itemSize >= 3) bufferAttribute.setZ(index, sparseValues[i * itemSize + 2]);
         if (itemSize >= 4) bufferAttribute.setW(index, sparseValues[i * itemSize + 3]);
-        if (itemSize >= 5) throw new Error("THREE.GLTFLoader: Unsupported itemSize in sparse BufferAttribute.");
+        if (itemSize >= 5) throw new Error('THREE.GLTFLoader: Unsupported itemSize in sparse BufferAttribute.');
       }
     }
 
@@ -1898,10 +1898,10 @@ class GLTFLoader {
    * @return {Promise<ArrayBuffer>}
    */
   async loadBufferView(bufferViewIndex) {
-    const { json } = await this.getDependency("root");
+    const { json } = await this.getDependency('root');
     const bufferViewDef = json.bufferViews[bufferViewIndex];
 
-    const buffer = await this.getDependency("buffer", bufferViewDef.buffer);
+    const buffer = await this.getDependency('buffer', bufferViewDef.buffer);
     const byteLength = bufferViewDef.byteLength || 0;
     const byteOffset = bufferViewDef.byteOffset || 0;
     return buffer.slice(byteOffset, byteOffset + byteLength);
@@ -1913,12 +1913,12 @@ class GLTFLoader {
    * @return {Promise<ArrayBuffer>}
    */
   async loadBuffer(bufferIndex) {
-    const { json, glbBuffer } = await this.getDependency("root");
+    const { json, glbBuffer } = await this.getDependency('root');
     const bufferDef = json.buffers[bufferIndex];
     const loader = this.fileLoader;
 
-    if (bufferDef.type && bufferDef.type !== "arraybuffer") {
-      throw new Error("THREE.GLTFLoader: " + bufferDef.type + " buffer type is not supported.");
+    if (bufferDef.type && bufferDef.type !== 'arraybuffer') {
+      throw new Error('THREE.GLTFLoader: ' + bufferDef.type + ' buffer type is not supported.');
     }
 
     let buffer;
@@ -1946,7 +1946,7 @@ class GLTFLoader {
 
   resolveURL(url, path) {
     // Invalid URL
-    if (typeof url !== "string" || url === "") return "";
+    if (typeof url !== 'string' || url === '') return '';
 
     // Absolute URL http://,https://,//
     if (/^(https?:)?\/\//i.test(url)) return url;
@@ -1985,7 +1985,7 @@ class GLTFLoader {
   addUnknownExtensionsToUserData(object, objectDef) {
     for (const name in objectDef.extensions) {
       if (
-        name == "MOZ_hubs_components" ||
+        name == 'MOZ_hubs_components' ||
         (this.options.addUnknownExtensionsToUserData && !this.knownExtensions.has(name))
       ) {
         object.userData.gltfExtensions = object.userData.gltfExtensions || {};
@@ -2000,25 +2000,25 @@ class GLTFLoader {
    */
   assignExtrasToUserData(object, gltfDef) {
     if (gltfDef.extras !== undefined) {
-      if (typeof gltfDef.extras === "object") {
+      if (typeof gltfDef.extras === 'object') {
         Object.assign(object.userData, gltfDef.extras);
       } else {
-        console.warn("THREE.GLTFLoader: Ignoring primitive type .extras, " + gltfDef.extras);
+        console.warn('THREE.GLTFLoader: Ignoring primitive type .extras, ' + gltfDef.extras);
       }
     }
   }
 
   createPrimitiveKey(primitiveDef) {
-    return primitiveDef.indices + ":" + this.createAttributesKey(primitiveDef.attributes) + ":" + primitiveDef.mode;
+    return primitiveDef.indices + ':' + this.createAttributesKey(primitiveDef.attributes) + ':' + primitiveDef.mode;
   }
 
   createAttributesKey(attributes) {
-    let attributesKey = "";
+    let attributesKey = '';
 
     const keys = Object.keys(attributes).sort();
 
     for (let i = 0, il = keys.length; i < il; i++) {
-      attributesKey += keys[i] + ":" + attributes[keys[i]] + ";";
+      attributesKey += keys[i] + ':' + attributes[keys[i]] + ';';
     }
 
     return attributesKey;

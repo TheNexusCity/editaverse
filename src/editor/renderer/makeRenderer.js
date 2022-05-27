@@ -1,16 +1,16 @@
-import { WebGLRenderer, PCFSoftShadowMap } from "three";
+import { WebGLRenderer, PCFSoftShadowMap } from 'three';
 
 export default function makeRenderer(width, height, { canvas, ...rest } = {}) {
   if (!canvas) {
-    canvas = document.createElement("canvas");
+    canvas = document.createElement('canvas');
   }
 
   let context;
 
   try {
-    context = canvas.getContext("webgl2", { antialias: true });
+    context = canvas.getContext('webgl2', { antialias: true });
   } catch (error) {
-    context = canvas.getContext("webgl", { antialias: true });
+    context = canvas.getContext('webgl', { antialias: true });
   }
 
   const renderer = new WebGLRenderer({

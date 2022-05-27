@@ -1,5 +1,5 @@
-import Command from "./Command";
-import { serializeObject3DArray } from "../utils/debug";
+import Command from './Command';
+import { serializeObject3DArray } from '../utils/debug';
 
 export default class LoadMaterialSlotMultipleCommand extends Command {
   constructor(editor, objects, subPieceId, materialSlotId, materialId) {
@@ -21,7 +21,7 @@ export default class LoadMaterialSlotMultipleCommand extends Command {
       this.editor.loadMaterialSlot(object, this.subPieceId, this.materialSlotId, this.prevMaterialIds[i], false, false);
     }
 
-    this.editor.emit("objectsChanged", this.objects, "materialSlot");
+    this.editor.emit('objectsChanged', this.objects, 'materialSlot');
   }
 
   toString() {

@@ -1,8 +1,8 @@
-import { BufferAttribute, InterleavedBufferAttribute } from "three";
+import { BufferAttribute, InterleavedBufferAttribute } from 'three';
 
 export default class ClonableInterleavedBufferAttribute extends InterleavedBufferAttribute {
   clone() {
-    console.warn("Cloning an InterleavedBufferAttribute is unsupported. Converting to a BufferAttribute instead.");
+    console.warn('Cloning an InterleavedBufferAttribute is unsupported. Converting to a BufferAttribute instead.');
 
     const count = this.count;
     const itemSize = this.itemSize;

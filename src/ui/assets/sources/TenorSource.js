@@ -1,14 +1,14 @@
-import VideoMediaSource from "../VideoMediaSource";
-import { ItemTypes } from "../../dnd";
-import VideoNode from "../../../editor/nodes/VideoNode";
+import VideoMediaSource from '../VideoMediaSource';
+import { ItemTypes } from '../../dnd';
+import VideoNode from '../../../editor/nodes/VideoNode';
 
 export default class TenorSource extends VideoMediaSource {
   constructor(api) {
     super(api);
-    this.id = "tenor";
-    this.name = "Tenor GIFs";
-    this.searchPlaceholder = "Search GIFs...";
-    this.searchLegalCopy = "Search by Tenor";
+    this.id = 'tenor';
+    this.name = 'Tenor GIFs';
+    this.searchPlaceholder = 'Search GIFs...';
+    this.searchLegalCopy = 'Search by Tenor';
   }
 
   async search(params, cursor, abortSignal) {

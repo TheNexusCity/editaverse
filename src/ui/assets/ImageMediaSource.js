@@ -1,7 +1,7 @@
-import { BaseSource } from "./sources/index";
-import { ItemTypes } from "../dnd";
-import ImageSourcePanel from "./ImageSourcePanel";
-import ImageNode from "../../editor/nodes/ImageNode";
+import { BaseSource } from './sources/index';
+import { ItemTypes } from '../dnd';
+import ImageSourcePanel from './ImageSourcePanel';
+import ImageNode from '../../editor/nodes/ImageNode';
 
 export default class ImageMediaSource extends BaseSource {
   constructor(api) {

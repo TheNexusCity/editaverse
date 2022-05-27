@@ -1,17 +1,17 @@
-import EditorNodeMixin from "./EditorNodeMixin";
-import PhysicalPointLight from "../objects/PhysicalPointLight";
-import SpokePointLightHelper from "../helpers/SpokePointLightHelper";
+import EditorNodeMixin from './EditorNodeMixin';
+import PhysicalPointLight from '../objects/PhysicalPointLight';
+import SpokePointLightHelper from '../helpers/SpokePointLightHelper';
 
 export default class PointLightNode extends EditorNodeMixin(PhysicalPointLight) {
-  static legacyComponentName = "point-light";
+  static legacyComponentName = 'point-light';
 
-  static nodeName = "Point Light";
+  static nodeName = 'Point Light';
 
   static async deserialize(editor, json) {
     const node = await super.deserialize(editor, json);
 
     const { color, intensity, range, castShadow, shadowMapResolution, shadowBias, shadowRadius } = json.components.find(
-      c => c.name === "point-light"
+      c => c.name === 'point-light'
     ).props;
 
     node.color.set(color);
@@ -74,7 +74,7 @@ export default class PointLightNode extends EditorNodeMixin(PhysicalPointLight) 
 
   serialize() {
     return super.serialize({
-      "point-light": {
+      'point-light': {
         color: this.color,
         intensity: this.intensity,
         range: this.range,
@@ -89,7 +89,7 @@ export default class PointLightNode extends EditorNodeMixin(PhysicalPointLight) 
   prepareForExport() {
     super.prepareForExport();
     this.remove(this.helper);
-    this.addGLTFComponent("point-light", {
+    this.addGLTFComponent('point-light', {
       color: this.color,
       intensity: this.intensity,
       range: this.range,

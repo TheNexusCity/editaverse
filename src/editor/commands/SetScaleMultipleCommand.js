@@ -1,7 +1,7 @@
-import Command from "./Command";
-import { TransformSpace } from "../Editor";
-import arrayShallowEqual from "../utils/arrayShallowEqual";
-import { serializeObject3DArray, serializeVector3 } from "../utils/debug";
+import Command from './Command';
+import { TransformSpace } from '../Editor';
+import arrayShallowEqual from '../utils/arrayShallowEqual';
+import { serializeObject3DArray, serializeVector3 } from '../utils/debug';
 
 export default class SetScaleMultipleCommand extends Command {
   constructor(editor, objects, scale, space) {
@@ -30,7 +30,7 @@ export default class SetScaleMultipleCommand extends Command {
       this.editor.setScale(this.objects[i], this.oldScales[i], TransformSpace.Local, false, false);
     }
 
-    this.editor.emit("objectsChanged", this.objects, "scale");
+    this.editor.emit('objectsChanged', this.objects, 'scale');
   }
 
   toString() {

@@ -8,20 +8,20 @@ import {
   Mesh,
   SphereBufferGeometry,
   RGBAFormat
-} from "three";
-import { RethrownError } from "../utils/errors";
-import Hls from "hls.js/dist/hls.light";
-import isHLS from "../utils/isHLS";
-import AudioSource from "./AudioSource";
+} from 'three';
+import { RethrownError } from '../utils/errors';
+import Hls from 'hls.js/dist/hls.light';
+import isHLS from '../utils/isHLS';
+import AudioSource from './AudioSource';
 
 export const VideoProjection = {
-  Flat: "flat",
-  Equirectangular360: "360-equirectangular"
+  Flat: 'flat',
+  Equirectangular360: '360-equirectangular'
 };
 
 export default class Video extends AudioSource {
   constructor(audioListener) {
-    super(audioListener, "video");
+    super(audioListener, 'video');
 
     this._videoTexture = new VideoTexture(this.el);
     this._videoTexture.minFilter = LinearFilter;
@@ -33,9 +33,9 @@ export default class Video extends AudioSource {
     material.map = this._texture;
     material.side = DoubleSide;
     this._mesh = new Mesh(geometry, material);
-    this._mesh.name = "VideoMesh";
+    this._mesh.name = 'VideoMesh';
     this.add(this._mesh);
-    this._projection = "flat";
+    this._projection = 'flat';
 
     this.hls = null;
   }
@@ -71,15 +71,15 @@ export default class Video extends AudioSource {
       };
 
       cleanup = () => {
-        this.el.removeEventListener("loadeddata", onLoadedMetadata);
-        this.el.removeEventListener("error", onError);
+        this.el.removeEventListener('loadeddata', onLoadedMetadata);
+        this.el.removeEventListener('error', onError);
       };
 
       if (_isHLS) {
         this.hls.on(Hls.Events.ERROR, onError);
       }
-      this.el.addEventListener("loadeddata", onLoadedMetadata);
-      this.el.addEventListener("error", onError);
+      this.el.addEventListener('loadeddata', onLoadedMetadata);
+      this.el.addEventListener('error', onError);
     });
   }
 
@@ -96,7 +96,7 @@ export default class Video extends AudioSource {
 
     let geometry;
 
-    if (projection === "360-equirectangular") {
+    if (projection === '360-equirectangular') {
       geometry = new SphereBufferGeometry(1, 64, 32);
       // invert the geometry on the x-axis so that all of the faces point inward
       geometry.scale(-1, 1, 1);
@@ -110,7 +110,7 @@ export default class Video extends AudioSource {
     this._projection = projection;
 
     const nextMesh = new Mesh(geometry, material);
-    nextMesh.name = "VideoMesh";
+    nextMesh.name = 'VideoMesh';
 
     const meshIndex = this.children.indexOf(this._mesh);
 

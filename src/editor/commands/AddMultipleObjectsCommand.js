@@ -1,5 +1,5 @@
-import Command from "./Command";
-import { serializeObject3DArray, serializeObject3D } from "../utils/debug";
+import Command from './Command';
+import { serializeObject3DArray, serializeObject3D } from '../utils/debug';
 
 export default class AddMultipleObjectsCommand extends Command {
   constructor(editor, objects, parent, before) {

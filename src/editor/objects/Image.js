@@ -7,25 +7,25 @@ import {
   sRGBEncoding,
   LinearFilter,
   PlaneBufferGeometry
-} from "three";
-import loadTexture from "../utils/loadTexture";
+} from 'three';
+import loadTexture from '../utils/loadTexture';
 
 export const ImageProjection = {
-  Flat: "flat",
-  Equirectangular360: "360-equirectangular"
+  Flat: 'flat',
+  Equirectangular360: '360-equirectangular'
 };
 
 export const ImageAlphaMode = {
-  Opaque: "opaque",
-  Blend: "blend",
-  Mask: "mask"
+  Opaque: 'opaque',
+  Blend: 'blend',
+  Mask: 'mask'
 };
 
 export default class Image extends Object3D {
   constructor() {
     super();
     this._src = null;
-    this._projection = "flat";
+    this._projection = 'flat';
     this._alphaMode = ImageAlphaMode.Opaque;
     this._alphaCutoff = 0.5;
 
@@ -35,7 +35,7 @@ export default class Image extends Object3D {
     material.transparent = this.alphaMode === ImageAlphaMode.Blend;
     material.alphaTest = this.alphaMode === ImageAlphaMode.Mask ? this._alphaCutoff : 0;
     this._mesh = new Mesh(geometry, material);
-    this._mesh.name = "ImageMesh";
+    this._mesh.name = 'ImageMesh';
     this.add(this._mesh);
     this._texture = null;
   }
@@ -82,7 +82,7 @@ export default class Image extends Object3D {
 
     let geometry;
 
-    if (projection === "360-equirectangular") {
+    if (projection === '360-equirectangular') {
       geometry = new SphereBufferGeometry(1, 64, 32);
       // invert the geometry on the x-axis so that all of the faces point inward
       geometry.scale(-1, 1, 1);
@@ -99,7 +99,7 @@ export default class Image extends Object3D {
     this._projection = projection;
 
     const nextMesh = new Mesh(geometry, material);
-    nextMesh.name = "ImageMesh";
+    nextMesh.name = 'ImageMesh';
     nextMesh.visible = this._mesh.visible;
 
     const meshIndex = this.children.indexOf(this._mesh);

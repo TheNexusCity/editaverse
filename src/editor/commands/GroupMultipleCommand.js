@@ -1,6 +1,6 @@
-import Command from "./Command";
-import { serializeObject3DArray, serializeObject3D } from "../utils/debug";
-import reverseDepthFirstTraverse from "../utils/reverseDepthFirstTraverse";
+import Command from './Command';
+import { serializeObject3DArray, serializeObject3D } from '../utils/debug';
+import reverseDepthFirstTraverse from '../utils/reverseDepthFirstTraverse';
 
 export default class GroupMultipleCommand extends Command {
   constructor(editor, objects, groupParent, groupBefore) {
@@ -53,7 +53,7 @@ export default class GroupMultipleCommand extends Command {
 
     this.editor.updateTransformRoots();
 
-    this.editor.emit("sceneGraphChanged");
+    this.editor.emit('sceneGraphChanged');
 
     this.editor.setSelection(this.oldSelection, false, true, false);
   }

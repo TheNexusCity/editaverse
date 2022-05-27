@@ -1,14 +1,14 @@
-import EditorNodeMixin from "./EditorNodeMixin";
-import Model from "../objects/Model";
-import { PropertyBinding } from "three";
-import { setStaticMode, StaticModes } from "../StaticMode";
-import cloneObject3D from "../utils/cloneObject3D";
-import { getComponents } from "../gltf/moz-hubs-components";
-import { isKitPieceNode, getComponent, getGLTFComponent, traverseGltfNode } from "../gltf/moz-hubs-components";
-import { RethrownError } from "../utils/errors";
+import EditorNodeMixin from './EditorNodeMixin';
+import Model from '../objects/Model';
+import { PropertyBinding } from 'three';
+import { setStaticMode, StaticModes } from '../StaticMode';
+import cloneObject3D from '../utils/cloneObject3D';
+import { getComponents } from '../gltf/moz-hubs-components';
+import { isKitPieceNode, getComponent, getGLTFComponent, traverseGltfNode } from '../gltf/moz-hubs-components';
+import { RethrownError } from '../utils/errors';
 
 export default class KitPieceNode extends EditorNodeMixin(Model) {
-  static legacyComponentName = "kit-piece";
+  static legacyComponentName = 'kit-piece';
 
   static experimental = true;
 
@@ -16,22 +16,22 @@ export default class KitPieceNode extends EditorNodeMixin(Model) {
 
   static useMultiplePlacementMode = true;
 
-  static nodeName = "Kit Piece";
+  static nodeName = 'Kit Piece';
 
   static async deserialize(editor, json, loadAsync, onError) {
     const node = await super.deserialize(editor, json);
 
     loadAsync(
       (async () => {
-        const { kitId, pieceId, subPiecesConfig } = json.components.find(c => c.name === "kit-piece").props;
+        const { kitId, pieceId, subPiecesConfig } = json.components.find(c => c.name === 'kit-piece').props;
 
-        await node.load(kitId || "architecture-kit", pieceId, subPiecesConfig, onError);
+        await node.load(kitId || 'architecture-kit', pieceId, subPiecesConfig, onError);
 
-        node.collidable = !!json.components.find(c => c.name === "collidable");
-        node.walkable = !!json.components.find(c => c.name === "walkable");
-        node.combine = !!json.components.find(c => c.name === "combine");
+        node.collidable = !!json.components.find(c => c.name === 'collidable');
+        node.walkable = !!json.components.find(c => c.name === 'walkable');
+        node.combine = !!json.components.find(c => c.name === 'combine');
 
-        const loopAnimationComponent = json.components.find(c => c.name === "loop-animation");
+        const loopAnimationComponent = json.components.find(c => c.name === 'loop-animation');
 
         if (loopAnimationComponent && loopAnimationComponent.props) {
           const { clip, activeClipIndices } = loopAnimationComponent.props;
@@ -48,7 +48,7 @@ export default class KitPieceNode extends EditorNodeMixin(Model) {
           }
         }
 
-        const shadowComponent = json.components.find(c => c.name === "shadow");
+        const shadowComponent = json.components.find(c => c.name === 'shadow');
 
         if (shadowComponent) {
           node.castShadow = shadowComponent.props.cast;
@@ -63,7 +63,7 @@ export default class KitPieceNode extends EditorNodeMixin(Model) {
   constructor(editor) {
     super(editor);
 
-    this._canonicalUrl = "";
+    this._canonicalUrl = '';
     this.collidable = true;
     this.walkable = true;
     this.combine = true;
@@ -78,7 +78,7 @@ export default class KitPieceNode extends EditorNodeMixin(Model) {
   }
 
   set src(value) {
-    throw new Error("Cannot set src directly on a KitPieceNode");
+    throw new Error('Cannot set src directly on a KitPieceNode');
   }
 
   get kitId() {
@@ -126,7 +126,7 @@ export default class KitPieceNode extends EditorNodeMixin(Model) {
 
     materialSlot.value = _materialId;
 
-    const material = await loader.getDependency("material", _materialId.index);
+    const material = await loader.getDependency('material', _materialId.index);
 
     if (materialSlot.value && materialSlot.value.id === materialId) {
       materialSlot.object.material = material;
@@ -140,10 +140,10 @@ export default class KitPieceNode extends EditorNodeMixin(Model) {
 
   async loadGLTF(src, pieceId, subPiecesConfig = {}) {
     const loader = this.editor.gltfCache.getLoader(src, { addUnknownExtensionsToUserData: true });
-    const { json } = await loader.getDependency("root");
+    const { json } = await loader.getDependency('root');
 
     if (!Array.isArray(json.nodes)) {
-      throw new Error("glTF file has no nodes.");
+      throw new Error('glTF file has no nodes.');
     }
 
     const nodeIndex = json.nodes.findIndex(nodeDef => isKitPieceNode(nodeDef, pieceId));
@@ -160,12 +160,12 @@ export default class KitPieceNode extends EditorNodeMixin(Model) {
     let loadDefaultMaterial = false;
 
     traverseGltfNode(json, nodeIndex, nodeDef => {
-      if (getGLTFComponent(nodeDef, "kit-alt-materials")) {
+      if (getGLTFComponent(nodeDef, 'kit-alt-materials')) {
         loadDefaultMaterial = true;
       }
     });
 
-    const piece = await loader.getDependency("node", nodeIndex, {
+    const piece = await loader.getDependency('node', nodeIndex, {
       cacheKey: `kit-piece:${pieceId}`,
       loadDefaultMaterial
     });
@@ -183,7 +183,7 @@ export default class KitPieceNode extends EditorNodeMixin(Model) {
 
     for (let i = 0; i < materialDefs.length; i++) {
       const materialDef = materialDefs[i];
-      const materialId = getGLTFComponent(materialDef, "material-id");
+      const materialId = getGLTFComponent(materialDef, 'material-id');
 
       if (materialId) {
         materialIds.push({
@@ -199,7 +199,7 @@ export default class KitPieceNode extends EditorNodeMixin(Model) {
     this.subPieces.length = 0;
 
     clonedPiece.traverse(object => {
-      const kitAltMaterials = getComponent(object, "kit-alt-materials");
+      const kitAltMaterials = getComponent(object, 'kit-alt-materials');
 
       if (kitAltMaterials) {
         const { id, name, defaultMaterials, altMaterials } = kitAltMaterials;
@@ -273,7 +273,7 @@ export default class KitPieceNode extends EditorNodeMixin(Model) {
       for (const { object, value } of subPiece.materialSlots) {
         if (value) {
           pendingMaterials.push(
-            loader.getDependency("material", value.index).then(material => (object.material = material))
+            loader.getDependency('material', value.index).then(material => (object.material = material))
           );
         }
       }
@@ -306,7 +306,7 @@ export default class KitPieceNode extends EditorNodeMixin(Model) {
       this.model = null;
     }
 
-    this._canonicalUrl = (source && source.kitUrl) || "";
+    this._canonicalUrl = (source && source.kitUrl) || '';
 
     try {
       if (this._canonicalUrl && nextPieceId) {
@@ -364,8 +364,8 @@ export default class KitPieceNode extends EditorNodeMixin(Model) {
       console.error(kitPieceError);
     }
 
-    this.editor.emit("objectsChanged", [this]);
-    this.editor.emit("selectionChanged");
+    this.editor.emit('objectsChanged', [this]);
+    this.editor.emit('selectionChanged');
     this.hideLoadingCube();
 
     return this;
@@ -392,7 +392,7 @@ export default class KitPieceNode extends EditorNodeMixin(Model) {
       for (const animation of this.model.animations) {
         for (const track of animation.tracks) {
           const { nodeName: uuid } = PropertyBinding.parseTrackName(track.name);
-          const animatedNode = this.model.getObjectByProperty("uuid", uuid);
+          const animatedNode = this.model.getObjectByProperty('uuid', uuid);
 
           if (!animatedNode) {
             throw new Error(`Model.updateStaticModes: Couldn't find object with uuid: "${uuid}"`);
@@ -418,7 +418,7 @@ export default class KitPieceNode extends EditorNodeMixin(Model) {
     }
 
     const components = {
-      "kit-piece": {
+      'kit-piece': {
         kitId: this.kitId,
         pieceId: this.pieceId,
         subPiecesConfig
@@ -430,7 +430,7 @@ export default class KitPieceNode extends EditorNodeMixin(Model) {
     };
 
     if (this.activeClipIndices.length > 0) {
-      components["loop-animation"] = {
+      components['loop-animation'] = {
         activeClipIndices: this.activeClipIndices
       };
     }
@@ -466,7 +466,7 @@ export default class KitPieceNode extends EditorNodeMixin(Model) {
       const subPieceObjects = {};
 
       this.model.traverse(object => {
-        const kitAltMaterials = getComponent(object, "kit-alt-materials");
+        const kitAltMaterials = getComponent(object, 'kit-alt-materials');
         if (kitAltMaterials) {
           subPieceObjects[kitAltMaterials.id] = object;
         }
@@ -509,7 +509,7 @@ export default class KitPieceNode extends EditorNodeMixin(Model) {
 
   prepareForExport(ctx) {
     super.prepareForExport();
-    this.addGLTFComponent("shadow", {
+    this.addGLTFComponent('shadow', {
       cast: this.castShadow,
       receive: this.receiveShadow
     });
@@ -521,13 +521,13 @@ export default class KitPieceNode extends EditorNodeMixin(Model) {
     this.model.traverse(child => {
       const components = getComponents(child);
 
-      if (components && components["loop-animation"]) {
-        delete components["loop-animation"];
+      if (components && components['loop-animation']) {
+        delete components['loop-animation'];
       }
     });
 
     if (clipIndices.length > 0) {
-      this.addGLTFComponent("loop-animation", {
+      this.addGLTFComponent('loop-animation', {
         activeClipIndices: clipIndices
       });
     }

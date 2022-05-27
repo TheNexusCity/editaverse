@@ -7,22 +7,22 @@ import {
   Mesh,
   Vector3,
   DoubleSide
-} from "three";
-import EditorNodeMixin from "./EditorNodeMixin";
+} from 'three';
+import EditorNodeMixin from './EditorNodeMixin';
 
 export const MediaType = {
-  ALL: "all",
-  ALL_2D: "all-2d",
-  MODEL: "model",
-  IMAGE: "image",
-  VIDEO: "video",
-  PDF: "pdf"
+  ALL: 'all',
+  ALL_2D: 'all-2d',
+  MODEL: 'model',
+  IMAGE: 'image',
+  VIDEO: 'video',
+  PDF: 'pdf'
 };
 
 export default class MediaFrameNode extends EditorNodeMixin(Object3D) {
-  static legacyComponentName = "media-frame";
+  static legacyComponentName = 'media-frame';
 
-  static nodeName = "Media Frame";
+  static nodeName = 'Media Frame';
 
   static _geometry = new BoxBufferGeometry();
 
@@ -115,7 +115,7 @@ export default class MediaFrameNode extends EditorNodeMixin(Object3D) {
 
   serialize() {
     return super.serialize({
-      "media-frame": {
+      'media-frame': {
         mediaType: this.mediaType
       }
     });
@@ -123,7 +123,7 @@ export default class MediaFrameNode extends EditorNodeMixin(Object3D) {
 
   static async deserialize(editor, json) {
     const node = await super.deserialize(editor, json);
-    const mediaFrame = json.components.find(c => c.name === "media-frame");
+    const mediaFrame = json.components.find(c => c.name === 'media-frame');
     node.mediaType = mediaFrame.props.mediaType;
     return node;
   }
@@ -131,13 +131,13 @@ export default class MediaFrameNode extends EditorNodeMixin(Object3D) {
   prepareForExport() {
     super.prepareForExport();
     this.remove(this.helper);
-    this.addGLTFComponent("media-frame", {
+    this.addGLTFComponent('media-frame', {
       mediaType: this.mediaType,
       bounds: new Vector3().copy(this.scale)
     });
     // We use scale to configure bounds, we don't actually want to set the node's scale
     this.scale.setScalar(1);
-    this.addGLTFComponent("networked", {
+    this.addGLTFComponent('networked', {
       id: this.uuid
     });
   }

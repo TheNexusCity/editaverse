@@ -1,5 +1,5 @@
-import { Mesh, Color, PlaneBufferGeometry, ShaderMaterial, DoubleSide, Plane, Vector3 } from "three";
-import { addIsHelperFlag } from "./utils";
+import { Mesh, Color, PlaneBufferGeometry, ShaderMaterial, DoubleSide, Plane, Vector3 } from 'three';
+import { addIsHelperFlag } from './utils';
 
 /**
  * Original Author: Fyrestar
@@ -56,7 +56,7 @@ void main() {
 
 export default class SpokeInfiniteGridHelper extends Mesh {
   constructor(size1, size2, color, distance) {
-    color = color || new Color("white");
+    color = color || new Color('white');
     size1 = size1 || 1;
     size2 = size2 || 10;
     distance = distance || 8000;
@@ -91,7 +91,7 @@ export default class SpokeInfiniteGridHelper extends Mesh {
 
     super(geometry, material);
 
-    this.name = "SpokeInfiniteGridHelper";
+    this.name = 'SpokeInfiniteGridHelper';
     this.layers.set(1);
     addIsHelperFlag(this);
     this.frustumCulled = false;

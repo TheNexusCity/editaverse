@@ -1,5 +1,5 @@
-import { Mesh, SphereBufferGeometry, MeshBasicMaterial, IcosahedronBufferGeometry } from "three";
-import { addIsHelperFlag } from "./utils";
+import { Mesh, SphereBufferGeometry, MeshBasicMaterial, IcosahedronBufferGeometry } from 'three';
+import { addIsHelperFlag } from './utils';
 
 export default class SpokePointLightHelper extends Mesh {
   constructor(light, sphereSize) {
@@ -8,7 +8,7 @@ export default class SpokePointLightHelper extends Mesh {
 
     super(geometry, material);
 
-    this.name = "SpokePointLightHelper";
+    this.name = 'SpokePointLightHelper';
 
     this.light = light;
 

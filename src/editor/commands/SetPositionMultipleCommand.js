@@ -1,7 +1,7 @@
-import Command from "./Command";
-import { TransformSpace } from "../Editor";
-import arrayShallowEqual from "../utils/arrayShallowEqual";
-import { serializeVector3, serializeObject3DArray } from "../utils/debug";
+import Command from './Command';
+import { TransformSpace } from '../Editor';
+import arrayShallowEqual from '../utils/arrayShallowEqual';
+import { serializeVector3, serializeObject3DArray } from '../utils/debug';
 
 export default class SetPositionMultipleCommand extends Command {
   constructor(editor, objects, position, space) {
@@ -30,7 +30,7 @@ export default class SetPositionMultipleCommand extends Command {
       this.editor.setPosition(this.objects[i], this.oldPositions[i], TransformSpace.Local, false, false);
     }
 
-    this.editor.emit("objectsChanged", this.objects, "position");
+    this.editor.emit('objectsChanged', this.objects, 'position');
   }
 
   toString() {

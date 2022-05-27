@@ -1,4 +1,4 @@
-import { Object3D } from "three";
+import { Object3D } from 'three';
 
 export default class FloorPlan extends Object3D {
   constructor() {

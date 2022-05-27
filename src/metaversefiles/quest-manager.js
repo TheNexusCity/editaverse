@@ -6,7 +6,7 @@ class Quest {
   constructor(app) {
     // this.app = app;
 
-    const {name, description, conditions, completeActions} = app.json;
+    const { name, description, conditions, completeActions } = app.json;
 
     this.name = name;
     this.description = description;
@@ -17,7 +17,7 @@ class Quest {
 
     this.conditionsFn = (() => {
       for (const condition of this.conditions) {
-        const {key, value} = condition;
+        const { key, _ } = condition;
         switch (key) {
           case 'clearMobs': {
             return () => {
@@ -36,9 +36,11 @@ class Quest {
       }
     })();
   }
-  update(timestamp, timeDiff) {
+
+  update(_timestamp, _timeDiff) {
     this.conditionsFn && this.conditionsFn();
   }
+
   destroy() {
     // nothing
   }
@@ -50,29 +52,36 @@ class QuestManager extends EventTarget {
 
     this.quests = [];
   }
+
   addQuest(questApp) {
     const quest = new Quest(questApp);
     this.quests.push(quest);
-    this.dispatchEvent(new MessageEvent('questadd', {
-      data: {
-        quest,
-      },
-    }));
+    this.dispatchEvent(
+      new MessageEvent('questadd', {
+        data: {
+          quest
+        }
+      })
+    );
     return quest;
   }
+
   removeQuest(quest) {
     const index = this.quests.indexOf(quest);
     if (index !== -1) {
       this.quests.splice(index, 1);
       quest.destroy();
 
-      this.dispatchEvent(new MessageEvent('questremove', {
-        data: {
-          quest,
-        },
-      }));
+      this.dispatchEvent(
+        new MessageEvent('questremove', {
+          data: {
+            quest
+          }
+        })
+      );
     }
   }
+
   update(timestamp, timeDiff) {
     for (const quest of this.quests) {
       quest.update(timestamp, timeDiff);

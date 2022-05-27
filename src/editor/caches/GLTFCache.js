@@ -1,4 +1,4 @@
-import { GLTFLoader } from "../gltf/GLTFLoader";
+import { GLTFLoader } from '../gltf/GLTFLoader';
 
 export default class GLTFCache {
   constructor() {

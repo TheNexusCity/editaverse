@@ -18,9 +18,9 @@ import {
   Mesh,
   PlaneBufferGeometry,
   Layers
-} from "three";
-import { CopyShader } from "three/examples/jsm/shaders/CopyShader";
-import { Pass } from "three/examples/jsm/postprocessing/EffectComposer";
+} from 'three';
+import { CopyShader } from 'three/examples/jsm/shaders/CopyShader';
+import { Pass } from 'three/examples/jsm/postprocessing/EffectComposer';
 
 /**
  * Adapted from THREE.OutlinePass
@@ -29,7 +29,7 @@ import { Pass } from "three/examples/jsm/postprocessing/EffectComposer";
 
 class DepthMaskMaterial extends ShaderMaterial {
   constructor(camera) {
-    const cameraType = camera.isPerspectiveCamera ? "perspective" : "orthographic";
+    const cameraType = camera.isPerspectiveCamera ? 'perspective' : 'orthographic';
     super({
       defines: {
         DEPTH_TO_VIEW_Z: `${cameraType}DepthToViewZ`
@@ -174,7 +174,7 @@ export default class OutlinePass extends Pass {
     this.maskBufferMaterial = new MeshBasicMaterial({ color: 0xffffff });
     this.maskBufferMaterial.side = DoubleSide;
     this.renderTargetMaskBuffer = new WebGLRenderTarget(this.resolution.x, this.resolution.y, pars);
-    this.renderTargetMaskBuffer.texture.name = "OutlinePass.mask";
+    this.renderTargetMaskBuffer.texture.name = 'OutlinePass.mask';
     this.renderTargetMaskBuffer.texture.generateMipmaps = false;
 
     this.depthMaterial = new MeshDepthMaterial();
@@ -186,18 +186,18 @@ export default class OutlinePass extends Pass {
     this.depthMaskMaterial.side = DoubleSide;
 
     this.renderTargetDepthBuffer = new WebGLRenderTarget(this.resolution.x, this.resolution.y, pars);
-    this.renderTargetDepthBuffer.texture.name = "OutlinePass.depth";
+    this.renderTargetDepthBuffer.texture.name = 'OutlinePass.depth';
     this.renderTargetDepthBuffer.texture.generateMipmaps = false;
 
     this.edgeDetectionMaterial = new EdgeDetectionMaterial();
     this.renderTargetEdgeBuffer = new WebGLRenderTarget(this.resolution.x, this.resolution.y, pars);
-    this.renderTargetEdgeBuffer.texture.name = "OutlinePass.edge";
+    this.renderTargetEdgeBuffer.texture.name = 'OutlinePass.edge';
     this.renderTargetEdgeBuffer.texture.generateMipmaps = false;
 
     this.overlayMaterial = new OverlayMaterial();
 
     this.copyUniforms = UniformsUtils.clone(CopyShader.uniforms);
-    this.copyUniforms["opacity"].value = 1.0;
+    this.copyUniforms['opacity'].value = 1.0;
     this.copyMaterial = new ShaderMaterial({
       uniforms: this.copyUniforms,
       vertexShader: CopyShader.vertexShader,
@@ -300,12 +300,12 @@ export default class OutlinePass extends Pass {
       });
 
       this.renderScene.overrideMaterial = this.depthMaskMaterial;
-      this.depthMaskMaterial.uniforms["cameraNearFar"].value = new Vector2(
+      this.depthMaskMaterial.uniforms['cameraNearFar'].value = new Vector2(
         this.renderCamera.near,
         this.renderCamera.far
       );
-      this.depthMaskMaterial.uniforms["depthTexture"].value = this.renderTargetDepthBuffer.texture;
-      this.depthMaskMaterial.uniforms["textureMatrix"].value = this.textureMatrix;
+      this.depthMaskMaterial.uniforms['depthTexture'].value = this.renderTargetDepthBuffer.texture;
+      this.depthMaskMaterial.uniforms['textureMatrix'].value = this.textureMatrix;
       renderer.setRenderTarget(this.renderTargetMaskBuffer);
       renderer.clear();
 
@@ -336,8 +336,8 @@ export default class OutlinePass extends Pass {
 
       // Apply Edge Detection Pass
       this.quad.material = this.edgeDetectionMaterial;
-      this.edgeDetectionMaterial.uniforms["maskTexture"].value = this.renderTargetMaskBuffer.texture;
-      this.edgeDetectionMaterial.uniforms["texSize"].value = new Vector2(
+      this.edgeDetectionMaterial.uniforms['maskTexture'].value = this.renderTargetMaskBuffer.texture;
+      this.edgeDetectionMaterial.uniforms['texSize'].value = new Vector2(
         this.renderTargetMaskBuffer.width,
         this.renderTargetMaskBuffer.height
       );
@@ -347,9 +347,9 @@ export default class OutlinePass extends Pass {
 
       // Blend it additively over the input texture
       this.quad.material = this.overlayMaterial;
-      this.overlayMaterial.uniforms["edgeTexture"].value = this.renderTargetEdgeBuffer.texture;
-      this.overlayMaterial.uniforms["edgeColor"].value = this.edgeColor;
-      this.overlayMaterial.uniforms["texSize"].value = new Vector2(
+      this.overlayMaterial.uniforms['edgeTexture'].value = this.renderTargetEdgeBuffer.texture;
+      this.overlayMaterial.uniforms['edgeColor'].value = this.edgeColor;
+      this.overlayMaterial.uniforms['texSize'].value = new Vector2(
         this.renderTargetEdgeBuffer.width,
         this.renderTargetEdgeBuffer.height
       );
@@ -366,7 +366,7 @@ export default class OutlinePass extends Pass {
     // Copy the result of the outline pass to the frame buffer
     if (this.renderToScreen) {
       this.quad.material = this.copyMaterial;
-      this.copyUniforms["tDiffuse"].value = readBuffer.texture;
+      this.copyUniforms['tDiffuse'].value = readBuffer.texture;
       renderer.setRenderTarget(null);
       renderer.render(this.outlineScene, this.outlineCamera);
     }

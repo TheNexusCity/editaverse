@@ -1,14 +1,14 @@
-import EditorNodeMixin from "./EditorNodeMixin";
-import { Object3D, PlaneBufferGeometry, MeshBasicMaterial, Mesh, DoubleSide } from "three";
-import linkIconUrl from "../../assets/link-icon.png";
-import loadTexture from "../utils/loadTexture";
+import EditorNodeMixin from './EditorNodeMixin';
+import { Object3D, PlaneBufferGeometry, MeshBasicMaterial, Mesh, DoubleSide } from 'three';
+import linkIconUrl from '../../assets/link-icon.png?url';
+import loadTexture from '../utils/loadTexture';
 
 let linkHelperTexture = null;
 
 export default class LinkNode extends EditorNodeMixin(Object3D) {
-  static legacyComponentName = "link";
+  static legacyComponentName = 'link';
 
-  static nodeName = "Link";
+  static nodeName = 'Link';
 
   static async load() {
     linkHelperTexture = await loadTexture(linkIconUrl);
@@ -17,7 +17,7 @@ export default class LinkNode extends EditorNodeMixin(Object3D) {
   static async deserialize(editor, json) {
     const node = await super.deserialize(editor, json);
 
-    const { href } = json.components.find(c => c.name === "link").props;
+    const { href } = json.components.find(c => c.name === 'link').props;
 
     node.href = href;
 
@@ -27,7 +27,7 @@ export default class LinkNode extends EditorNodeMixin(Object3D) {
   constructor(editor) {
     super(editor);
 
-    this.href = "";
+    this.href = '';
 
     const geometry = new PlaneBufferGeometry();
     const material = new MeshBasicMaterial();
@@ -70,10 +70,10 @@ export default class LinkNode extends EditorNodeMixin(Object3D) {
   prepareForExport() {
     super.prepareForExport();
     this.remove(this.helper);
-    this.addGLTFComponent("link", {
+    this.addGLTFComponent('link', {
       href: this.href
     });
-    this.addGLTFComponent("networked", {
+    this.addGLTFComponent('networked', {
       id: this.uuid
     });
     this.replaceObject();

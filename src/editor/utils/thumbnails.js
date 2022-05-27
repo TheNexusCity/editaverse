@@ -33,7 +33,7 @@ export async function generateImageFileThumbnail(file, width, height, crop, back
 
 export async function generateVideoFileThumbnail(file, width, height, background) {
   const url = URL.createObjectURL(file);
-  const video = document.createElement("video");
+  const video = document.createElement('video');
   await new Promise((resolve, reject) => {
     video.src = url;
     video.onloadeddata = resolve;
@@ -48,28 +48,28 @@ export async function generateVideoFileThumbnail(file, width, height, background
   return generateMediaThumbnail(video, width, height, background);
 }
 
-export async function generateMediaThumbnail(el, width = 256, height = 256, background = "#000") {
-  const canvas = document.createElement("canvas");
+export async function generateMediaThumbnail(el, width = 256, height = 256, background = '#000') {
+  const canvas = document.createElement('canvas');
   canvas.width = width;
   canvas.height = height;
 
-  const ctx = canvas.getContext("2d");
+  const ctx = canvas.getContext('2d');
 
   const dimensions = resize(el.width || el.videoWidth, el.height || el.videoHeight, width, height);
-  if (background !== "transparent") {
+  if (background !== 'transparent') {
     ctx.fillStyle = background;
     ctx.fillRect(0, 0, width, height);
   }
   ctx.drawImage(el, dimensions.x, dimensions.y, dimensions.w, dimensions.h);
 
-  if (background === "transparent") {
-    return getCanvasBlob(canvas, "image/png");
+  if (background === 'transparent') {
+    return getCanvasBlob(canvas, 'image/png');
   } else {
     return getCanvasBlob(canvas);
   }
 }
 
-export function getCanvasBlob(canvas, fileType = "image/jpeg", quality = 0.9) {
+export function getCanvasBlob(canvas, fileType = 'image/jpeg', quality = 0.9) {
   if (canvas.msToBlob) {
     return Promise.resolve(canvas.msToBlob());
   } else {

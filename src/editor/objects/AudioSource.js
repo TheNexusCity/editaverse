@@ -1,15 +1,15 @@
-import { Object3D, Audio, PositionalAudio } from "three";
-import { RethrownError } from "../utils/errors";
+import { Object3D, Audio, PositionalAudio } from 'three';
+import { RethrownError } from '../utils/errors';
 
 export const AudioType = {
-  Stereo: "stereo",
-  PannerNode: "pannernode"
+  Stereo: 'stereo',
+  PannerNode: 'pannernode'
 };
 
 export const DistanceModelType = {
-  Linear: "linear",
-  Inverse: "inverse",
-  Exponential: "exponential"
+  Linear: 'linear',
+  Inverse: 'inverse',
+  Exponential: 'exponential'
 };
 
 export const AudioTypeOptions = Object.values(AudioType).map(v => ({ label: v, value: v }));
@@ -17,17 +17,17 @@ export const AudioTypeOptions = Object.values(AudioType).map(v => ({ label: v, v
 export const DistanceModelOptions = Object.values(DistanceModelType).map(v => ({ label: v, value: v }));
 
 export default class AudioSource extends Object3D {
-  constructor(audioListener, elTag = "audio") {
+  constructor(audioListener, elTag = 'audio') {
     super();
 
     const el = document.createElement(elTag);
-    el.setAttribute("playsinline", "");
-    el.setAttribute("webkit-playsinline", "");
-    el.crossOrigin = "anonymous";
+    el.setAttribute('playsinline', '');
+    el.setAttribute('webkit-playsinline', '');
+    el.crossOrigin = 'anonymous';
     el.loop = true;
     this.el = el;
 
-    this._src = "";
+    this._src = '';
     this.audioListener = audioListener;
     this.controls = true;
     this.audioType = AudioType.PannerNode;
@@ -220,12 +220,12 @@ export default class AudioSource extends Object3D {
       };
 
       cleanup = () => {
-        this.el.removeEventListener("loadeddata", onLoadedData);
-        this.el.removeEventListener("error", onError);
+        this.el.removeEventListener('loadeddata', onLoadedData);
+        this.el.removeEventListener('error', onError);
       };
 
-      this.el.addEventListener("loadeddata", onLoadedData);
-      this.el.addEventListener("error", onError);
+      this.el.addEventListener('loadeddata', onLoadedData);
+      this.el.addEventListener('error', onError);
     });
   }
 

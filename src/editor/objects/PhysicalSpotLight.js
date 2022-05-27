@@ -1,5 +1,5 @@
-import { SpotLight, Object3D } from "three";
-import createShadowMapResolutionProxy from "../utils/createShadowMapResolutionProxy";
+import { SpotLight, Object3D } from 'three';
+import createShadowMapResolutionProxy from '../utils/createShadowMapResolutionProxy';
 
 export default class PhysicalSpotLight extends SpotLight {
   constructor() {

@@ -1,10 +1,10 @@
-import EventEmitter from "eventemitter3";
+import EventEmitter from 'eventemitter3';
 
 export class BaseSource extends EventEmitter {
   constructor() {
     super();
-    this.id = "";
-    this.name = "";
+    this.id = '';
+    this.name = '';
     this.iconComponent = undefined;
     this.assetPanelComponent = undefined;
     this.requiresAuthentication = false;

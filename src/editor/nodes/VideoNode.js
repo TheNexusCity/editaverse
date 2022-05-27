@@ -1,15 +1,15 @@
-import EditorNodeMixin from "./EditorNodeMixin";
-import Video from "../objects/Video";
-import Hls from "hls.js/dist/hls.light";
-import isHLS from "../utils/isHLS";
-import spokeLandingVideo from "../../assets/video/SpokePromo.mp4";
-import { RethrownError } from "../utils/errors";
-import { getObjectPerfIssues } from "../utils/performance";
+import EditorNodeMixin from './EditorNodeMixin';
+import Video from '../objects/Video';
+import Hls from 'hls.js/dist/hls.light';
+import isHLS from '../utils/isHLS';
+import spokeLandingVideo from '../../assets/video/SpokePromo.mp4';
+import { RethrownError } from '../utils/errors';
+import { getObjectPerfIssues } from '../utils/performance';
 
 export default class VideoNode extends EditorNodeMixin(Video) {
-  static legacyComponentName = "video";
+  static legacyComponentName = 'video';
 
-  static nodeName = "Video";
+  static nodeName = 'Video';
 
   static initialElementProps = {
     src: new URL(spokeLandingVideo, location).href
@@ -33,7 +33,7 @@ export default class VideoNode extends EditorNodeMixin(Video) {
       coneOuterAngle,
       coneOuterGain,
       projection
-    } = json.components.find(c => c.name === "video").props;
+    } = json.components.find(c => c.name === 'video').props;
 
     loadAsync(
       (async () => {
@@ -60,7 +60,7 @@ export default class VideoNode extends EditorNodeMixin(Video) {
   constructor(editor) {
     super(editor, editor.audioListener);
 
-    this._canonicalUrl = "";
+    this._canonicalUrl = '';
     this._autoPlay = true;
     this.volume = 0.5;
     this.controls = true;
@@ -83,13 +83,13 @@ export default class VideoNode extends EditorNodeMixin(Video) {
   }
 
   async load(src, onError) {
-    const nextSrc = src || "";
+    const nextSrc = src || '';
 
-    if (nextSrc === this._canonicalUrl && nextSrc !== "") {
+    if (nextSrc === this._canonicalUrl && nextSrc !== '') {
       return;
     }
 
-    this._canonicalUrl = src || "";
+    this._canonicalUrl = src || '';
 
     this.issues = [];
     this._mesh.visible = false;
@@ -113,7 +113,7 @@ export default class VideoNode extends EditorNodeMixin(Video) {
       if (isHls) {
         this.hls = new Hls({
           xhrSetup: (xhr, url) => {
-            xhr.open("GET", this.editor.api.unproxyUrl(src, url));
+            xhr.open('GET', this.editor.api.unproxyUrl(src, url));
           }
         });
       }
@@ -142,11 +142,11 @@ export default class VideoNode extends EditorNodeMixin(Video) {
 
       console.error(videoError);
 
-      this.issues.push({ severity: "error", message: "Error loading video." });
+      this.issues.push({ severity: 'error', message: 'Error loading video.' });
     }
 
-    this.editor.emit("objectsChanged", [this]);
-    this.editor.emit("selectionChanged");
+    this.editor.emit('objectsChanged', [this]);
+    this.editor.emit('selectionChanged');
     this.hideLoadingCube();
 
     return this;
@@ -203,7 +203,7 @@ export default class VideoNode extends EditorNodeMixin(Video) {
 
   prepareForExport() {
     super.prepareForExport();
-    this.addGLTFComponent("video", {
+    this.addGLTFComponent('video', {
       src: this._canonicalUrl,
       controls: this.controls,
       autoPlay: this.autoPlay,
@@ -219,7 +219,7 @@ export default class VideoNode extends EditorNodeMixin(Video) {
       coneOuterGain: this.coneOuterGain,
       projection: this.projection
     });
-    this.addGLTFComponent("networked", {
+    this.addGLTFComponent('networked', {
       id: this.uuid
     });
     this.replaceObject();

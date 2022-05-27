@@ -1,21 +1,21 @@
-import { Math as _Math, Scene, Group, Object3D, Fog, FogExp2, Color } from "three";
-import EditorNodeMixin from "./EditorNodeMixin";
-import { setStaticMode, StaticModes, isStatic } from "../StaticMode";
-import sortEntities from "../utils/sortEntities";
-import MeshCombinationGroup from "../MeshCombinationGroup";
-import GroupNode from "./GroupNode";
-import getNodeWithUUID from "../utils/getNodeWithUUID";
-import serializeColor from "../utils/serializeColor";
-import { DistanceModelType } from "../objects/AudioSource";
-import traverseFilteredSubtrees from "../utils/traverseFilteredSubtrees";
-
+import { Math as _Math, Scene, Group, Object3D, Fog, FogExp2, Color } from 'three';
+import EditorNodeMixin from './EditorNodeMixin';
+import { setStaticMode, StaticModes, isStatic } from '../StaticMode';
+import sortEntities from '../utils/sortEntities';
+import MeshCombinationGroup from '../MeshCombinationGroup';
+import GroupNode from './GroupNode';
+import getNodeWithUUID from '../utils/getNodeWithUUID';
+import serializeColor from '../utils/serializeColor';
+import { DistanceModelType } from '../objects/AudioSource';
+import traverseFilteredSubtrees from '../utils/traverseFilteredSubtrees';
+//import metaversefileApi from "../../metaversefiles/metaversefile-api.js";
 //To Kebab case
 const toKebabCase = str =>
   str &&
   str
     .match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g)
     .map(x => x.toLowerCase())
-    .join("-");
+    .join('-');
 // Migrate v1 spoke scene to v2
 function migrateV1ToV2(json) {
   const { root, metadata, entities } = json;
@@ -60,32 +60,32 @@ function migrateV2ToV3(json) {
     }
 
     entity.components.push({
-      name: "visible",
+      name: 'visible',
       props: {
         value: true
       }
     });
 
-    const modelComponent = entity.components.find(c => c.name === "gltf-model");
-    const navMeshComponent = entity.components.find(c => c.name === "nav-mesh");
+    const modelComponent = entity.components.find(c => c.name === 'gltf-model');
+    const navMeshComponent = entity.components.find(c => c.name === 'nav-mesh');
 
     if (!navMeshComponent && modelComponent && modelComponent.props.includeInFloorPlan) {
       entity.components.push({
-        name: "collidable",
+        name: 'collidable',
         props: {}
       });
 
       entity.components.push({
-        name: "walkable",
+        name: 'walkable',
         props: {}
       });
     }
 
-    const groundPlaneComponent = entity.components.find(c => c.name === "ground-plane");
+    const groundPlaneComponent = entity.components.find(c => c.name === 'ground-plane');
 
     if (groundPlaneComponent) {
       entity.components.push({
-        name: "walkable",
+        name: 'walkable',
         props: {}
       });
     }
@@ -93,7 +93,7 @@ function migrateV2ToV3(json) {
     if (modelComponent && navMeshComponent) {
       entity.components = [
         {
-          name: "floor-plan",
+          name: 'floor-plan',
           props: {
             autoCellSize: true,
             cellSize: 1,
@@ -124,7 +124,7 @@ function migrateV3ToV4(json) {
       continue;
     }
 
-    const visibleComponent = entity.components.find(c => c.name === "visible");
+    const visibleComponent = entity.components.find(c => c.name === 'visible');
 
     if (visibleComponent) {
       if (visibleComponent.props.visible !== undefined) {
@@ -146,7 +146,7 @@ function migrateV3ToV4(json) {
   return json;
 }
 
-const combineComponents = ["gltf-model", "kit-piece"];
+const combineComponents = ['gltf-model', 'kit-piece'];
 
 function migrateV4ToV5(json) {
   json.version = 5;
@@ -160,7 +160,7 @@ function migrateV4ToV5(json) {
       continue;
     }
 
-    const animationComponent = entity.components.find(c => c.name === "loop-animation");
+    const animationComponent = entity.components.find(c => c.name === 'loop-animation');
 
     if (animationComponent) {
       // Prior to V5 animation clips were stored in activeClipIndex as an integer
@@ -175,7 +175,7 @@ function migrateV4ToV5(json) {
 
     if (hasCombineComponent) {
       entity.components.push({
-        name: "combine",
+        name: 'combine',
         props: {}
       });
     }
@@ -185,13 +185,13 @@ function migrateV4ToV5(json) {
 }
 
 export const FogType = {
-  Disabled: "disabled",
-  Linear: "linear",
-  Exponential: "exponential"
+  Disabled: 'disabled',
+  Linear: 'linear',
+  Exponential: 'exponential'
 };
 
 export default class SceneNode extends EditorNodeMixin(Scene) {
-  static nodeName = "Scene";
+  static nodeName = 'Scene';
 
   static disableTransform = true;
 
@@ -283,9 +283,10 @@ export default class SceneNode extends EditorNodeMixin(Scene) {
 
   static scnToSpokeJson(json) {
     const { name, root, skyboxId, components } = json.objects[0].content;
-    const secureName = name ? name : "Imported";
+    const secureName = name ? name : 'Imported';
     const secureRoot = root ? root : _Math.generateUUID();
     const secureSkyBoxId = skyboxId ? skyboxId : _Math.generateUUID();
+
     const object = {
       version: 5,
       root: secureRoot,
@@ -295,10 +296,10 @@ export default class SceneNode extends EditorNodeMixin(Scene) {
           name: secureName
         },
         [secureSkyBoxId]: {
-          name: "Skybox",
+          name: 'Skybox',
           components: [
             {
-              name: "transform",
+              name: 'transform',
               props: {
                 position: {
                   x: 0,
@@ -318,19 +319,19 @@ export default class SceneNode extends EditorNodeMixin(Scene) {
               }
             },
             {
-              name: "visible",
+              name: 'visible',
               props: {
                 visible: true
               }
             },
             {
-              name: "editor-settings",
+              name: 'editor-settings',
               props: {
                 enabled: true
               }
             },
             {
-              name: "skybox",
+              name: 'skybox',
               props: {
                 turbidity: 6.09,
                 rayleigh: 0.82,
@@ -359,15 +360,20 @@ export default class SceneNode extends EditorNodeMixin(Scene) {
 
     json.objects.forEach((item, index) => {
       let tmpEntity;
-      const itemUuid = item?.content?.uuid ? item.content.uuid : _Math.generateUUID();
-      if (itemUuid && item.type === "application/light") {
+      const itemUuid = item?.content?.root
+        ? item?.content?.root
+        : item?.content?.uuid
+        ? item.content.uuid
+        : _Math.generateUUID();
+
+      if (itemUuid && item.type === 'application/light') {
         const itemName = item?.content?.name ? item.content.name : `${item.content.lightType}-light`;
         tmpEntity = {
           [itemUuid]: {
             name: itemName,
             components: [
               {
-                name: "transform",
+                name: 'transform',
                 props: {
                   position: {
                     x: item?.content?.position ? item.content.position[0] : 0,
@@ -387,13 +393,13 @@ export default class SceneNode extends EditorNodeMixin(Scene) {
                 }
               },
               {
-                name: "visible",
+                name: 'visible',
                 props: {
                   visible: true
                 }
               },
               {
-                name: "editor-settings",
+                name: 'editor-settings',
                 props: {
                   enabled: true
                 }
@@ -401,7 +407,7 @@ export default class SceneNode extends EditorNodeMixin(Scene) {
               {
                 name: toKebabCase(itemName),
                 props: {
-                  color: item.color ? item.color : "#ffffff",
+                  color: item.color ? item.color : '#ffffff',
                   intensity: 1,
                   range: 0,
                   castShadow: true,
@@ -411,18 +417,18 @@ export default class SceneNode extends EditorNodeMixin(Scene) {
                 }
               }
             ],
-            parent: secureRoot,
+            parent: secureRoot !== itemUuid ? secureRoot : undefined,
             index: index
           }
         };
-      } else if (itemUuid && item.type !== "application/spawnpoint" && item.type !== "application/rendersettings") {
+      } else if (itemUuid && item.type !== 'application/spawnpoint' && item.type !== 'application/rendersettings') {
         const itemName = item?.content?.name ? item.content.name : `gltf-model`;
         tmpEntity = {
           [itemUuid]: {
             name: itemName,
             components: [
               {
-                name: "transform",
+                name: 'transform',
                 props: {
                   position: {
                     x: item.position ? item.position[0] : 0,
@@ -442,19 +448,19 @@ export default class SceneNode extends EditorNodeMixin(Scene) {
                 }
               },
               {
-                name: "visible",
+                name: 'visible',
                 props: {
                   visible: true
                 }
               },
               {
-                name: "editor-settings",
+                name: 'editor-settings',
                 props: {
                   enabled: true
                 }
               },
               {
-                name: "gltf-model",
+                name: 'gltf-model',
                 props: {
                   // src: item.start_url.replace("http://localhost:8081/", ""),
                   src: item.start_url,
@@ -462,26 +468,26 @@ export default class SceneNode extends EditorNodeMixin(Scene) {
                 }
               },
               {
-                name: "shadow",
+                name: 'shadow',
                 props: {
                   cast: false,
                   receive: true
                 }
               },
               {
-                name: "collidable",
+                name: 'collidable',
                 props: {}
               },
               {
-                name: "walkable",
+                name: 'walkable',
                 props: {}
               },
               {
-                name: "combine",
+                name: 'combine',
                 props: {}
               }
             ],
-            parent: secureRoot,
+            parent: secureRoot !== itemUuid ? secureRoot : undefined,
             index: index
           }
         };
@@ -493,6 +499,9 @@ export default class SceneNode extends EditorNodeMixin(Scene) {
   }
 
   static async loadProjectScn(editor, scnjson) {
+    /* debugger;
+    const data = await metaversefileApi.import("https://webaverse.github.io/infinifruit/");
+    debugger;*/
     let json = SceneNode.scnToSpokeJson(scnjson);
     if (!json.version) {
       json = migrateV1ToV2(json);
@@ -583,7 +592,7 @@ export default class SceneNode extends EditorNodeMixin(Scene) {
     const node = await super.deserialize(editor, json);
 
     if (json.components) {
-      const fog = json.components.find(c => c.name === "fog");
+      const fog = json.components.find(c => c.name === 'fog');
 
       if (fog) {
         const { type, color, density, near, far } = fog.props;
@@ -594,14 +603,14 @@ export default class SceneNode extends EditorNodeMixin(Scene) {
         node.fogFarDistance = far;
       }
 
-      const background = json.components.find(c => c.name === "background");
+      const background = json.components.find(c => c.name === 'background');
 
       if (background) {
         const { color } = background.props;
         node.background.set(color);
       }
 
-      const audioSettings = json.components.find(c => c.name === "audio-settings");
+      const audioSettings = json.components.find(c => c.name === 'audio-settings');
 
       if (audioSettings) {
         const props = audioSettings.props;
@@ -755,7 +764,7 @@ export default class SceneNode extends EditorNodeMixin(Scene) {
           name: this.name,
           components: [
             {
-              name: "fog",
+              name: 'fog',
               props: {
                 type: this.fogType,
                 color: serializeColor(this.fogColor),
@@ -765,13 +774,13 @@ export default class SceneNode extends EditorNodeMixin(Scene) {
               }
             },
             {
-              name: "background",
+              name: 'background',
               props: {
                 color: serializeColor(this.background)
               }
             },
             {
-              name: "audio-settings",
+              name: 'audio-settings',
               props: {
                 overrideAudioSettings: this.overrideAudioSettings,
                 avatarDistanceModel: this.avatarDistanceModel,
@@ -826,10 +835,10 @@ export default class SceneNode extends EditorNodeMixin(Scene) {
           content: {
             root: this.uuid,
             name: this.name,
-            skyboxId: "",
+            skyboxId: '',
             components: [
               {
-                name: "fog",
+                name: 'fog',
                 props: {
                   type: this.fogType,
                   color: serializeColor(this.fogColor),
@@ -839,13 +848,13 @@ export default class SceneNode extends EditorNodeMixin(Scene) {
                 }
               },
               {
-                name: "background",
+                name: 'background',
                 props: {
                   color: serializeColor(this.background)
                 }
               },
               {
-                name: "audio-settings",
+                name: 'audio-settings',
                 props: {
                   overrideAudioSettings: this.overrideAudioSettings,
                   avatarDistanceModel: this.avatarDistanceModel,
@@ -869,9 +878,9 @@ export default class SceneNode extends EditorNodeMixin(Scene) {
     };
 
     for (const sibling of this.children) {
-      if (sibling.name === "Skybox") {
+      if (sibling.name === 'Skybox') {
         sceneJson.objects[0].content.skyboxId = sibling.uuid;
-      } else if (sibling.type === "Model") {
+      } else if (sibling.type === 'Model') {
         const object = {
           position: [sibling.position.x, sibling.position.y, sibling.position.z],
           physics: sibling.collidable,
@@ -884,13 +893,13 @@ export default class SceneNode extends EditorNodeMixin(Scene) {
           }
         };
         sceneJson.objects.push(object);
-      } else if (sibling.type.includes("Light")) {
+      } else if (sibling.type.includes('Light')) {
         let object;
-        if (sibling.type === "HemisphereLight") {
+        if (sibling.type === 'HemisphereLight') {
           object = {
-            type: "application/light",
+            type: 'application/light',
             content: {
-              lightType: sibling.name.split(" ")[0].toLowerCase(),
+              lightType: sibling.name.split(' ')[0].toLowerCase(),
               args: [[255, 255, 255], 0.5],
               name: sibling.name,
               uuid: sibling.uuid
@@ -898,9 +907,9 @@ export default class SceneNode extends EditorNodeMixin(Scene) {
           };
         } else {
           object = {
-            type: "application/light",
+            type: 'application/light',
             content: {
-              lightType: sibling.name.split(" ")[0].toLowerCase(),
+              lightType: sibling.name.split(' ')[0].toLowerCase(),
               args: [[255, 255, 255], 5],
               name: sibling.name,
               position: [sibling.position.x, sibling.position.y, sibling.position.z],
@@ -935,19 +944,19 @@ export default class SceneNode extends EditorNodeMixin(Scene) {
       }
     }
 
-    this.addGLTFComponent("background", {
+    this.addGLTFComponent('background', {
       color: this.background
     });
 
     if (this.fogType === FogType.Linear) {
-      this.addGLTFComponent("fog", {
+      this.addGLTFComponent('fog', {
         type: this.fogType,
         color: serializeColor(this.fogColor),
         near: this.fogNearDistance,
         far: this.fogFarDistance
       });
     } else if (this.fogType === FogType.Exponential) {
-      this.addGLTFComponent("fog", {
+      this.addGLTFComponent('fog', {
         type: this.fogType,
         color: serializeColor(this.fogColor),
         density: this.fogDensity
@@ -955,7 +964,7 @@ export default class SceneNode extends EditorNodeMixin(Scene) {
     }
 
     if (this.overrideAudioSettings) {
-      this.addGLTFComponent("audio-settings", {
+      this.addGLTFComponent('audio-settings', {
         avatarDistanceModel: this.avatarDistanceModel,
         avatarRolloffFactor: this.avatarRolloffFactor,
         avatarRefDistance: this.avatarRefDistance,
@@ -1030,7 +1039,7 @@ export default class SceneNode extends EditorNodeMixin(Scene) {
         return false;
       }
 
-      if (child.type === "Model") {
+      if (child.type === 'Model') {
         animations.push(...child.clips);
       }
     });

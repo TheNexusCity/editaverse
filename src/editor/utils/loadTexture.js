@@ -1,5 +1,5 @@
-import { TextureLoader } from "three";
-import { RethrownError } from "./errors";
+import { TextureLoader } from 'three';
+import { RethrownError } from './errors';
 
 // Texture loading function that returns a promise and uses the RethrownError class
 export default function loadTexture(src, textureLoader = new TextureLoader()) {

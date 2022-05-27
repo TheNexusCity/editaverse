@@ -1,8 +1,8 @@
-import { Scene, AmbientLight, DirectionalLight, PerspectiveCamera, Box3, Vector3 } from "three";
-import { environmentMap } from "../utils/EnvironmentMap";
-import { traverseMaterials } from "../utils/materials";
-import { getCanvasBlob } from "../utils/thumbnails";
-import makeRenderer from "./makeRenderer";
+import { Scene, AmbientLight, DirectionalLight, PerspectiveCamera, Box3, Vector3 } from 'three';
+import { environmentMap } from '../utils/EnvironmentMap';
+import { traverseMaterials } from '../utils/materials';
+import { getCanvasBlob } from '../utils/thumbnails';
+import makeRenderer from './makeRenderer';
 
 export default class ThumbnailRenderer {
   constructor() {

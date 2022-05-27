@@ -1,5 +1,5 @@
-import { Mesh, PlaneBufferGeometry, MeshStandardMaterial, MeshPhongMaterial, Vector2, RepeatWrapping } from "three";
-import { SimplexNoise } from "three/examples/jsm/math/SimplexNoise";
+import { Mesh, PlaneBufferGeometry, MeshStandardMaterial, MeshPhongMaterial, Vector2, RepeatWrapping } from 'three';
+import { SimplexNoise } from 'three/examples/jsm/math/SimplexNoise';
 
 /**
  * SimpleWater
@@ -35,13 +35,13 @@ export default class SimpleWater extends Mesh {
     normalMap.wrapS = normalMap.wrapT = RepeatWrapping;
 
     const material = new materialClass({ color: 0x0054df, normalMap });
-    material.name = "SimpleWaterMaterial";
+    material.name = 'SimpleWaterMaterial';
 
     material.onBeforeCompile = shader => {
       Object.assign(shader.uniforms, waterUniforms);
 
       shader.vertexShader = shader.vertexShader.replace(
-        "#include <fog_pars_vertex>",
+        '#include <fog_pars_vertex>',
         `
         #include <fog_pars_vertex>
         varying vec3 vWPosition;
@@ -49,7 +49,7 @@ export default class SimpleWater extends Mesh {
       );
 
       shader.vertexShader = shader.vertexShader.replace(
-        "#include <fog_vertex>",
+        '#include <fog_vertex>',
         `
         #include <fog_vertex>
         vWPosition = ( modelMatrix * vec4( transformed, 1.0 ) ).xyz;
@@ -58,7 +58,7 @@ export default class SimpleWater extends Mesh {
 
       // getNoise function from https://github.com/mrdoob/three.js/blob/dev/examples/jsm/objects/Water.js
       shader.fragmentShader = shader.fragmentShader.replace(
-        "#include <normalmap_pars_fragment>",
+        '#include <normalmap_pars_fragment>',
         `
         #include <normalmap_pars_fragment>
 
@@ -86,7 +86,7 @@ export default class SimpleWater extends Mesh {
 
       // https://github.com/mrdoob/three.js/blob/dev/src/renderers/shaders/ShaderChunk/normalmap_pars_fragment.glsl.js#L20
       shader.fragmentShader = shader.fragmentShader.replace(
-        "#include <normal_fragment_maps>",
+        '#include <normal_fragment_maps>',
         `
           // Workaround for Adreno 3XX dFd*( vec3 ) bug. See #9988
 

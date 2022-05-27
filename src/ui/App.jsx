@@ -26,11 +26,11 @@ import { Column } from "./layout/Flex";
 import theme from "./theme";
 
 const EditorContainer = lazy(() =>
-  import(/* webpackChunkName: "project-page", webpackPrefetch: true */ "./EditorContainer")
+  import(/* webpackChunkName: "project-page", webpackPrefetch: true */ "./EditorContainer.jsx")
 );
 
 const PackageKitPage = lazy(() =>
-  import(/* webpackChunkName: "package-kit-page", webpackPrefetch: true */ "./assets/PackageKitPage")
+  import(/* webpackChunkName: "package-kit-page", webpackPrefetch: true */ "./assets/PackageKitPage.jsx")
 );
 
 export default class App extends Component {
