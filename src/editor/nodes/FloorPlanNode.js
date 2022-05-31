@@ -8,7 +8,7 @@ import mergeMeshGeometries from '../utils/mergeMeshGeometries';
 import RecastClient from '../recast/RecastClient';
 import HeightfieldClient from '../heightfield/HeightfieldClient';
 import SpawnPointNode from '../nodes/SpawnPointNode';
-import * as recastWasmUrl from 'recast-wasm/dist/recast.wasm';
+import * as recastWasmUrl from 'recast-wasm/dist/recast.wasm?url';
 import traverseFilteredSubtrees from '../utils/traverseFilteredSubtrees';
 
 const recastClient = new RecastClient();
@@ -158,7 +158,6 @@ export default class FloorPlanNode extends EditorNodeMixin(FloorPlan) {
 
     // Tuned to produce cell sizes from ~0.5 to ~1.5 for areas from ~200 to ~350,000.
     const cellSize = this.autoCellSize ? Math.pow(area, 1 / 3) / 50 : this.cellSize;
-
     const navGeometry = await recastClient.buildNavMesh(
       walkableGeometry,
       {

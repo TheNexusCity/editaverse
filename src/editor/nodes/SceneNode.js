@@ -8,7 +8,7 @@ import getNodeWithUUID from '../utils/getNodeWithUUID';
 import serializeColor from '../utils/serializeColor';
 import { DistanceModelType } from '../objects/AudioSource';
 import traverseFilteredSubtrees from '../utils/traverseFilteredSubtrees';
-//import metaversefileApi from "../../metaversefiles/metaversefile-api.js";
+//import metaversefileApi from '../../metaversefiles/metaversefile-api.js';
 //To Kebab case
 const toKebabCase = str =>
   str &&
@@ -499,9 +499,9 @@ export default class SceneNode extends EditorNodeMixin(Scene) {
   }
 
   static async loadProjectScn(editor, scnjson) {
-    /* debugger;
-    const data = await metaversefileApi.import("https://webaverse.github.io/infinifruit/");
-    debugger;*/
+    //debugger;
+    //const data = await metaversefileApi.import('https://webaverse.github.io/infinifruit/');
+    //debugger;
     let json = SceneNode.scnToSpokeJson(scnjson);
     if (!json.version) {
       json = migrateV1ToV2(json);

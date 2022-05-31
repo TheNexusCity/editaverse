@@ -1,9 +1,9 @@
-import React, { useCallback, useState } from "react";
-import styled from "styled-components";
-import NavBar from "../navigation/NavBar";
-import FileInput from "../inputs/FileInput";
-import ProgressBar from "../inputs/ProgressBar";
-import KitPackager from "../../editor/kits/KitPackager";
+import React, { useCallback, useState } from 'react';
+import styled from 'styled-components';
+import NavBar from '../navigation/NavBar';
+import FileInput from '../inputs/FileInput';
+import ProgressBar from '../inputs/ProgressBar';
+import KitPackager from '../../editor/kits/KitPackager';
 
 const Container = styled.div`
   display: flex;
@@ -39,11 +39,11 @@ export default function PackageKitPage() {
     try {
       const file = files[0];
       const fileUrl = URL.createObjectURL(file);
-      const kitName = file.name.replace(".glb", "");
+      const kitName = file.name.replace('.glb', '');
       const zipBlob = await kitPackager.package(kitName, fileUrl, setMessage);
 
-      const el = document.createElement("a");
-      const fileName = kitName + ".zip";
+      const el = document.createElement('a');
+      const fileName = kitName + '.zip';
       el.download = fileName;
       el.href = URL.createObjectURL(zipBlob);
       document.body.appendChild(el);

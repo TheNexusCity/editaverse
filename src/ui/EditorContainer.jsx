@@ -1,35 +1,35 @@
-import * as Sentry from "@sentry/browser";
-import PropTypes from "prop-types";
-import React, { Component } from "react";
-import { DndProvider } from "react-dnd";
-import HTML5Backend from "react-dnd-html5-backend";
-import { Helmet } from "react-helmet";
-import Modal from "react-modal";
-import styled from "styled-components";
-import { createEditor } from "../config";
-import configs from "../configs";
-import Editor from "../editor/Editor";
-import { trackEvent } from "../telemetry";
-import defaultTemplateUrl from "./../assets/templates/crater.spoke?url";
-import tutorialTemplateUrl from "./../assets/templates/tutorial.spoke?url";
-import { withApi } from "./contexts/ApiContext";
-import { DialogContextProvider } from "./contexts/DialogContext";
-import { EditorContextProvider } from "./contexts/EditorContext";
-import { OnboardingContextProvider } from "./contexts/OnboardingContext";
-import { defaultSettings, SettingsContextProvider } from "./contexts/SettingsContext";
-import ConfirmDialog from "./dialogs/ConfirmDialog";
-import ErrorDialog from "./dialogs/ErrorDialog";
-import ExportProjectDialog from "./dialogs/ExportProjectDialog";
-import ProgressDialog from "./dialogs/ProgressDialog";
-import SaveNewProjectDialog from "./dialogs/SaveNewProjectDialog";
+import * as Sentry from '@sentry/browser';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { DndProvider } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
+import { Helmet } from 'react-helmet';
+import Modal from 'react-modal';
+import styled from 'styled-components';
+import { createEditor } from '../config';
+import configs from '../configs';
+import Editor from '../editor/Editor';
+import { trackEvent } from '../telemetry';
+import defaultTemplateUrl from './../assets/templates/crater.spoke?url';
+import tutorialTemplateUrl from './../assets/templates/tutorial.spoke?url';
+import { withApi } from './contexts/ApiContext';
+import { DialogContextProvider } from './contexts/DialogContext';
+import { EditorContextProvider } from './contexts/EditorContext';
+import { OnboardingContextProvider } from './contexts/OnboardingContext';
+import { defaultSettings, SettingsContextProvider } from './contexts/SettingsContext';
+import ConfirmDialog from './dialogs/ConfirmDialog';
+import ErrorDialog from './dialogs/ErrorDialog';
+import ExportProjectDialog from './dialogs/ExportProjectDialog';
+import ProgressDialog from './dialogs/ProgressDialog';
+import SaveNewProjectDialog from './dialogs/SaveNewProjectDialog';
 // import DragLayer from "./dnd/DragLayer";
-import HierarchyPanelContainer from "./hierarchy/HierarchyPanelContainer";
-import { Resizeable } from "./layout/Resizeable";
-import Onboarding from "./onboarding/Onboarding";
-import PropertiesPanelContainer from "./properties/PropertiesPanelContainer";
-import BrowserPrompt from "./router/BrowserPrompt";
-import ToolBar from "./toolbar/ToolBar";
-import ViewportPanelContainer from "./viewport/ViewportPanelContainer";
+import HierarchyPanelContainer from './hierarchy/HierarchyPanelContainer';
+import { Resizeable } from './layout/Resizeable';
+import Onboarding from './onboarding/Onboarding';
+import PropertiesPanelContainer from './properties/PropertiesPanelContainer';
+import BrowserPrompt from './router/BrowserPrompt';
+import ToolBar from './toolbar/ToolBar';
+import ViewportPanelContainer from './viewport/ViewportPanelContainer';
 
 const StyledEditorContainer = styled.div`
   display: flex;
@@ -47,9 +47,8 @@ const WorkspaceContainer = styled.div`
   margin: 6px;
 `;
 
- 
 class EditorContainer extends Component {
-   static propTypes = {
+  static propTypes = {
     api: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
@@ -60,7 +59,7 @@ class EditorContainer extends Component {
     super(props);
 
     let settings = defaultSettings;
-    const storedSettings = localStorage.getItem("spoke-settings");
+    const storedSettings = localStorage.getItem('spoke-settings');
     if (storedSettings) {
       settings = JSON.parse(storedSettings);
     }
@@ -68,7 +67,7 @@ class EditorContainer extends Component {
     const editor = createEditor(props.api, settings);
     window.editor = editor;
     editor.init();
-    editor.addListener("initialized", this.onEditorInitialized);
+    editor.addListener('initialized', this.onEditorInitialized);
 
     this.state = {
       error: null,
@@ -93,22 +92,22 @@ class EditorContainer extends Component {
     const projectId = match.params.projectId;
     const queryParams = new URLSearchParams(location.search);
 
-    if (projectId === "new") {
-      if (queryParams.has("template")) {
-        this.loadProjectTemplate(queryParams.get("template"));
-      } else if (queryParams.has("sceneId")) {
-        this.loadScene(queryParams.get("sceneId"));
+    if (projectId === 'new') {
+      if (queryParams.has('template')) {
+        this.loadProjectTemplate(queryParams.get('template'));
+      } else if (queryParams.has('sceneId')) {
+        this.loadScene(queryParams.get('sceneId'));
       } else {
         this.loadProjectTemplate(defaultTemplateUrl);
       }
-    } else if (projectId === "tutorial") {
+    } else if (projectId === 'tutorial') {
       this.loadProjectTemplate(tutorialTemplateUrl, true);
     } else {
       this.loadProject(projectId);
     }
 
-    if (projectId === "tutorial") {
-      trackEvent("Tutorial Start");
+    if (projectId === 'tutorial') {
+      trackEvent('Tutorial Start');
       this.setState({ onboardingContext: { enabled: true } });
     }
   }
@@ -218,8 +217,8 @@ class EditorContainer extends Component {
       console.error(error);
 
       this.showDialog(ErrorDialog, {
-        title: "Error loading project.",
-        message: error.message || "There was an error when loading the project.",
+        title: 'Error loading project.',
+        message: error.message || 'There was an error when loading the project.',
         error
       });
     }
@@ -332,44 +331,44 @@ class EditorContainer extends Component {
         name: "File",
         items: [
           {
-            name: "Publish To Webaverse...",
+            name: 'Publish To Webaverse...',
             action: this.onExportProjectToWebaverse
           },
           {
-            name: "Export as binary glTF (.glb) ...",
+            name: 'Export as binary glTF (.glb) ...',
             action: this.onExportProject
           },
           {
-            name: "Import legacy .spoke project",
+            name: 'Import legacy .spoke project',
             action: this.onImportLegacyProject
           },
           {
-            name: "Export legacy .spoke project",
+            name: 'Export legacy .spoke project',
             action: this.onExportLegacyProject
           },
           {
-            name: "Import .scn project",
+            name: 'Import .scn project',
             action: this.onImportSCNProject
           },
           {
-            name: "Export .scn project",
+            name: 'Export .scn project',
             action: this.onExportSCNProject
           }
         ]
       },
       {
-        name: "Help",
+        name: 'Help',
         items: [
           {
-            name: "Tutorial",
+            name: 'Tutorial',
             action: () => {
               const { projectId } = this.props.match.params;
 
-              if (projectId === "tutorial") {
-                trackEvent("Tutorial Start");
+              if (projectId === 'tutorial') {
+                trackEvent('Tutorial Start');
                 this.setState({ onboardingContext: { enabled: true } });
               } else {
-                this.props.history.push("/projects/tutorial");
+                this.props.history.push('/projects/tutorial');
               }
             }
           }
@@ -383,10 +382,10 @@ class EditorContainer extends Component {
 
     const gl = this.state.editor.renderer.renderer.context;
 
-    const debugInfo = gl.getExtension("WEBGL_debug_renderer_info");
+    const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
 
-    let webglVendor = "Unknown";
-    let webglRenderer = "Unknown";
+    let webglVendor = 'Unknown';
+    let webglRenderer = 'Unknown';
 
     if (debugInfo) {
       webglVendor = gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL);
@@ -394,27 +393,27 @@ class EditorContainer extends Component {
     }
 
     Sentry.configureScope(scope => {
-      scope.setTag("webgl-vendor", webglVendor);
-      scope.setTag("webgl-renderer", webglRenderer);
+      scope.setTag('webgl-vendor', webglVendor);
+      scope.setTag('webgl-renderer', webglRenderer);
     });
 
-    window.addEventListener("resize", this.onResize);
+    window.addEventListener('resize', this.onResize);
     this.onResize();
-    editor.addListener("projectLoaded", this.onProjectLoaded);
-    editor.addListener("error", this.onEditorError);
-    editor.addListener("sceneModified", this.onSceneModified);
-    editor.addListener("saveProject", this.onSaveProject);
+    editor.addListener('projectLoaded', this.onProjectLoaded);
+    editor.addListener('error', this.onEditorError);
+    editor.addListener('sceneModified', this.onSceneModified);
+    editor.addListener('saveProject', this.onSaveProject);
   };
 
   componentWillUnmount() {
-    window.removeEventListener("resize", this.onResize);
+    window.removeEventListener('resize', this.onResize);
 
     const editor = this.state.editor;
-    editor.removeListener("sceneModified", this.onSceneModified);
-    editor.removeListener("saveProject", this.onSaveProject);
-    editor.removeListener("initialized", this.onEditorInitialized);
-    editor.removeListener("error", this.onEditorError);
-    editor.removeListener("projectLoaded", this.onProjectLoaded);
+    editor.removeListener('sceneModified', this.onSceneModified);
+    editor.removeListener('saveProject', this.onSaveProject);
+    editor.removeListener('initialized', this.onEditorInitialized);
+    editor.removeListener('error', this.onEditorError);
+    editor.removeListener('projectLoaded', this.onProjectLoaded);
     editor.dispose();
   }
 
@@ -458,8 +457,8 @@ class EditorContainer extends Component {
     console.error(error);
 
     this.showDialog(ErrorDialog, {
-      title: error.title || "Error",
-      message: error.message || "There was an unknown error.",
+      title: error.title || 'Error',
+      message: error.message || 'There was an unknown error.',
       error
     });
   };
@@ -474,10 +473,10 @@ class EditorContainer extends Component {
 
   updateSetting(key, value) {
     const settings = Object.assign(this.state.settingsContext.settings, { [key]: value });
-    localStorage.setItem("spoke-settings", JSON.stringify(settings));
+    localStorage.setItem('spoke-settings', JSON.stringify(settings));
     const editor = this.state.editor;
     editor.settings = settings;
-    editor.emit("settingsChanged");
+    editor.emit('settingsChanged');
     this.setState({
       settingsContext: {
         ...this.state.settingsContext,
@@ -498,8 +497,8 @@ class EditorContainer extends Component {
     const { editor, parentSceneId } = this.state;
 
     this.showDialog(ProgressDialog, {
-      title: "Generating Project Screenshot",
-      message: "Generating project screenshot..."
+      title: 'Generating Project Screenshot',
+      message: 'Generating project screenshot...'
     });
 
     // Wait for 5ms so that the ProgressDialog shows up.
@@ -524,8 +523,8 @@ class EditorContainer extends Component {
     const abortController = new AbortController();
 
     this.showDialog(ProgressDialog, {
-      title: "Saving Project",
-      message: "Saving project...",
+      title: 'Saving Project',
+      message: 'Saving project...',
       cancelable: true,
       onCancel: () => {
         abortController.abort();
@@ -533,7 +532,7 @@ class EditorContainer extends Component {
       }
     });
 
-    editor.setProperty(editor.scene, "name", result.name, false);
+    editor.setProperty(editor.scene, 'name', result.name, false);
     editor.scene.setMetadata({ name: result.name });
 
     const project = await this.props.api.createProject(
@@ -558,21 +557,21 @@ class EditorContainer extends Component {
   }
 
   onNewProject = async () => {
-    this.props.history.push("/projects/templates");
+    this.props.history.push('/projects/templates');
   };
 
   onOpenProject = () => {
-    this.props.history.push("/projects");
+    this.props.history.push('/projects');
   };
 
   onSaveProject = async () => {
-    trackEvent("Project Save Start");
+    trackEvent('Project Save Start');
 
     const abortController = new AbortController();
 
     this.showDialog(ProgressDialog, {
-      title: "Saving Project",
-      message: "Saving project...",
+      title: 'Saving Project',
+      message: 'Saving project...',
       cancelable: true,
       onCancel: () => {
         abortController.abort();
@@ -605,24 +604,24 @@ class EditorContainer extends Component {
 
       this.hideDialog();
 
-      trackEvent("Project Save Successful");
+      trackEvent('Project Save Successful');
     } catch (error) {
       console.error(error);
 
       this.showDialog(ErrorDialog, {
-        title: "Error Saving Project",
-        message: error.message || "There was an error when saving the project."
+        title: 'Error Saving Project',
+        message: error.message || 'There was an error when saving the project.'
       });
 
-      trackEvent("Project Save Error");
+      trackEvent('Project Save Error');
     }
   };
 
   onDuplicateProject = async () => {
     const abortController = new AbortController();
     this.showDialog(ProgressDialog, {
-      title: "Duplicating Project",
-      message: "Duplicating project...",
+      title: 'Duplicating Project',
+      message: 'Duplicating project...',
       cancelable: true,
       onCancel: () => {
         abortController.abort();
@@ -641,8 +640,8 @@ class EditorContainer extends Component {
       console.error(error);
 
       this.showDialog(ErrorDialog, {
-        title: "Error Saving Project",
-        message: error.message || "There was an error when saving the project."
+        title: 'Error Saving Project',
+        message: error.message || 'There was an error when saving the project.'
       });
     }
   };
@@ -671,8 +670,8 @@ class EditorContainer extends Component {
     const abortController = new AbortController();
 
     this.showDialog(ProgressDialog, {
-      title: "Exporting Project To Webaverse",
-      message: "Getting project ready for Webaverse...",
+      title: 'Exporting Project To Webaverse',
+      message: 'Getting project ready for Webaverse...',
       cancelable: true,
       onCancel: () => abortController.abort()
     });
@@ -682,20 +681,20 @@ class EditorContainer extends Component {
 
       const { glbBlob } = await editor.exportScene(abortController.signal, options);
 
-      const glbFile = this.blobToFile(glbBlob, "scene.glb");
+      const glbFile = this.blobToFile(glbBlob, 'scene.glb');
 
-      fetch("https://ipfs.exokit.org", {
-        method: "POST",
+      fetch('https://ipfs.exokit.org', {
+        method: 'POST',
         body: glbFile
       })
         .then(response => response.json())
         .then(data => {
-          window.location.href = "https://webaverse.com/bake/" + data.hash + "." + "scene" + "." + "glb";
+          window.location.href = 'https://webaverse.com/bake/' + data.hash + '.' + 'scene' + '.' + 'glb';
         });
 
       this.hideDialog();
 
-      trackEvent("Export Project as glTF");
+      trackEvent('Export Project as glTF');
     } catch (error) {
       if (error.aborted) {
         this.hideDialog();
@@ -705,8 +704,8 @@ class EditorContainer extends Component {
       console.error(error);
 
       this.showDialog(ErrorDialog, {
-        title: "Error Exporting Project",
-        message: error.message || "There was an error when exporting the project.",
+        title: 'Error Exporting Project',
+        message: error.message || 'There was an error when exporting the project.',
         error
       });
     }
@@ -729,8 +728,8 @@ class EditorContainer extends Component {
     const abortController = new AbortController();
 
     this.showDialog(ProgressDialog, {
-      title: "Exporting Project",
-      message: "Exporting project...",
+      title: 'Exporting Project',
+      message: 'Exporting project...',
       cancelable: true,
       onCancel: () => abortController.abort()
     });
@@ -742,14 +741,14 @@ class EditorContainer extends Component {
 
       this.hideDialog();
 
-      const el = document.createElement("a");
-      el.download = editor.scene.name + ".glb";
+      const el = document.createElement('a');
+      el.download = editor.scene.name + '.glb';
       el.href = URL.createObjectURL(glbBlob);
       document.body.appendChild(el);
       el.click();
       document.body.removeChild(el);
 
-      trackEvent("Export Project as glTF");
+      trackEvent('Export Project as glTF');
     } catch (error) {
       if (error.aborted) {
         this.hideDialog();
@@ -759,8 +758,8 @@ class EditorContainer extends Component {
       console.error(error);
 
       this.showDialog(ErrorDialog, {
-        title: "Error Exporting Project",
-        message: error.message || "There was an error when exporting the project.",
+        title: 'Error Exporting Project',
+        message: error.message || 'There was an error when exporting the project.',
         error
       });
     }
@@ -769,10 +768,10 @@ class EditorContainer extends Component {
   onImportLegacyProject = async () => {
     const confirm = await new Promise(resolve => {
       this.showDialog(ConfirmDialog, {
-        title: "Import Legacy Spoke Project",
-        message: "Warning! This will overwrite your existing scene! Are you sure you wish to continue?",
-        cancelLabel: "Cancel",
-        confirmLabel: "Ok",
+        title: 'Import Legacy Spoke Project',
+        message: 'Warning! This will overwrite your existing scene! Are you sure you wish to continue?',
+        cancelLabel: 'Cancel',
+        confirmLabel: 'Ok',
         onConfirm: () => resolve(true),
         onCancel: () => resolve(false)
       });
@@ -782,10 +781,10 @@ class EditorContainer extends Component {
 
     if (!confirm) return;
 
-    const el = document.createElement("input");
-    el.type = "file";
-    el.accept = ".spoke";
-    el.style.display = "none";
+    const el = document.createElement('input');
+    el.type = 'file';
+    el.accept = '.spoke';
+    el.style.display = 'none';
     el.onchange = () => {
       if (el.files.length > 0) {
         const fileReader = new FileReader();
@@ -802,16 +801,16 @@ class EditorContainer extends Component {
     };
     el.click();
 
-    trackEvent("Import Legacy Project");
+    trackEvent('Import Legacy Project');
   };
 
   onImportSCNProject = async () => {
     const confirm = await new Promise(resolve => {
       this.showDialog(ConfirmDialog, {
-        title: "Import Scn Project",
-        message: "Warning! This will overwrite your existing scene! Are you sure you wish to continue?",
-        cancelLabel: "Cancel",
-        confirmLabel: "Ok",
+        title: 'Import Scn Project',
+        message: 'Warning! This will overwrite your existing scene! Are you sure you wish to continue?',
+        cancelLabel: 'Cancel',
+        confirmLabel: 'Ok',
         onConfirm: () => resolve(true),
         onCancel: () => resolve(false)
       });
@@ -821,10 +820,10 @@ class EditorContainer extends Component {
 
     if (!confirm) return;
 
-    const el = document.createElement("input");
-    el.type = "file";
-    el.accept = ".scn";
-    el.style.display = "none";
+    const el = document.createElement('input');
+    el.type = 'file';
+    el.accept = '.scn';
+    el.style.display = 'none';
     el.onchange = () => {
       if (el.files.length > 0) {
         const fileReader = new FileReader();
@@ -843,7 +842,7 @@ class EditorContainer extends Component {
     };
     el.click();
 
-    trackEvent("Import Scn Project");
+    trackEvent('Import Scn Project');
   };
 
   onExportLegacyProject = async () => {
@@ -857,15 +856,15 @@ class EditorContainer extends Component {
 
     const projectJson = JSON.stringify(projectFile);
     const projectBlob = new Blob([projectJson]);
-    const el = document.createElement("a");
-    const fileName = this.state.editor.scene.name.toLowerCase().replace(/\s+/g, "-");
-    el.download = fileName + ".spoke";
+    const el = document.createElement('a');
+    const fileName = this.state.editor.scene.name.toLowerCase().replace(/\s+/g, '-');
+    el.download = fileName + '.spoke';
     el.href = URL.createObjectURL(projectBlob);
     document.body.appendChild(el);
     el.click();
     document.body.removeChild(el);
 
-    trackEvent("Project Exported");
+    trackEvent('Project Exported');
   };
 
   onExportSCNProject = async () => {
@@ -879,19 +878,19 @@ class EditorContainer extends Component {
 
     const projectJson = JSON.stringify(projectFile);
     const projectBlob = new Blob([projectJson]);
-    const el = document.createElement("a");
-    const fileName = this.state.editor.scene.name.toLowerCase().replace(/\s+/g, "-");
-    el.download = fileName + ".scn";
+    const el = document.createElement('a');
+    const fileName = this.state.editor.scene.name.toLowerCase().replace(/\s+/g, '-');
+    el.download = fileName + '.scn';
     el.href = URL.createObjectURL(projectBlob);
     document.body.appendChild(el);
     el.click();
     document.body.removeChild(el);
 
-    trackEvent("Project Exported");
+    trackEvent('Project Exported');
   };
 
   onPublishProject = async () => {
-    trackEvent("Project Publish Started");
+    trackEvent('Project Publish Started');
 
     try {
       const editor = this.state.editor;
@@ -914,24 +913,24 @@ class EditorContainer extends Component {
       editor.sceneModified = false;
       this.updateModifiedState();
 
-      trackEvent("Project Publish Successful");
+      trackEvent('Project Publish Successful');
 
       this.setState({ project });
     } catch (error) {
       if (error.aborted) {
         this.hideDialog();
-        trackEvent("Project Publish Canceled");
+        trackEvent('Project Publish Canceled');
         return;
       }
 
       console.error(error);
       this.showDialog(ErrorDialog, {
-        title: "Error Publishing Project",
-        message: error.message || "There was an unknown error.",
+        title: 'Error Publishing Project',
+        message: error.message || 'There was an unknown error.',
         error
       });
 
-      trackEvent("Project Publish Error");
+      trackEvent('Project Publish Error');
     }
   };
 
@@ -952,12 +951,12 @@ class EditorContainer extends Component {
   };
 
   onFinishTutorial = nextAction => {
-    trackEvent("Tutorial Finished", nextAction);
+    trackEvent('Tutorial Finished', nextAction);
     this.setState({ onboardingContext: { enabled: false } });
   };
 
   onSkipTutorial = lastCompletedStep => {
-    trackEvent("Tutorial Skipped", lastCompletedStep);
+    trackEvent('Tutorial Skipped', lastCompletedStep);
     this.setState({ onboardingContext: { enabled: false } });
   };
 
@@ -1004,7 +1003,7 @@ class EditorContainer extends Component {
                     )}
                   </Modal>
                   <Helmet>
-                    <title>{`${this.state.modified ? "*" : ""}${editor.scene.name} | ${configs.longName}`}</title>
+                    <title>{`${this.state.modified ? '*' : ''}${editor.scene.name} | ${configs.longName}`}</title>
                     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
                   </Helmet>
                   {this.state.modified && (
